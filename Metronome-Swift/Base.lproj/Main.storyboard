@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Metronome View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="MetronomeViewController" customModule="TAP_Metronome_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8r-1J-ZFl">
+                                <rect key="frame" x="32" y="172" width="536" height="256"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="TAP">
+                                    <color key="titleColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapDown:" destination="BYZ-38-t0r" eventType="touchDown" id="WAz-iB-BFN"/>
+                                    <action selector="tapUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M4J-fW-xmM"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="120" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ze5-m6-xwQ">
+                                <rect key="frame" x="238" y="438" width="125" height="72"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="48"/>
+                                <color key="textColor" red="0.70588235290000001" green="0.70588235290000001" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="120" minValue="40" maxValue="240" translatesAutoresizingMaskIntoConstraints="NO" id="9em-ye-FqV">
+                                <rect key="frame" x="50" y="534" width="417" height="31"/>
+                                <color key="tintColor" red="0.70588235290000001" green="0.70588235290000001" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="tempoSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="M4z-hG-FLM"/>
+                                </connections>
+                            </slider>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3s-2O-r0N">
+                                <rect key="frame" x="504" y="527" width="44" height="44"/>
+                                <state key="normal" title="Time">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.047058823529411764" green="0.047058823529411764" blue="0.047058823529411764" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="P3s-2O-r0N" secondAttribute="trailing" constant="36" id="1F0-GK-QY4"/>
+                            <constraint firstAttribute="centerX" secondItem="Ze5-m6-xwQ" secondAttribute="centerX" id="4DL-06-52M"/>
+                            <constraint firstAttribute="centerX" secondItem="y8r-1J-ZFl" secondAttribute="centerX" id="6fM-Xn-aF0"/>
+                            <constraint firstItem="P3s-2O-r0N" firstAttribute="leading" secondItem="9em-ye-FqV" secondAttribute="trailing" constant="24" id="7TF-h5-VI7"/>
+                            <constraint firstItem="P3s-2O-r0N" firstAttribute="leading" secondItem="9em-ye-FqV" secondAttribute="trailing" constant="24" id="BDS-ki-sgG"/>
+                            <constraint firstItem="9em-ye-FqV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="36" id="DyY-Me-XhF"/>
+                            <constraint firstAttribute="centerY" secondItem="y8r-1J-ZFl" secondAttribute="centerY" id="PGb-wO-03X"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="9em-ye-FqV" secondAttribute="bottom" constant="36" id="SrF-o6-i8E"/>
+                            <constraint firstItem="9em-ye-FqV" firstAttribute="top" secondItem="Ze5-m6-xwQ" secondAttribute="bottom" constant="24" id="du3-EW-WAh"/>
+                            <constraint firstItem="P3s-2O-r0N" firstAttribute="centerY" secondItem="9em-ye-FqV" secondAttribute="centerY" id="xRS-De-YwZ"/>
+                            <constraint firstAttribute="centerY" secondItem="Ze5-m6-xwQ" secondAttribute="centerY" constant="-169" id="zpK-w8-JGP"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="zpK-w8-JGP"/>
+                                <exclude reference="7TF-h5-VI7"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="tapButton" destination="y8r-1J-ZFl" id="dFV-bS-rBC"/>
+                        <outlet property="tempoLabel" destination="Ze5-m6-xwQ" id="JWC-DK-Pzj"/>
+                        <outlet property="tempoSlider" destination="9em-ye-FqV" id="c67-fo-9dJ"/>
+                        <outlet property="timeSignatureButton" destination="P3s-2O-r0N" id="7IR-xF-t7m"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="282" y="443"/>
+        </scene>
+    </scenes>
+</document>
