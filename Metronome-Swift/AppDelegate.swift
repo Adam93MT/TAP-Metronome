@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  Metronome-Swift
 //
-//  Created by Nikolas Gelo on 10/7/14.
-//  Copyright (c) 2014 Nikolas Gelo. All rights reserved.
+//  Created by Adam Thompson on 10/7/14.
+//  Copyright (c) 2015 Adam Thompson. All rights reserved.
 //
 
 import UIKit
