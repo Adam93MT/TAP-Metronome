@@ -20,7 +20,8 @@ class MetronomeViewController: UIViewController {
     //-- Deprecated
 //    @IBOutlet weak var tempoStepper: UIStepper!
 //    @IBOutlet var metronomePlayButton: UIButton!
-   
+    var beatCircleView: BeatCircleView!
+    
     var BeatViewsArray : [BeatView] = []
     var metronomeDisplayLink: CADisplayLink!
     
@@ -95,6 +96,10 @@ class MetronomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        var viewWidth = view.frame.width
+        var viewHeight = view.frame.height
+        println("Height: \(viewHeight), Width: \(viewWidth)")
+        beatCircleView = BeatCircleView(frame: CGRectMake(0, 0, viewWidth, viewHeight))
         
         view.backgroundColor = backgroundColor
         
@@ -111,6 +116,10 @@ class MetronomeViewController: UIViewController {
 //        view.addSubview(myBeatView)
 //        var myTimeInterval: NSTimeInterval = 1
 //        myBeatView.animateBeatCircle(myTimeInterval)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+//        beatCircleView.animateBeatCircle(metronome.timeInterval)
     }
     
     // MARK: - UIResponder

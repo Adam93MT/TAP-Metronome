@@ -17,11 +17,11 @@ class BeatView: UIView {
     
     
     override init (frame : CGRect) {
+        super.init(frame : frame)
+        
         self.startShape = UIBezierPath(ovalInRect: CGRectMake(187.5, 333.5, 5, 5)).CGPath
         self.endShape = UIBezierPath(ovalInRect: CGRectMake(-195.5, -49.5, 766, 766)).CGPath
         self.beatCircleLayer = CAShapeLayer()
-       
-        super.init(frame : frame)
 
         addBehavior()
     }

@@ -42,31 +42,40 @@
                                     <action selector="tempoSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="M4z-hG-FLM"/>
                                 </connections>
                             </slider>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3s-2O-r0N">
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3s-2O-r0N">
                                 <rect key="frame" x="504" y="527" width="44" height="44"/>
                                 <state key="normal" title="Time">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <view opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="np1-dH-H4I" customClass="BeatCircleView" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="32" y="36" width="536" height="445"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.047058823529411764" green="0.047058823529411764" blue="0.047058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="centerY" secondItem="np1-dH-H4I" secondAttribute="centerY" id="1DM-ib-TtZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="P3s-2O-r0N" secondAttribute="trailing" constant="36" id="1F0-GK-QY4"/>
                             <constraint firstAttribute="centerX" secondItem="Ze5-m6-xwQ" secondAttribute="centerX" id="4DL-06-52M"/>
                             <constraint firstAttribute="centerX" secondItem="y8r-1J-ZFl" secondAttribute="centerX" id="6fM-Xn-aF0"/>
                             <constraint firstItem="P3s-2O-r0N" firstAttribute="leading" secondItem="9em-ye-FqV" secondAttribute="trailing" constant="24" id="7TF-h5-VI7"/>
                             <constraint firstItem="P3s-2O-r0N" firstAttribute="leading" secondItem="9em-ye-FqV" secondAttribute="trailing" constant="24" id="BDS-ki-sgG"/>
+                            <constraint firstAttribute="centerX" secondItem="np1-dH-H4I" secondAttribute="centerX" id="D8e-fQ-5bW"/>
                             <constraint firstItem="9em-ye-FqV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="36" id="DyY-Me-XhF"/>
                             <constraint firstAttribute="centerY" secondItem="y8r-1J-ZFl" secondAttribute="centerY" id="PGb-wO-03X"/>
+                            <constraint firstItem="P3s-2O-r0N" firstAttribute="top" secondItem="np1-dH-H4I" secondAttribute="bottom" constant="53" id="R5z-fA-cfu"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="9em-ye-FqV" secondAttribute="bottom" constant="36" id="SrF-o6-i8E"/>
                             <constraint firstItem="9em-ye-FqV" firstAttribute="top" secondItem="Ze5-m6-xwQ" secondAttribute="bottom" constant="24" id="du3-EW-WAh"/>
                             <constraint firstItem="P3s-2O-r0N" firstAttribute="centerY" secondItem="9em-ye-FqV" secondAttribute="centerY" id="xRS-De-YwZ"/>
+                            <constraint firstItem="np1-dH-H4I" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="zH7-fo-7Tg"/>
                             <constraint firstAttribute="centerY" secondItem="Ze5-m6-xwQ" secondAttribute="centerY" constant="-169" id="zpK-w8-JGP"/>
+                            <constraint firstItem="np1-dH-H4I" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="16" id="zry-5h-Bgh"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="zpK-w8-JGP"/>
                                 <exclude reference="7TF-h5-VI7"/>
+                                <exclude reference="R5z-fA-cfu"/>
                             </mask>
                         </variation>
                     </view>
