@@ -24,9 +24,9 @@ class Metronome {
     var isPrepared: Bool = false
     var isOn: Bool = false
 
-    var timeSignature: Int = 4
+    var timeSignature: Int = 4 // default is 4:4
     var beat = 1
-    var tempo: Int = 60
+    var tempo: Int!
     
     // DEBUG ------
     var lastBeat = CFAbsoluteTimeGetCurrent()
@@ -51,7 +51,7 @@ class Metronome {
         }
         
         timeInterval = NSTimeInterval(60.0/Double(tempo))
-        beatTimer = NSTimer(timeInterval: timeInterval, target: self, selector: "startTimer:", userInfo: nil, repeats: true)
+        beatTimer = NSTimer(timeInterval: timeInterval, target: self, selector: Selector("startTimer:"), userInfo: nil, repeats: true)
         println("Expected Fire Date \(beatTimer.fireDate.timeIntervalSinceNow)")
         println("Prepared: \(beatTimer.timeInterval) seconds")
         
@@ -78,20 +78,23 @@ class Metronome {
     }
     
     @objc func startTimer(timer: NSTimer!) {
+        
         prepareForNextBeat()
         self.playBeat()
+        updateTimer()
+        
         
     // DEBUG -----
-        if (!playedLastBeat){
-            println("Skipped Click")
-        }
-        println("Fire Date Error: \(-beatTimer.fireDate.timeIntervalSinceNow)")
-        current_time = CFAbsoluteTimeGetCurrent()
-        error = timeInterval - (current_time - lastBeat)
-        total_error = total_error + error
-        avg_error = total_error/Double(total_beats)
-        println("Avg. Error: \(avg_error)")
-        lastBeat = current_time
+//        if (!playedLastBeat){
+//            println("Skipped Click")
+//        }
+//        println("Fire Date Error: \(-beatTimer.fireDate.timeIntervalSinceNow)")
+//        current_time = CFAbsoluteTimeGetCurrent()
+//        error = timeInterval - (current_time - lastBeat)
+//        total_error = total_error + error
+//        avg_error = total_error/Double(total_beats)
+//        println("Avg. Error: \(avg_error)")
+//        lastBeat = current_time
     // -----------
     }
     
@@ -100,6 +103,7 @@ class Metronome {
         //parentViewController.DEBUG_beatLabel.text = String(beat)
         playSound()
         incrementBeat()
+        println("Time Interval: \(beatTimer.timeInterval)")
     }
     
     func playSound() {
@@ -112,7 +116,7 @@ class Metronome {
             beatClick.play()
             playedLastBeat = true
         }
-        println("*click* - Beat \(beat)")
+        //println("*click* - Beat \(beat)")
     }
     
     func incrementBeat() {
@@ -121,6 +125,16 @@ class Metronome {
             beat = 1
         }
         total_beats += 1
+        
+        // Check how many beats have been played w/o manually tapping
+        untappedBeats += 1
+        if untappedBeats >= 8 {
+            if loggedTaps.count > 0 {
+                // remove the oldest logget tap time
+                println("Removing oldest Tap")
+                loggedTaps.removeAtIndex(0)
+            }
+        }
     }
     
     func prepareForNextBeat() {
@@ -132,8 +146,7 @@ class Metronome {
         //--
         playedLastBeat = false
     }
-    
-    
+
     func stop() {
         self.beatTimer.invalidate()
         println(" ---- Stopping Metronome ---- ")
@@ -151,4 +164,39 @@ class Metronome {
         total_error = 0
         avg_error = 0
     }
+    
+    // Beat Logging
+    
+    var loggedTaps = [CFAbsoluteTime]()
+    var untappedBeats: Int = 0
+    
+    func logTap() {
+        println("Logging Tap")
+        untappedBeats = 0
+        loggedTaps.append(CFAbsoluteTimeGetCurrent())
+        if loggedTaps.count > 3 {
+            var total_diff = 0.0
+            for t in 0...loggedTaps.count - 2 {
+                var diff = loggedTaps[t + 1] - loggedTaps[t]
+                total_diff += diff
+            }
+            // weight the tap diff with the current tempo
+            var avg_tap_diff = (total_diff)/Double(loggedTaps.count)
+            timeInterval = NSTimeInterval(avg_tap_diff)
+            println("New Time Interval \(avg_tap_diff)")
+            tempo = Int(60.0/Double(timeInterval))
+            println("New Tempo: \(tempo)")
+        }
+    }
+    
+    func updateTimer() {
+        self.beatTimer.fireDate.dateByAddingTimeInterval(timeInterval)
+    }
+    
+    
+    
+    
+    
+    
+    
 }

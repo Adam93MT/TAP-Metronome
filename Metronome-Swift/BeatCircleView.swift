@@ -104,20 +104,19 @@ class BeatCircleView: UIView {
     }
     
     func animateBeatCircle(beat:Int, beatDuration:NSTimeInterval) {
-        println("Animating Beat Circle... \(beat)")
+        //println("Animating Beat Circle... \(beat)")
         self.BeatViewsArray[beat-1].hidden = false
         var animationScale = CGFloat(667/self.startDiameter*1.2)
         var beatAnimation = { () -> Void in
             let scaleTransform = CGAffineTransformMakeScale(animationScale, animationScale)
             self.BeatViewsArray[beat-1].backgroundColor = self.endColor
             self.BeatViewsArray[beat-1].transform = scaleTransform
-            println("beatAnimation")
         }
     
         
         //UIView.animateWithDuration(beatDuration*2, animations: beatAnimation)
         UIView.animateWithDuration(beatDuration*2, animations: beatAnimation, completion:  { finished in
-            println("Beat \(beat) done")
+            //println("Beat \(beat) done")
             self.beatCircleReset(beat)
         })
         

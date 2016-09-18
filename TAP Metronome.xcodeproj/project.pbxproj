@@ -182,6 +182,7 @@
 					B897AC7019E4AC8700820251 = {
 						CreatedOnToolsVersion = 6.0.1;
 						DevelopmentTeam = K6MAN39573;
+						LastSwiftMigration = 0800;
 					};
 					B897AC8519E4AC8700820251 = {
 						CreatedOnToolsVersion = 6.0.1;
@@ -369,6 +370,7 @@
 				INFOPLIST_FILE = "Metronome-Swift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "TAP Metronome-Swift";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -380,6 +382,7 @@
 				INFOPLIST_FILE = "Metronome-Swift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "TAP Metronome-Swift";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

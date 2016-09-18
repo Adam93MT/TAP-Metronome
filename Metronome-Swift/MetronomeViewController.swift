@@ -39,9 +39,24 @@ class MetronomeViewController: UIViewController {
         metronome.prepare()
     }
     
+    @IBAction func swipeButton(sender: UIButton) {
+        if metronome.isOn {
+            self.stopMetronome()
+        }
+         // else ignore
+        
+    }
 
     @IBAction func tapDown(sender: UIButton) {
-        toggleMetronome()
+        if metronome.isOn == false {
+            self.startMetronome()
+        }
+        else //is On 
+        {
+            // Log tempo
+            metronome.logTap()
+        }
+        
     }
     @IBAction func tapUp(sender: UIButton) {
 
@@ -74,21 +89,14 @@ class MetronomeViewController: UIViewController {
     func startUI() {
         tempoSlider.enabled = false            // Disable the metronome stepper.
         tempoLabel.enabled = false          // Disable editing the tempo text field.
-        //beatCircleView.initAllBeatCircles(metronome.timeSignature)
     }
     
     func stopUI() {
-        //beatCircleView.removeAllBeatCircles()
         tapButton.enabled = true
         tapButton.hidden = false
         // Enable the metronome stepper.
         tempoSlider.enabled = true
     }
-    
-//    func animateBeatCircle() {
-//        println("Animating Beat Circle")
-//        //BeatViewsArray[beat - 1].animateBeatCircle(metronomeTimer)
-//    }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         // Hide the keyboard
@@ -107,12 +115,14 @@ class MetronomeViewController: UIViewController {
         view.sendSubviewToBack(beatCircleView)
         metronome.parentViewController = self
         
+        tapButton.frame.size = CGSizeMake(viewWidth, viewWidth);
+        tapButton.contentEdgeInsets = UIEdgeInsetsMake(viewWidth/2, viewWidth/2, viewWidth/2, viewWidth/2);
         view.bringSubviewToFront(tapButton)
         
         view.backgroundColor = backgroundColor
         
         // Set the inital value of the tempo.
-        metronome.tempo = 120
+        metronome.tempo = 100
         metronome.timeSignature = 4
         tempoLabel.text = String(metronome.tempo)
         tempoSlider.value = Float(metronome.tempo)
@@ -120,16 +130,11 @@ class MetronomeViewController: UIViewController {
 
         metronome.prepare()
         
-//        var myBeatView = BeatView()
-//        view.addSubview(myBeatView)
-//        var myTimeInterval: NSTimeInterval = 1
-//        myBeatView.animateBeatCircle(myTimeInterval)
-        
         //self.startMetronome()
     }
     
     override func viewDidAppear(animated: Bool) {
-//        beatCircleView.animateBeatCircle(metronome.timeInterval)
+        
     }
     
     // MARK: - UIResponder
