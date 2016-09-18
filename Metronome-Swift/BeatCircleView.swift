@@ -94,9 +94,12 @@ class BeatCircleView: UIView {
     }
     
     func removeAllBeatCircles() {
-        for beat in 0...BeatViewsArray.count {
-            BeatViewsArray[beat].removeFromSuperview()
-            BeatViewsArray.removeAtIndex(beat)
+        var totalBeats = BeatViewsArray.count
+        for beat in 0...totalBeats-1 {
+            println(BeatViewsArray.count)
+            beatCircleReset(1)
+            BeatViewsArray[0].removeFromSuperview()
+            BeatViewsArray.removeAtIndex(0)
         }
     }
     

@@ -16,9 +16,9 @@ class MetronomeViewController: UIViewController {
     @IBOutlet weak var tapButton: UIButton!
     @IBOutlet weak var tempoSlider: UISlider!
     @IBOutlet weak var timeSignatureButton: UIButton!
-    
-    @IBOutlet weak var DEBUG_beatLabel: UILabel!
-    // The superView containing all animating Circles
+
+     // The superView containing all animating Circles
+    //@IBOutlet weak var beatCircleView: BeatCircleView!
     var beatCircleView: BeatCircleView!
     
     let metronome = Metronome()
@@ -38,8 +38,16 @@ class MetronomeViewController: UIViewController {
         tempoLabel.text = String(metronome.tempo)
         metronome.prepare()
     }
+    
 
     @IBAction func tapDown(sender: UIButton) {
+        toggleMetronome()
+    }
+    @IBAction func tapUp(sender: UIButton) {
+
+    }
+    
+    func toggleMetronome() {
         if metronome.isOn {
             self.stopMetronome()
         }
@@ -47,9 +55,6 @@ class MetronomeViewController: UIViewController {
         {
             self.startMetronome()
         }
-    }
-    @IBAction func tapUp(sender: UIButton) {
-
     }
     
     func startMetronome() {
@@ -69,11 +74,11 @@ class MetronomeViewController: UIViewController {
     func startUI() {
         tempoSlider.enabled = false            // Disable the metronome stepper.
         tempoLabel.enabled = false          // Disable editing the tempo text field.
-        beatCircleView.initAllBeatCircles(metronome.timeSignature)
+        //beatCircleView.initAllBeatCircles(metronome.timeSignature)
     }
     
     func stopUI() {
-        beatCircleView.removeAllBeatCircles()
+        //beatCircleView.removeAllBeatCircles()
         tapButton.enabled = true
         tapButton.hidden = false
         // Enable the metronome stepper.
@@ -96,13 +101,13 @@ class MetronomeViewController: UIViewController {
         var viewHeight = view.frame.height
         println("Height: \(viewHeight), Width: \(viewWidth)")
         
-        
-//        beatCircleView = BeatCircleView(frame: CGRectMake(0, 0, viewWidth, viewHeight))
         beatCircleView = BeatCircleView(frame: CGRectMake(0, 0, viewWidth, viewHeight))
         beatCircleView.center = view.center
         view.addSubview(beatCircleView)
+        view.sendSubviewToBack(beatCircleView)
         metronome.parentViewController = self
-        //metronome.beatCircleViewTag = beatCircleView.tag
+        
+        view.bringSubviewToFront(tapButton)
         
         view.backgroundColor = backgroundColor
         
@@ -120,7 +125,7 @@ class MetronomeViewController: UIViewController {
 //        var myTimeInterval: NSTimeInterval = 1
 //        myBeatView.animateBeatCircle(myTimeInterval)
         
-        self.startMetronome()
+        //self.startMetronome()
     }
     
     override func viewDidAppear(animated: Bool) {
