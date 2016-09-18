@@ -1,17 +1,8 @@
-Metronome-Swift
+TAP Metronome
 ===============
 
-A simple metronome application built in Swift.
+Original Metronome sample based of Metronone-Swift by ngelo
 
-My intentions & goals of this application were to:
+My first attempt at a Swift app
 
-1. write my first application in Swift;
-2. understand how NSTimer can be applied to a metronome; and
-3. build a basic foundation for a side-project.
-
-Future plans for this app are:
-
-* improving the metronome's accuracy
-* cleaning up the GUI
-* expanding the functionality and scope
-  * Although this is very vague, I don't want to give away what my plans are as of yet ;)
+TAP Metronome has minimal UI at its core
