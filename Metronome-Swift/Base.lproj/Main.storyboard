@@ -17,6 +17,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="np1-dH-H4I" customClass="BeatCircleView" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="32" y="36" width="536" height="445"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" updatesFrequently="YES"/>
+                                </accessibility>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="120" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ze5-m6-xwQ">
+                                <rect key="frame" x="238" y="438" width="125" height="72"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="48"/>
+                                <color key="textColor" red="0.70588235290000001" green="0.70588235290000001" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="120" minValue="40" maxValue="240" translatesAutoresizingMaskIntoConstraints="NO" id="9em-ye-FqV">
+                                <rect key="frame" x="50" y="534" width="417" height="31"/>
+                                <color key="tintColor" red="0.70588235290000001" green="0.70588235290000001" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="tempoSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="M4z-hG-FLM"/>
+                                </connections>
+                            </slider>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3s-2O-r0N">
+                                <rect key="frame" x="504" y="527" width="44" height="44"/>
+                                <state key="normal" title="Time">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8r-1J-ZFl">
                                 <rect key="frame" x="32" y="172" width="536" height="256"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -29,28 +54,6 @@
                                     <action selector="tapUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M4J-fW-xmM"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="120" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ze5-m6-xwQ">
-                                <rect key="frame" x="238" y="438" width="125" height="72"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="48"/>
-                                <color key="textColor" red="0.70588235290000001" green="0.70588235290000001" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="120" minValue="40" maxValue="240" translatesAutoresizingMaskIntoConstraints="NO" id="9em-ye-FqV">
-                                <rect key="frame" x="50" y="534" width="417" height="31"/>
-                                <color key="tintColor" red="0.70588235290000001" green="0.70588235290000001" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="tempoSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="M4z-hG-FLM"/>
-                                </connections>
-                            </slider>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3s-2O-r0N">
-                                <rect key="frame" x="504" y="527" width="44" height="44"/>
-                                <state key="normal" title="Time">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <view opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="np1-dH-H4I" customClass="BeatCircleView" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="32" y="36" width="536" height="445"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.047058823529411764" green="0.047058823529411764" blue="0.047058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>

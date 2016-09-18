@@ -17,15 +17,14 @@ class MetronomeViewController: UIViewController {
     @IBOutlet weak var tempoSlider: UISlider!
     @IBOutlet weak var timeSignatureButton: UIButton!
     
-    //-- Deprecated
-//    @IBOutlet weak var tempoStepper: UIStepper!
-//    @IBOutlet var metronomePlayButton: UIButton!
+    @IBOutlet weak var DEBUG_beatLabel: UILabel!
+    // The superView containing all animating Circles
     var beatCircleView: BeatCircleView!
     
-    var BeatViewsArray : [BeatView] = []
+    let metronome = Metronome()
     var metronomeDisplayLink: CADisplayLink!
     
-    let metronome = Metronome()
+    
     // Colours
     let backgroundColor = UIColor(red:0.04, green: 0.04, blue: 0.04, alpha: 1)
     let sliderColor = UIColor(red: 0.059, green: 0.059, blue: 0.059, alpha: 1)
@@ -42,52 +41,49 @@ class MetronomeViewController: UIViewController {
 
     @IBAction func tapDown(sender: UIButton) {
         if metronome.isOn {
-            metronome.stop()
-            stopUI()
+            self.stopMetronome()
         }
         else // Metronome is off
         {
-            if !metronome.isPrepared {
-                metronome.prepare()
-            }
-            println("Tempo: \(metronome.tempo)")
-            metronome.start()
-            startUI()
+            self.startMetronome()
         }
     }
     @IBAction func tapUp(sender: UIButton) {
 
     }
+    
+    func startMetronome() {
+        if !metronome.isPrepared {
+            metronome.prepare()
+        }
+        println("Tempo: \(metronome.tempo)")
+        metronome.start()
+        startUI()
+    }
+    
+    func stopMetronome() {
+        metronome.stop()
+        stopUI()
+    }
+    
     func startUI() {
-        
         tempoSlider.enabled = false            // Disable the metronome stepper.
         tempoLabel.enabled = false          // Disable editing the tempo text field.
-        
-//        for var b = 0;  b < metronome.timeSignature; b++
-//        {
-//            BeatViewsArray.append(BeatView())
-//            view.addSubview(BeatViewsArray[b])
-//        }
+        beatCircleView.initAllBeatCircles(metronome.timeSignature)
     }
     
     func stopUI() {
-//        for var b = 0;  b < metronome.timeSignature; b++
-//        {
-//            BeatViewsArray[b].removeFromSuperview()
-//        }
-//        BeatViewsArray.removeAll()
-        
+        beatCircleView.removeAllBeatCircles()
         tapButton.enabled = true
         tapButton.hidden = false
-        
         // Enable the metronome stepper.
         tempoSlider.enabled = true
     }
     
-    func animateBeatCircle() {
-        println("Animating Beat Circle")
-        //BeatViewsArray[beat - 1].animateBeatCircle(metronomeTimer)
-    }
+//    func animateBeatCircle() {
+//        println("Animating Beat Circle")
+//        //BeatViewsArray[beat - 1].animateBeatCircle(metronomeTimer)
+//    }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         // Hide the keyboard
@@ -99,7 +95,14 @@ class MetronomeViewController: UIViewController {
         var viewWidth = view.frame.width
         var viewHeight = view.frame.height
         println("Height: \(viewHeight), Width: \(viewWidth)")
+        
+        
+//        beatCircleView = BeatCircleView(frame: CGRectMake(0, 0, viewWidth, viewHeight))
         beatCircleView = BeatCircleView(frame: CGRectMake(0, 0, viewWidth, viewHeight))
+        beatCircleView.center = view.center
+        view.addSubview(beatCircleView)
+        metronome.parentViewController = self
+        //metronome.beatCircleViewTag = beatCircleView.tag
         
         view.backgroundColor = backgroundColor
         
@@ -116,6 +119,8 @@ class MetronomeViewController: UIViewController {
 //        view.addSubview(myBeatView)
 //        var myTimeInterval: NSTimeInterval = 1
 //        myBeatView.animateBeatCircle(myTimeInterval)
+        
+        self.startMetronome()
     }
     
     override func viewDidAppear(animated: Bool) {

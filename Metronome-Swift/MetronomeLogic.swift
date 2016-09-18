@@ -6,6 +6,7 @@
 //  Copyright (c) 2016 Adam Thompson. All rights reserved.
 //
 
+import UIKit
 import Foundation
 import AVFoundation
 
@@ -18,6 +19,7 @@ class Metronome {
     
     var beatTimer: NSTimer!
     var timeInterval: NSTimeInterval!
+    var parentViewController: MetronomeViewController!
     
     var isPrepared: Bool = false
     var isOn: Bool = false
@@ -43,6 +45,10 @@ class Metronome {
         self.downBeatClick = AVAudioPlayer(contentsOfURL: downBeatSoundURL, error: nil)
         self.beatClick.prepareToPlay()
         self.downBeatClick.prepareToPlay()
+        
+        if parentViewController != nil {
+            parentViewController.beatCircleView.initAllBeatCircles(timeSignature)
+        }
         
         timeInterval = NSTimeInterval(60.0/Double(tempo))
         beatTimer = NSTimer(timeInterval: timeInterval, target: self, selector: "startTimer:", userInfo: nil, repeats: true)
@@ -73,21 +79,27 @@ class Metronome {
     
     @objc func startTimer(timer: NSTimer!) {
         prepareForNextBeat()
-        self.playSound()
+        self.playBeat()
         
-        // DEBUG -----
+    // DEBUG -----
         if (!playedLastBeat){
-            println("Skipped Beat")
+            println("Skipped Click")
         }
         println("Fire Date Error: \(-beatTimer.fireDate.timeIntervalSinceNow)")
         current_time = CFAbsoluteTimeGetCurrent()
         error = timeInterval - (current_time - lastBeat)
         total_error = total_error + error
         avg_error = total_error/Double(total_beats)
-//        println("Error: \(error)")
         println("Avg. Error: \(avg_error)")
         lastBeat = current_time
-        // -----------
+    // -----------
+    }
+    
+    func playBeat() {
+        parentViewController.beatCircleView.animateBeatCircle(beat, beatDuration: timeInterval)
+        //parentViewController.DEBUG_beatLabel.text = String(beat)
+        playSound()
+        incrementBeat()
     }
     
     func playSound() {
@@ -101,7 +113,6 @@ class Metronome {
             playedLastBeat = true
         }
         println("*click* - Beat \(beat)")
-        incrementBeat()
     }
     
     func incrementBeat() {

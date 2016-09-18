@@ -89,13 +89,13 @@
 		B897AC7319E4AC8700820251 /* TAPMetronome */ = {
 			isa = PBXGroup;
 			children = (
+				66E4D1F31D16532900811CCA /* BeatCircleView.swift */,
 				6695724C1C2C6024001BF1FF /* BeatView.swift */,
 				B897AC7619E4AC8700820251 /* AppDelegate.swift */,
 				B897AC7819E4AC8700820251 /* MetronomeViewController.swift */,
 				66C553B51D1383BE00FE56B4 /* MetronomeLogic.swift */,
 				B897AC7A19E4AC8700820251 /* Main.storyboard */,
 				B897AC7D19E4AC8700820251 /* Images.xcassets */,
-				66E4D1F31D16532900811CCA /* BeatCircleView.swift */,
 				66E4D1F11D164A4300811CCA /* BeatCircleView.xib */,
 				B897AC7F19E4AC8700820251 /* LaunchScreen.xib */,
 				66E98B881C2919C00097E58E /* downBeatClick.mp3 */,
