@@ -51,9 +51,9 @@ class Metronome {
         }
         
         timeInterval = TimeInterval(60.0/Double(tempo))
-        beatTimer = Timer(timeInterval: timeInterval, target: self, selector: #selector(Metronome.startTimer(_:)), userInfo: nil, repeats: true)
-        print("Expected Fire Date \(beatTimer.fireDate.timeIntervalSinceNow)")
-        print("Prepared: \(beatTimer.timeInterval) seconds")
+        beatTimer = Timer(timeInterval: timeInterval, target: self, selector: #selector(Metronome.startTimer(_:)), userInfo: nil, repeats: false)
+//        print("Expected Fire Date \(beatTimer.fireDate.timeIntervalSinceNow)")
+//        print("Prepared: \(beatTimer.timeInterval) seconds")
         
         self.beat = 1
         self.isPrepared = true
@@ -103,7 +103,7 @@ class Metronome {
         //parentViewController.DEBUG_beatLabel.text = String(beat)
         playSound()
         incrementBeat()
-        print("Time Interval: \(beatTimer.timeInterval)")
+        print("Time Interval: \(timeInterval)")
     }
     
     func playSound() {
@@ -128,7 +128,8 @@ class Metronome {
         
         // Check how many beats have been played w/o manually tapping
         untappedBeats += 1
-        if untappedBeats >= 8 {
+        if untappedBeats >= 4
+        {
             if loggedTaps.count > 0 {
                 // remove the oldest logget tap time
                 print("Removing oldest Tap")
@@ -145,6 +146,10 @@ class Metronome {
         
         //--
         playedLastBeat = false
+        if (newTempoSet) {
+            parentViewController.tempoLabel.text = String(tempo)
+            parentViewController.tempoSlider.setValue(Float(tempo), animated: true)
+        }
     }
 
     func stop() {
@@ -157,6 +162,7 @@ class Metronome {
         self.isOn = false
         self.beat = 1
         self.prepare()
+        self.loggedTaps.removeAll()
         
         //-- Debug
         total_beats = 0
@@ -169,28 +175,46 @@ class Metronome {
     
     var loggedTaps = [CFAbsoluteTime]()
     var untappedBeats: Int = 0
+    var newTempoSet: Bool = false
     
     func logTap() {
         print("Logging Tap")
-        untappedBeats = 0
         loggedTaps.append(CFAbsoluteTimeGetCurrent())
-        if loggedTaps.count > 3 {
+        if loggedTaps.count >= 4 {
             var total_diff = 0.0
-            for t in 0...loggedTaps.count - 2 {
-                var diff = loggedTaps[t + 1] - loggedTaps[t]
-                total_diff += diff
+            for t in (max(1,loggedTaps.count - 8)...loggedTaps.count-1).reversed() {
+                var diff = loggedTaps[t] - loggedTaps[t-1]
+                print("index \(t), diff \(diff)")
+                if diff < 1.0 {
+                    total_diff += diff
+                }
             }
             // weight the tap diff with the current tempo
-            var avg_tap_diff = (total_diff)/Double(loggedTaps.count)
-            timeInterval = TimeInterval(avg_tap_diff)
-            print("New Time Interval \(avg_tap_diff)")
-            tempo = Int(60.0/Double(timeInterval))
-            print("New Tempo: \(tempo)")
+            print(total_diff)
+            let avg_tap_diff = (total_diff)/Double(min(loggedTaps.count - 2, 8))
+            print(avg_tap_diff)
+            setTimeInterval(newInterval: TimeInterval(avg_tap_diff))
         }
     }
     
+    func setTempo(newTempo: Int){
+        tempo = newTempo
+        timeInterval = TimeInterval(60.0/Double(tempo))
+        print("New Tempo: \(tempo)")
+        newTempoSet = true
+    }
+    
+    func setTimeInterval(newInterval: TimeInterval){
+        timeInterval = newInterval
+        tempo = Int(60.0/Double(timeInterval))
+        print("New Time Interval \(timeInterval)")
+        print("New Tempo: \(tempo)")
+        newTempoSet = true
+    }
+    
     func updateTimer() {
-        self.beatTimer.fireDate.addingTimeInterval(timeInterval)
+        beatTimer = Timer(timeInterval: timeInterval, target: self, selector: #selector(Metronome.startTimer(_:)), userInfo: nil, repeats: false)
+        RunLoop.current.add(beatTimer, forMode: RunLoopMode.commonModes)
     }
     
     

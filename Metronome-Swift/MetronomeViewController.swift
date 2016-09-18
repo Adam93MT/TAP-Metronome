@@ -35,7 +35,7 @@ class MetronomeViewController: UIViewController {
 
     @IBAction func tempoSliderChanged(_ sender: UISlider) {
         print("Slider Value: \(tempoSlider.value)")
-        metronome.tempo = Int(tempoSlider.value) // Save the new tempo.
+        metronome.setTempo(newTempo: Int(tempoSlider.value))
         tempoLabel.text = String(metronome.tempo)
         metronome.prepare()
     }
@@ -48,12 +48,11 @@ class MetronomeViewController: UIViewController {
         
     }
 
-    @IBAction func tapDown(_ sender: UIButton) {
+    @IBAction func tapDown(_ sender: UIButton) {        
         if metronome.isOn == false {
             self.startMetronome()
         }
-        else //is On 
-        {
+        else {
             // Log tempo
             metronome.logTap()
         }
@@ -88,11 +87,11 @@ class MetronomeViewController: UIViewController {
     }
     
     func startUI() {
-        tempoSlider.isEnabled = false            // Disable the metronome stepper.
-        tempoLabel.isEnabled = false          // Disable editing the tempo text field.
-        UIView.animate(withDuration: 0.2, animations: {() -> Void in
-            self.tempoSlider.alpha = 0.4
-        })
+//        tempoSlider.isEnabled = false
+        tempoLabel.isEnabled = false
+//        UIView.animate(withDuration: 0.2, animations: {() -> Void in
+//            self.tempoSlider.alpha = 0.4
+//        })
     }
     
     func stopUI() {
@@ -100,9 +99,9 @@ class MetronomeViewController: UIViewController {
         tapButton.isHidden = false
         // Enable the metronome stepper.
         tempoSlider.isEnabled = true
-        UIView.animate(withDuration: 0.2, animations: {() -> Void in
-            self.tempoSlider.alpha = 1
-        })
+//        UIView.animate(withDuration: 0.2, animations: {() -> Void in
+//            self.tempoSlider.alpha = 1
+//        })
     }
     
     override func viewDidLoad() {
