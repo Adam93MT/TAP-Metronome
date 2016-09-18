@@ -43,33 +43,23 @@ class BeatCircleView: UIView {
 //    }
     
     override init (frame : CGRect) {
-        println("Called override Init")
+        print("Called override Init")
         super.init(frame : frame)
         setup()
     }
-//    convenience init () {
-//        println("Init Convenience")
-//        self.init(frame: CGRectZero)
-//        setup()
-//    }
-    required init(coder aDecoder: NSCoder) {
-        println("Init Required")
-        super.init(coder: aDecoder)
-        setup()
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
-    func addBehavior (){
-        self.backgroundColor = UIColor.clearColor()
-//        self.initAllBeatCircles()
-    }
     
     
-    func initAllBeatCircles(timeSignature: Int) {
+    func initAllBeatCircles(_ timeSignature: Int) {
         if allBeatsInitialized == false {
-        println("Initializing All Circles")
+        print("Initializing All Circles")
         // Create one BeatView for each beat in the Time Signature
         for beat in 0...timeSignature-1 {
-            println("Initializing \(beat) ")
+            print("Initializing \(beat) ")
             var newBeatView = BeatView(frame: CGRect(x: 0.0, y: 0.0, width: startDiameter, height: startDiameter))
             BeatViewsArray.append(newBeatView)
             BeatViewsArray[beat].center = self.center
@@ -78,9 +68,9 @@ class BeatCircleView: UIView {
             BeatViewsArray[beat].endColor = endColor
             BeatViewsArray[beat].startDiameter = startDiameter
             self.addSubview(BeatViewsArray[beat])
-            BeatViewsArray[beat].hidden = true
+            BeatViewsArray[beat].isHidden = true
             
-            println("Size: \(BeatViewsArray[beat].frame.height)")
+            print("Size: \(BeatViewsArray[beat].frame.height)")
         }
             
 //        self.beatCircleLayer = CAShapeLayer()
@@ -96,26 +86,26 @@ class BeatCircleView: UIView {
     func removeAllBeatCircles() {
         var totalBeats = BeatViewsArray.count
         for beat in 0...totalBeats-1 {
-            println(BeatViewsArray.count)
+            print(BeatViewsArray.count)
             beatCircleReset(1)
             BeatViewsArray[0].removeFromSuperview()
-            BeatViewsArray.removeAtIndex(0)
+            BeatViewsArray.remove(at: 0)
         }
     }
     
-    func animateBeatCircle(beat:Int, beatDuration:NSTimeInterval) {
+    func animateBeatCircle(_ beat:Int, beatDuration:TimeInterval) {
         //println("Animating Beat Circle... \(beat)")
-        self.BeatViewsArray[beat-1].hidden = false
-        var animationScale = CGFloat(667/self.startDiameter*1.2)
-        var beatAnimation = { () -> Void in
-            let scaleTransform = CGAffineTransformMakeScale(animationScale, animationScale)
+        self.BeatViewsArray[beat-1].isHidden = false
+        let animationScale = CGFloat(667/self.startDiameter*1.2)
+        let beatAnimation = { () -> Void in
+            let scaleTransform = CGAffineTransform(scaleX: animationScale, y: animationScale)
             self.BeatViewsArray[beat-1].backgroundColor = self.endColor
             self.BeatViewsArray[beat-1].transform = scaleTransform
         }
     
         
         //UIView.animateWithDuration(beatDuration*2, animations: beatAnimation)
-        UIView.animateWithDuration(beatDuration*2, animations: beatAnimation, completion:  { finished in
+        UIView.animate(withDuration: beatDuration*2, animations: beatAnimation, completion:  { finished in
             //println("Beat \(beat) done")
             self.beatCircleReset(beat)
         })
@@ -123,11 +113,11 @@ class BeatCircleView: UIView {
         //BeatViewsArray[beat].animateBeat(beatDuration)
     }
     
-    func beatCircleReset(beat:Int) {
-        let resetScaleTransform = CGAffineTransformMakeScale(1.0, 1.0)
+    func beatCircleReset(_ beat:Int) {
+        let resetScaleTransform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         self.BeatViewsArray[beat-1].transform = resetScaleTransform
         self.BeatViewsArray[beat-1].backgroundColor = startColor//UIColor.redColor()
-        self.BeatViewsArray[beat-1].hidden = true
+        self.BeatViewsArray[beat-1].isHidden = true
         
     }
     
@@ -147,14 +137,14 @@ class BeatCircleView: UIView {
     func setup() {
         view = loadViewFromNib()
         view.frame = bounds
-        view.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        //view.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
         addSubview(view)
     }
     
     func loadViewFromNib() -> UIView {
-        let bundle = NSBundle(forClass:self.dynamicType)
+        let bundle = Bundle(for:type(of: self))
         let nib = UINib(nibName: "BeatCircleView", bundle: bundle)
-        let view = nib.instantiateWithOwner(self, options: nil)[0] as! UIView
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         return view
     }
 

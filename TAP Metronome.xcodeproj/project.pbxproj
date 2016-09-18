@@ -181,11 +181,12 @@
 				TargetAttributes = {
 					B897AC7019E4AC8700820251 = {
 						CreatedOnToolsVersion = 6.0.1;
-						DevelopmentTeam = K6MAN39573;
+						DevelopmentTeam = F9JXH3N2LB;
 						LastSwiftMigration = 0800;
 					};
 					B897AC8519E4AC8700820251 = {
 						CreatedOnToolsVersion = 6.0.1;
+						DevelopmentTeam = F9JXH3N2LB;
 						TestTargetID = B897AC7019E4AC8700820251;
 					};
 				};
@@ -300,8 +301,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: tml_lover@mac.com (BRUN4R8X84)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: tml_lover@mac.com (BRUN4R8X84)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = F9JXH3N2LB;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -343,7 +346,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -356,6 +359,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

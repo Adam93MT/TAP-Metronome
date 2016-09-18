@@ -12,13 +12,13 @@ import AVFoundation
 
 
 class Metronome {
-    let metronomeSoundURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("metronomeClick", ofType: "mp3")!)
-    let downBeatSoundURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("downBeatClick", ofType: "mp3")!)
+    let metronomeSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "metronomeClick", ofType: "mp3")!)
+    let downBeatSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "downBeatClick", ofType: "mp3")!)
     var beatClick: AVAudioPlayer!
     var downBeatClick: AVAudioPlayer!
     
-    var beatTimer: NSTimer!
-    var timeInterval: NSTimeInterval!
+    var beatTimer: Timer!
+    var timeInterval: TimeInterval!
     var parentViewController: MetronomeViewController!
     
     var isPrepared: Bool = false
@@ -30,7 +30,7 @@ class Metronome {
     
     // DEBUG ------
     var lastBeat = CFAbsoluteTimeGetCurrent()
-    var expectedBeatTime: NSDate!
+    var expectedBeatTime: Date!
     var playedLastBeat: Bool = false
     var current_time = CFAbsoluteTimeGetCurrent()
     
@@ -41,8 +41,8 @@ class Metronome {
     // ------------
     
     func prepare() {
-        self.beatClick = AVAudioPlayer(contentsOfURL: metronomeSoundURL, error: nil)
-        self.downBeatClick = AVAudioPlayer(contentsOfURL: downBeatSoundURL, error: nil)
+        self.beatClick = try? AVAudioPlayer(contentsOf: metronomeSoundURL)
+        self.downBeatClick = try? AVAudioPlayer(contentsOf: downBeatSoundURL)
         self.beatClick.prepareToPlay()
         self.downBeatClick.prepareToPlay()
         
@@ -50,10 +50,10 @@ class Metronome {
             parentViewController.beatCircleView.initAllBeatCircles(timeSignature)
         }
         
-        timeInterval = NSTimeInterval(60.0/Double(tempo))
-        beatTimer = NSTimer(timeInterval: timeInterval, target: self, selector: Selector("startTimer:"), userInfo: nil, repeats: true)
-        println("Expected Fire Date \(beatTimer.fireDate.timeIntervalSinceNow)")
-        println("Prepared: \(beatTimer.timeInterval) seconds")
+        timeInterval = TimeInterval(60.0/Double(tempo))
+        beatTimer = Timer(timeInterval: timeInterval, target: self, selector: #selector(Metronome.startTimer(_:)), userInfo: nil, repeats: true)
+        print("Expected Fire Date \(beatTimer.fireDate.timeIntervalSinceNow)")
+        print("Prepared: \(beatTimer.timeInterval) seconds")
         
         self.beat = 1
         self.isPrepared = true
@@ -67,17 +67,17 @@ class Metronome {
         }
         self.isOn = true
 
-        beatTimer.fireDate = NSDate()
-        println(beatTimer.fireDate.timeIntervalSinceNow)
-        NSRunLoop.currentRunLoop().addTimer(beatTimer, forMode: NSRunLoopCommonModes)
+        beatTimer.fireDate = Date()
+        print(beatTimer.fireDate.timeIntervalSinceNow)
+        RunLoop.current.add(beatTimer, forMode: RunLoopMode.commonModes)
 
 //        beatTimer = NSTimer.scheduledTimerWithTimeInterval(timeInterval, target: self, selector: "startTimer:", userInfo: nil, repeats: true)
-        println("---Started---")
+        print("---Started---")
 //        println("Next Fire Time: \(expectedBeatTime.timeIntervalSince1970)")
         
     }
     
-    @objc func startTimer(timer: NSTimer!) {
+    @objc func startTimer(_ timer: Timer!) {
         
         prepareForNextBeat()
         self.playBeat()
@@ -103,7 +103,7 @@ class Metronome {
         //parentViewController.DEBUG_beatLabel.text = String(beat)
         playSound()
         incrementBeat()
-        println("Time Interval: \(beatTimer.timeInterval)")
+        print("Time Interval: \(beatTimer.timeInterval)")
     }
     
     func playSound() {
@@ -131,8 +131,8 @@ class Metronome {
         if untappedBeats >= 8 {
             if loggedTaps.count > 0 {
                 // remove the oldest logget tap time
-                println("Removing oldest Tap")
-                loggedTaps.removeAtIndex(0)
+                print("Removing oldest Tap")
+                loggedTaps.remove(at: 0)
             }
         }
     }
@@ -149,9 +149,9 @@ class Metronome {
 
     func stop() {
         self.beatTimer.invalidate()
-        println(" ---- Stopping Metronome ---- ")
-        println("Average Error = \(avg_error)")
-        println("Expected Error = \(1.0/Double(tempo*tempo))")
+        print(" ---- Stopping Metronome ---- ")
+        print("Average Error = \(avg_error)")
+        print("Expected Error = \(1.0/Double(tempo*tempo))")
         // Mark the metronome as off.
         self.isPrepared = false
         self.isOn = false
@@ -171,7 +171,7 @@ class Metronome {
     var untappedBeats: Int = 0
     
     func logTap() {
-        println("Logging Tap")
+        print("Logging Tap")
         untappedBeats = 0
         loggedTaps.append(CFAbsoluteTimeGetCurrent())
         if loggedTaps.count > 3 {
@@ -182,15 +182,15 @@ class Metronome {
             }
             // weight the tap diff with the current tempo
             var avg_tap_diff = (total_diff)/Double(loggedTaps.count)
-            timeInterval = NSTimeInterval(avg_tap_diff)
-            println("New Time Interval \(avg_tap_diff)")
+            timeInterval = TimeInterval(avg_tap_diff)
+            print("New Time Interval \(avg_tap_diff)")
             tempo = Int(60.0/Double(timeInterval))
-            println("New Tempo: \(tempo)")
+            print("New Tempo: \(tempo)")
         }
     }
     
     func updateTimer() {
-        self.beatTimer.fireDate.dateByAddingTimeInterval(timeInterval)
+        self.beatTimer.fireDate.addingTimeInterval(timeInterval)
     }
     
     
