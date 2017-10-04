@@ -17,21 +17,26 @@ class Metronome {
     var beatClick: AVAudioPlayer!
     var downBeatClick: AVAudioPlayer!
     
-    var beatTimer: Timer!
-    var timeInterval: TimeInterval!
-    var parentViewController: MetronomeViewController!
+    let minTempo: Int = 60
+    let maxTempo: Int = 240
+    var timeSignature: Int = 4 // default is 4:4
+    var beat = 1
+    var tempo: Int = 100
+    var interval: Double = 0.6
+    var nextWhen: UInt64!
+    var nextNextWhen: UInt64!
     
     var isPrepared: Bool = false
     var isOn: Bool = false
-
-    var timeSignature: Int = 4 // default is 4:4
-    var beat = 1
-    var tempo: Int!
+    var newTempoIsSet: Bool = false
+    var playedLastBeat: Bool = false
+    var tapOverride: Bool = false
+    
+    var parentViewController: MetronomeViewController!
     
     // DEBUG ------
     var lastBeat = CFAbsoluteTimeGetCurrent()
     var expectedBeatTime: Date!
-    var playedLastBeat: Bool = false
     var current_time = CFAbsoluteTimeGetCurrent()
     
     var total_beats = 0
@@ -40,25 +45,111 @@ class Metronome {
     var avg_error: CFTimeInterval = 0
     // ------------
     
+    
+    // Configure High-Priority Timer
+    var timebaseInfo = mach_timebase_info_data_t()
+    
+    func configureThread() {
+        mach_timebase_info(&timebaseInfo)
+        let clock2abs = Double(timebaseInfo.denom) / Double(timebaseInfo.numer) * Double(NSEC_PER_SEC)
+        let period      = UInt32(0.00 * clock2abs)
+        let computation = UInt32(0.03 * clock2abs) // 30 ms of work
+        let constraint  = UInt32(0.05 * clock2abs)
+        
+        let THREAD_TIME_CONSTRAINT_POLICY_COUNT = mach_msg_type_number_t(MemoryLayout<thread_time_constraint_policy>.size / MemoryLayout<integer_t>.size)
+        
+        var policy = thread_time_constraint_policy()
+        var ret: Int32
+        let thread: thread_port_t = pthread_mach_thread_np(pthread_self())
+        
+        policy.period = period
+        policy.computation = computation
+        policy.constraint = constraint
+        policy.preemptible = 0
+        
+        ret = withUnsafeMutablePointer(to: &policy) {
+            $0.withMemoryRebound(to: integer_t.self, capacity: Int(THREAD_TIME_CONSTRAINT_POLICY_COUNT)) {
+                thread_policy_set(thread, UInt32(THREAD_TIME_CONSTRAINT_POLICY), $0, THREAD_TIME_CONSTRAINT_POLICY_COUNT)
+            }
+        }
+        
+        if ret != KERN_SUCCESS {
+            mach_error("thread_policy_set:", ret)
+            exit(1)
+        }
+    }
+    
+    private func nanosToAbs(_ nanos: UInt64) -> UInt64 {
+        return nanos * UInt64(timebaseInfo.denom) / UInt64(timebaseInfo.numer)
+    }
+    
+    private func startMachTimer() {
+        if #available(iOS 10.0, *) {
+            Thread.detachNewThread {
+                autoreleasepool {
+                    self.configureThread()
+                    var when = mach_absolute_time()
+                    // We only loop if the timer is on
+                    // we only play a beat if there has not just been a tap
+                    
+                    while self.isOn {
+                        if (self.tapOverride){
+                            // there has been a tap since the last timer firing
+                            self.tapOverride = false // reset tapOverride
+                            when = self.getNextBeatTime()
+                        }
+                        else if (self.newTempoIsSet) {
+                            // if we just set a new tempo, we'll skip this beat
+                            self.newTempoIsSet = false
+                            when = self.getNextBeatTime()
+                        }
+                        else {
+                            self.prepareForNextBeat()
+                            self.playBeat()
+                            self.animateCircleInMainThread()
+                            when += self.nanosToAbs(UInt64(self.interval * Double(NSEC_PER_SEC)))
+                        }
+                        print("Waiting...")
+                        mach_wait_until(when) // wait until fire time
+//
+                        if (self.playedLastBeat) { self.incrementBeat() }
+                    }
+                }
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+    func animateCircleInMainThread() {
+        DispatchQueue.main.async {
+            self.parentViewController.containerView.animateBeatCircle(self.beat, beatDuration: self.interval)
+        }
+    }
+    
+    func getNextBeatTime() -> UInt64{
+        let now = mach_absolute_time()
+        print("Using Rescheduled Click")
+        if (self.nextWhen <= now) {
+            return self.nextWhen
+        } else {
+            print("Skipping beat")
+            self.playedLastBeat = false
+            return self.nextNextWhen
+        }
+    }
+    
     func prepare() {
         self.beatClick = try? AVAudioPlayer(contentsOf: metronomeSoundURL)
         self.downBeatClick = try? AVAudioPlayer(contentsOf: downBeatSoundURL)
         self.beatClick.prepareToPlay()
         self.downBeatClick.prepareToPlay()
-        
-        if parentViewController != nil {
-            parentViewController.beatCircleView.initAllBeatCircles(timeSignature)
-        }
-        
-        timeInterval = TimeInterval(60.0/Double(tempo))
-        beatTimer = Timer(timeInterval: timeInterval, target: self, selector: #selector(Metronome.startTimer(_:)), userInfo: nil, repeats: false)
-//        print("Expected Fire Date \(beatTimer.fireDate.timeIntervalSinceNow)")
-//        print("Prepared: \(beatTimer.timeInterval) seconds")
-        
         self.beat = 1
         self.isPrepared = true
         
-        //-- Debug
+        if parentViewController != nil {
+            parentViewController.containerView.initAllBeatCircles(timeSignature)
+        }
     }
     
     func start() {
@@ -66,161 +157,161 @@ class Metronome {
             self.prepare()
         }
         self.isOn = true
-
-        beatTimer.fireDate = Date()
-        print(beatTimer.fireDate.timeIntervalSinceNow)
-        RunLoop.current.add(beatTimer, forMode: RunLoopMode.commonModes)
-
-//        beatTimer = NSTimer.scheduledTimerWithTimeInterval(timeInterval, target: self, selector: "startTimer:", userInfo: nil, repeats: true)
-        print("---Started---")
-//        println("Next Fire Time: \(expectedBeatTime.timeIntervalSince1970)")
-        
-    }
-    
-    @objc func startTimer(_ timer: Timer!) {
-        
-        prepareForNextBeat()
-        self.playBeat()
-        updateTimer()
-        
-        
-    // DEBUG -----
-//        if (!playedLastBeat){
-//            println("Skipped Click")
-//        }
-//        println("Fire Date Error: \(-beatTimer.fireDate.timeIntervalSinceNow)")
-//        current_time = CFAbsoluteTimeGetCurrent()
-//        error = timeInterval - (current_time - lastBeat)
-//        total_error = total_error + error
-//        avg_error = total_error/Double(total_beats)
-//        println("Avg. Error: \(avg_error)")
-//        lastBeat = current_time
-    // -----------
+        self.startMachTimer()
+        print("\n---Started---")
     }
     
     func playBeat() {
-        parentViewController.beatCircleView.animateBeatCircle(beat, beatDuration: timeInterval)
-        //parentViewController.DEBUG_beatLabel.text = String(beat)
-        playSound()
-        incrementBeat()
-        print("Time Interval: \(timeInterval)")
+        print("Beat \(self.beat)")
+        self.playSound()
+        self.playedLastBeat = true
     }
     
     func playSound() {
-        if (beat == 1) {
-            downBeatClick.play()
-            playedLastBeat = true
-        }
-        else if (beat == 4 && timeSignature == 6) {}
-        else {
-            beatClick.play()
-            playedLastBeat = true
-        }
-        //println("*click* - Beat \(beat)")
+        print("Playing Sound...")
+//        if (self.beat == 1) {
+//            self.downBeatClick.play()
+//            self.playedLastBeat = true
+//        }
+//        else if (self.beat == 4 && self.timeSignature == 6) {
+//            // play a different sound
+//        }
+//        else {
+            self.beatClick.play()
+            self.playedLastBeat = true
+//        }
     }
     
     func incrementBeat() {
-        beat += 1
-        if (beat > timeSignature) {
-            beat = 1
+        self.beat += 1
+        if (self.beat > self.timeSignature) {
+            self.beat = 1
         }
-        total_beats += 1
+        self.total_beats += 1
+        print("Incrementing Beat to \(self.beat)")
         
         // Check how many beats have been played w/o manually tapping
-        untappedBeats += 1
-        if untappedBeats >= 4
-        {
-            if loggedTaps.count > 0 {
-                // remove the oldest logget tap time
-                print("Removing oldest Tap")
-                loggedTaps.remove(at: 0)
-            }
-        }
+//        self.beatsSinceLastReset += 1
     }
     
     func prepareForNextBeat() {
-        downBeatClick.pause()
-        downBeatClick.currentTime = 0
-        beatClick.pause()
-        beatClick.currentTime = 0
-        
-        //--
-        playedLastBeat = false
-        if (newTempoSet) {
-            parentViewController.tempoLabel.text = String(tempo)
-            parentViewController.tempoSlider.setValue(Float(tempo), animated: true)
-        }
+        self.downBeatClick.pause()
+        self.downBeatClick.currentTime = 0
+        self.beatClick.pause()
+        self.beatClick.currentTime = 0
+        print("\nNext Beat ------ at \(self.tempo) bpm")
     }
 
     func stop() {
-        self.beatTimer.invalidate()
         print(" ---- Stopping Metronome ---- ")
-        print("Average Error = \(avg_error)")
-        print("Expected Error = \(1.0/Double(tempo*tempo))")
         // Mark the metronome as off.
         self.isPrepared = false
         self.isOn = false
         self.beat = 1
         self.prepare()
-        self.loggedTaps.removeAll()
         
         //-- Debug
-        total_beats = 0
-        error = 0
-        total_error = 0
-        avg_error = 0
+        self.total_beats = 0
+        self.error = 0
+        self.total_error = 0
+        self.avg_error = 0
+        //
     }
     
-    // Beat Logging
-    
-    var loggedTaps = [CFAbsoluteTime]()
-    var untappedBeats: Int = 0
-    var newTempoSet: Bool = false
-    
-    func logTap() {
-        print("Logging Tap")
-        loggedTaps.append(CFAbsoluteTimeGetCurrent())
-        if loggedTaps.count >= 4 {
-            var total_diff = 0.0
-            for t in (max(1,loggedTaps.count - 8)...loggedTaps.count-1).reversed() {
-                var diff = loggedTaps[t] - loggedTaps[t-1]
-                print("index \(t), diff \(diff)")
-                if diff < 1.0 {
-                    total_diff += diff
-                }
-            }
-            // weight the tap diff with the current tempo
-            print(total_diff)
-            let avg_tap_diff = (total_diff)/Double(min(loggedTaps.count - 2, 8))
-            print(avg_tap_diff)
-            setTimeInterval(newInterval: TimeInterval(avg_tap_diff))
+    func toggle() {
+        if (self.isOn){
+            self.stop()
+        }
+        else {
+            self.start()
         }
     }
     
+    // Beat Logging
+    var loggedDiffs = [Double]()
+    var untappedBeats: Int = 0
+    var lastTapTime = mach_absolute_time()
+    
+    func logTap() {
+        print("\nLogging Tap")
+        let tapTime = mach_absolute_time()
+        let lastDiff = Double(tapTime - lastTapTime)/Double(NSEC_PER_SEC)
+        
+        // Double tap means toggle
+        if (lastDiff < TimeFromTempo(bpm: self.maxTempo)) {
+            self.toggle()
+        }
+            
+        else if ( // if the tap interval is in tempo range
+            (lastDiff > TimeFromTempo(bpm: self.maxTempo))
+            && (lastDiff < TimeFromTempo(bpm: self.minTempo))
+        ) {
+            self.tapOverride = true
+            self.incrementBeat()
+            self.animateCircleInMainThread()
+            
+            self.loggedDiffs.append(lastDiff)
+            
+            // limit array to length of 2 bars
+            if (self.loggedDiffs.count > self.timeSignature * 2) {
+                self.loggedDiffs.remove(at: 0)
+            }
+            
+            // only change tempo when 2 beats have been tapped
+            if (self.loggedDiffs.count >= 2) {
+                var sum = 0.0
+                let len = Double(self.loggedDiffs.count)
+                for t in self.loggedDiffs {
+                    sum += Double(t)
+                }
+                let avgDiff = sum/len // calculate new interval
+                self.setTempo(newTempo: self.TempoFromTime(time: avgDiff))
+                self.scheduleNextBeats()
+            }
+        }
+        else {
+            self.scheduleNextBeats()
+        }
+        self.lastTapTime = tapTime
+    }
+    
+    func scheduleNextBeats() {
+        self.nextWhen = mach_absolute_time() + self.nanosToAbs(UInt64(self.interval * Double(NSEC_PER_SEC)))
+        self.nextNextWhen = self.nextWhen + self.nanosToAbs(UInt64(self.interval * Double(NSEC_PER_SEC)))
+    }
+    
+    func setTempofromTime(newTime: Double){
+        self.interval = newTime
+        self.tempo = TempoFromTime(time: newTime)
+        print("New Tempo: \(self.tempo)")
+        self.newTempoIsSet = true
+    }
+    
     func setTempo(newTempo: Int){
-        tempo = newTempo
-        timeInterval = TimeInterval(60.0/Double(tempo))
-        print("New Tempo: \(tempo)")
-        newTempoSet = true
+        self.tempo = newTempo
+        self.interval = TimeFromTempo(bpm: newTempo)
+        print("New Tempo: \(self.tempo)")
+        self.newTempoIsSet = true
+    }
+
+    func TimeFromTempo(bpm: Int) -> Double {
+        return Double(60.0/Double(bpm))
+    }
+
+    func TempoFromTime(time: Double) -> Int {
+        return Int(60.0/time)
     }
     
-    func setTimeInterval(newInterval: TimeInterval){
-        timeInterval = newInterval
-        tempo = Int(60.0/Double(timeInterval))
-        print("New Time Interval \(timeInterval)")
-        print("New Tempo: \(tempo)")
-        newTempoSet = true
-    }
+//    func setTimeInterval(newInterval: TimeInterval){
+//        let timeInterval = newInterval
+//        self.tempo = Int(60.0/Double(timeInterval))
+//        print("New Time Interval \(timeInterval)")
+//        print("New Tempo: \(tempo)")
+//        self.newTempoIsSet = true
+//    }
     
-    func updateTimer() {
-        beatTimer = Timer(timeInterval: timeInterval, target: self, selector: #selector(Metronome.startTimer(_:)), userInfo: nil, repeats: false)
-        RunLoop.current.add(beatTimer, forMode: RunLoopMode.commonModes)
-    }
-    
-    
-    
-    
-    
-    
-    
+//    func updateTimer() {
+//        self.beatTimer = Timer(timeInterval: self.timeInterval, target: self, selector: #selector(Metronome.startTimer(_:)), userInfo: nil, repeats: false)
+//        RunLoop.current.add(beatTimer, forMode: RunLoopMode.commonModes)
+//    }
 }
