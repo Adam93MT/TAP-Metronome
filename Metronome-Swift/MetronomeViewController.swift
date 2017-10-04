@@ -19,7 +19,7 @@ class MetronomeViewController: UIViewController {
 
      // The superView containing all animating Circles
     //@IBOutlet weak var beatCircleView: BeatCircleView!
-    var beatCircleView: BeatCircleView!
+    var containerView: BeatContainerView!
     
     let metronome = Metronome()
     var metronomeDisplayLink: CADisplayLink!
@@ -32,7 +32,42 @@ class MetronomeViewController: UIViewController {
     let sliderThumbColor = UIColor(red: 0.706, green: 0.706, blue: 0.706, alpha: 1)
     let tempoLabelColor = UIColor(red: 0.14, green: 0.14, blue: 0.14, alpha: 1)
     let tempoLabelColorPressed = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Lets us access the ViewController from metronome logic
+        metronome.parentViewController = self
+        
+        let viewWidth = view.frame.width
+        let viewHeight = view.frame.height
+        print("Height: \(viewHeight), Width: \(viewWidth)")
+        self.containerView = BeatContainerView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight))
+        self.containerView.center = view.center
+        view.addSubview(self.containerView)
+//        view.sendSubview(toBack: self.containerView)
+        
+        tapButton.frame.size = CGSize(width: viewWidth, height: viewWidth);
+        tapButton.contentEdgeInsets = UIEdgeInsetsMake(viewWidth/2, viewWidth/2, viewWidth/2, viewWidth/2);
+        view.bringSubview(toFront: tapButton)
+        
+        view.backgroundColor = backgroundColor
+        
+        tempoLabel.text = String(metronome.tempo)
+        tempoSlider.value = Float(metronome.tempo)
+        tempoSlider.thumbTintColor = sliderThumbColor
+        tempoSlider.minimumTrackTintColor = sliderMinColor
+        tempoSlider.maximumTrackTintColor = sliderMaxColor
+        tempoSlider.isEnabled = true
 
+        metronome.prepare()
+        
+        //self.startMetronome()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+    }
+    
     @IBAction func tempoSliderChanged(_ sender: UISlider) {
         print("Slider Value: \(tempoSlider.value)")
         metronome.setTempo(newTempo: Int(tempoSlider.value))
@@ -41,35 +76,24 @@ class MetronomeViewController: UIViewController {
     }
     
     @IBAction func swipeButton(_ sender: UIButton) {
-        if metronome.isOn {
-            self.stopMetronome()
-        }
-         // else ignore
+        if metronome.isOn { self.stopMetronome() }
+        // else ignore
         
     }
-
-    @IBAction func tapDown(_ sender: UIButton) {        
-        if metronome.isOn == false {
-            self.startMetronome()
-        }
-        else {
-            // Log tempo
-            metronome.logTap()
-        }
+    
+    @IBAction func tapDown(_ sender: UIButton) {
+//        metronome.logTap()
+        if metronome.isOn { metronome.logTap() }
+        else { self.startMetronome() }
         
     }
     @IBAction func tapUp(_ sender: UIButton) {
-
+        
     }
     
     func toggleMetronome() {
-        if metronome.isOn {
-            self.stopMetronome()
-        }
-        else // Metronome is off
-        {
-            self.startMetronome()
-        }
+        if metronome.isOn { self.stopMetronome() }
+        else { self.startMetronome() }
     }
     
     func startMetronome() {
@@ -87,11 +111,11 @@ class MetronomeViewController: UIViewController {
     }
     
     func startUI() {
-//        tempoSlider.isEnabled = false
+        //        tempoSlider.isEnabled = false
         tempoLabel.isEnabled = false
-//        UIView.animate(withDuration: 0.2, animations: {() -> Void in
-//            self.tempoSlider.alpha = 0.4
-//        })
+        UIView.animate(withDuration: 0.2, animations: {() -> Void in
+            self.tempoSlider.alpha = 0.4
+        })
     }
     
     func stopUI() {
@@ -99,46 +123,9 @@ class MetronomeViewController: UIViewController {
         tapButton.isHidden = false
         // Enable the metronome stepper.
         tempoSlider.isEnabled = true
-//        UIView.animate(withDuration: 0.2, animations: {() -> Void in
-//            self.tempoSlider.alpha = 1
-//        })
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let viewWidth = view.frame.width
-        let viewHeight = view.frame.height
-        print("Height: \(viewHeight), Width: \(viewWidth)")
-        
-        beatCircleView = BeatCircleView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight))
-        beatCircleView.center = view.center
-        view.addSubview(beatCircleView)
-        view.sendSubview(toBack: beatCircleView)
-        metronome.parentViewController = self
-        
-        tapButton.frame.size = CGSize(width: viewWidth, height: viewWidth);
-        tapButton.contentEdgeInsets = UIEdgeInsetsMake(viewWidth/2, viewWidth/2, viewWidth/2, viewWidth/2);
-        view.bringSubview(toFront: tapButton)
-        
-        view.backgroundColor = backgroundColor
-        
-        // Set the inital value of the tempo.
-        metronome.tempo = 100
-        metronome.timeSignature = 4
-        tempoLabel.text = String(metronome.tempo)
-        tempoSlider.value = Float(metronome.tempo)
-        tempoSlider.thumbTintColor = sliderThumbColor
-        tempoSlider.minimumTrackTintColor = sliderMinColor
-        tempoSlider.maximumTrackTintColor = sliderMaxColor
-        tempoSlider.isEnabled = true
-
-        metronome.prepare()
-        
-        //self.startMetronome()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
+        UIView.animate(withDuration: 0.2, animations: {() -> Void in
+            self.tempoSlider.alpha = 1
+        })
     }
     
     // MARK: - UIResponder
