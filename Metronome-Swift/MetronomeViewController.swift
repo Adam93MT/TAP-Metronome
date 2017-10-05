@@ -12,7 +12,7 @@ import Dispatch
 
 class MetronomeViewController: UIViewController {
     
-    @IBOutlet weak var tempoLabel: UILabel!
+    @IBOutlet weak var tempoTextField: UITextField!
     @IBOutlet weak var tapButton: UIButton!
     @IBOutlet weak var timeSignatureButton: UIButton!
     @IBOutlet weak var decrementButton: UIButton!
@@ -31,7 +31,7 @@ class MetronomeViewController: UIViewController {
     let tempoLabelColor = UIColor(red: 0.14, green: 0.14, blue: 0.14, alpha: 1)
     let tempoLabelColorPressed = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1)
     let MinColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2)
-    let MaxColor = UIColor(red:0.04, green: 0.04, blue: 0.04, alpha: 0.3)
+    let MaxColor = UIColor(red:0.04, green: 0.04, blue: 0.04, alpha: 0.2)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +56,12 @@ class MetronomeViewController: UIViewController {
         view.backgroundColor = backgroundColor
         
         // Set up Tempo Control Buttons, Slider and Text
-        tempoLabel.text = String(metronome.tempo)
+        self.addDoneButtonOnKeyboard()
+        tempoTextField.text = String(metronome.tempo)
+        tempoTextField.backgroundColor = UIColor.clear
+        // add keyboard listeners to move UI up/down
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         incrementButton.backgroundColor = MaxColor
         decrementButton.backgroundColor = MinColor
         tempoSlider.thumbTintColor = UIColor.clear
@@ -94,7 +99,25 @@ class MetronomeViewController: UIViewController {
         
     }
     @IBAction func tapUp(_ sender: UIButton) {
-        // nothing
+        // nothing but need to catch tapUp
+    }
+    
+    @IBAction func editedTextField(_ sender: UITextField) {
+        var val: Int!
+        if let v: Int = Int(self.tempoTextField.text!) {
+            val = v
+        } else {
+            val = self.metronome.tempo
+        }
+        if (val! > metronome.maxTempo){
+            val = metronome.maxTempo
+            self.tempoTextField.text = String(metronome.maxTempo)
+        } else if (val! < metronome.minTempo){
+            val = metronome.minTempo
+            self.tempoTextField.text = String(metronome.minTempo)
+        }
+        print("text box value: \(String(describing: val))")
+        self.metronome.setTempo(newTempo: val!)
     }
     
     @IBAction func incrementButtonPressed(_ sender: UIButton) {
@@ -106,8 +129,23 @@ class MetronomeViewController: UIViewController {
     }
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {
-        print("Slider Value: \(Int(tempoSlider.value))")
         self.metronome.setTempo(newTempo: Int(tempoSlider.value))
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += keyboardSize.height
+            }
+        }
     }
     
     func toggleMetronome() {
@@ -130,8 +168,7 @@ class MetronomeViewController: UIViewController {
     }
     
     func startUI() {
-        //        tempoSlider.isEnabled = false
-        tempoLabel.isEnabled = false
+//        tempoTextField.isEnabled = false
 //        UIView.animate(withDuration: 0.2, animations: {() -> Void in
 //            self.tempoSlider.alpha = 0.4
 //        })
@@ -145,6 +182,26 @@ class MetronomeViewController: UIViewController {
 //        UIView.animate(withDuration: 0.2, animations: {() -> Void in
 //            self.tempoSlider.alpha = 1
 //        })
+    }
+    
+    func addDoneButtonOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.black
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(self.doneButtonAction))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.tempoTextField.inputAccessoryView = doneToolbar
+    }
+    
+    func doneButtonAction() {
+        self.tempoTextField.resignFirstResponder()
     }
     
     // MARK: - UIResponder

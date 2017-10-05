@@ -79,6 +79,9 @@ class Metronome {
         }
     }
     
+    private func absToNanos(_ abs: UInt64) -> UInt64 {
+        return abs * UInt64(timebaseInfo.numer)/UInt64(timebaseInfo.denom)
+    }
     private func nanosToAbs(_ nanos: UInt64) -> UInt64 {
         return nanos * UInt64(timebaseInfo.denom) / UInt64(timebaseInfo.numer)
     }
@@ -91,7 +94,7 @@ class Metronome {
                     var when = mach_absolute_time()
                     // We only loop if the timer is on
                     // we only play a beat if there has not just been a tap
-                    
+                    print(self.timebaseInfo)
                     while self.isOn {
                         if (self.tapOverride){
                             // there has been a tap since the last timer firing
@@ -107,7 +110,9 @@ class Metronome {
                             self.prepareForNextBeat()
                             self.playBeat()
                             self.animateCircleInMainThread()
-                            when += self.nanosToAbs(UInt64(self.interval * Double(NSEC_PER_SEC)))
+                            when += self.nanosToAbs(
+                                UInt64(self.interval * Double(NSEC_PER_SEC))
+                            )
                         }
                         print("Waiting...")
                         mach_wait_until(when) // wait until fire time
@@ -123,7 +128,14 @@ class Metronome {
     
     func animateCircleInMainThread() {
         DispatchQueue.main.async {
-            self.parentViewController.containerView.animateBeatCircle(self.beat, beatDuration: self.interval)
+            self.parentViewController.containerView.animateBeatCircle(self.beat, beatDuration: self.interval * 2)
+        }
+    }
+    
+    func tempoChangeUpdateUI() {
+        DispatchQueue.main.async {
+            self.parentViewController.tempoSlider.value = Float(self.tempo)
+            self.parentViewController.tempoTextField.text = String(self.tempo)
         }
     }
     
@@ -171,7 +183,9 @@ class Metronome {
     
     func playBeat() {
         print("Beat \(self.beat)")
-        self.playSound()
+        DispatchQueue.main.async {
+            self.playSound()
+        }
         self.playedLastBeat = true
     }
     
@@ -229,14 +243,18 @@ class Metronome {
     
     // Beat Logging
     var loggedDiffs = [Double]()
-    var untappedBeats: Int = 0
     var lastTapTime = mach_absolute_time()
     
     func logTap() {
         print("\nLogging Tap")
         let tapTime = mach_absolute_time()
-        let lastDiff = Double(tapTime - lastTapTime)/Double(NSEC_PER_SEC)
+        print("Tap Time: \(tapTime)")
         
+        // on iPhones etc. mach_absolute_time does not return nanos, but something else
+        // see https://shiftedbits.org/2008/10/01/mach_absolute_time-on-the-iphone/
+        let lastDiff = Double(self.absToNanos(tapTime - lastTapTime)) / Double(NSEC_PER_SEC)
+        
+        print("Immediate Tempo: \(self.TempoFromTime(time: lastDiff))")
         // Double tap means toggle
         if (lastDiff < TimeFromTempo(bpm: self.maxTempo)) {
             self.toggle()
@@ -247,6 +265,7 @@ class Metronome {
             && (lastDiff < TimeFromTempo(bpm: self.minTempo))
         ) {
             self.tapOverride = true
+            self.scheduleNextBeats()
             self.incrementBeat()
             self.animateCircleInMainThread()
             
@@ -266,7 +285,6 @@ class Metronome {
                 }
                 let avgDiff = sum/len // calculate new interval
                 self.setTempo(newTempo: self.TempoFromTime(time: avgDiff))
-                self.scheduleNextBeats()
             }
         }
         else {
@@ -319,13 +337,6 @@ class Metronome {
     func incrementTempo() {
         if (self.tempo < self.maxTempo) {
             self.setTempo(newTempo: self.tempo + 1)
-        }
-    }
-    
-    func tempoChangeUpdateUI() {
-        DispatchQueue.main.async {
-            self.parentViewController.tempoSlider.value = Float(self.tempo)
-            self.parentViewController.tempoLabel.text = String(self.tempo)
         }
     }
     
