@@ -7,7 +7,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,14 +22,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="120" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ze5-m6-xwQ">
-                                <rect key="frame" x="125" y="445" width="125" height="72"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="48"/>
-                                <color key="textColor" red="0.70588235290000001" green="0.70588235290000001" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3s-2O-r0N">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3s-2O-r0N">
                                 <rect key="frame" x="504" y="527" width="44" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Time">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -48,28 +42,61 @@
                                     <action selector="tapUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M4J-fW-xmM"/>
                                 </connections>
                             </button>
-                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="120" minValue="60" maxValue="200" translatesAutoresizingMaskIntoConstraints="NO" id="9em-ye-FqV">
-                                <rect key="frame" x="34" y="570" width="307" height="31"/>
-                                <color key="tintColor" red="0.70588235290000001" green="0.70588235290000001" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WiX-66-u8x">
+                                <rect key="frame" x="0.0" y="612" width="55" height="55"/>
+                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="36"/>
+                                <state key="normal" title="-">
+                                    <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
-                                    <action selector="tempoSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="M4z-hG-FLM"/>
+                                    <action selector="decrementButtonPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="coG-4n-XrX"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="He9-vt-pRI">
+                                <rect key="frame" x="320" y="612" width="55" height="55"/>
+                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="36"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="incrementButtonPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="81N-ZE-Nfg"/>
+                                </connections>
+                            </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minValue="60" maxValue="250" translatesAutoresizingMaskIntoConstraints="NO" id="vWP-KZ-vbN" customClass="CustomHeightSlider" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="53" y="612" width="269" height="56"/>
+                                <connections>
+                                    <action selector="sliderValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="UwC-k3-Qi3"/>
                                 </connections>
                             </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="120" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ze5-m6-xwQ">
+                                <rect key="frame" x="125" y="516" width="125" height="72"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="48"/>
+                                <color key="textColor" red="0.70588235290000001" green="0.70588235290000001" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.047058823529411764" green="0.047058823529411764" blue="0.047058823529411764" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="P3s-2O-r0N" secondAttribute="trailing" constant="36" id="1F0-GK-QY4"/>
+                            <constraint firstItem="WiX-66-u8x" firstAttribute="bottom" secondItem="vWP-KZ-vbN" secondAttribute="bottom" id="0z9-RP-SAt"/>
                             <constraint firstAttribute="centerX" secondItem="Ze5-m6-xwQ" secondAttribute="centerX" id="4DL-06-52M"/>
                             <constraint firstAttribute="centerX" secondItem="y8r-1J-ZFl" secondAttribute="centerX" id="6fM-Xn-aF0"/>
-                            <constraint firstItem="P3s-2O-r0N" firstAttribute="leading" secondItem="9em-ye-FqV" secondAttribute="trailing" constant="24" id="7TF-h5-VI7"/>
+                            <constraint firstItem="He9-vt-pRI" firstAttribute="leading" secondItem="vWP-KZ-vbN" secondAttribute="trailing" id="8en-ks-o2a"/>
                             <constraint firstItem="y8r-1J-ZFl" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="9WH-lv-5nf"/>
-                            <constraint firstItem="9em-ye-FqV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="B85-pk-7BO"/>
+                            <constraint firstItem="WiX-66-u8x" firstAttribute="width" secondItem="vWP-KZ-vbN" secondAttribute="height" id="CNC-43-zHJ"/>
+                            <constraint firstItem="vWP-KZ-vbN" firstAttribute="top" secondItem="Ze5-m6-xwQ" secondAttribute="bottom" constant="24" id="FG1-Ig-tw8"/>
                             <constraint firstItem="y8r-1J-ZFl" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1:1" id="OnA-Dj-Zvq"/>
                             <constraint firstAttribute="centerY" secondItem="y8r-1J-ZFl" secondAttribute="centerY" id="PGb-wO-03X"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="9em-ye-FqV" secondAttribute="bottom" constant="36" id="SrF-o6-i8E"/>
-                            <constraint firstItem="9em-ye-FqV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YGd-mI-Gq4"/>
-                            <constraint firstItem="9em-ye-FqV" firstAttribute="top" secondItem="Ze5-m6-xwQ" secondAttribute="bottom" constant="24" id="du3-EW-WAh"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="9em-ye-FqV" secondAttribute="trailing" constant="16" id="plc-8H-Mo0"/>
+                            <constraint firstItem="vWP-KZ-vbN" firstAttribute="leading" secondItem="WiX-66-u8x" secondAttribute="trailing" id="Zov-Gi-eUm"/>
+                            <constraint firstItem="He9-vt-pRI" firstAttribute="height" secondItem="vWP-KZ-vbN" secondAttribute="height" id="Zqg-6F-Q3X"/>
+                            <constraint firstItem="Ze5-m6-xwQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="eQX-hK-GEm"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="vWP-KZ-vbN" secondAttribute="bottom" id="iBM-Cd-kB1"/>
+                            <constraint firstItem="He9-vt-pRI" firstAttribute="width" secondItem="vWP-KZ-vbN" secondAttribute="height" multiplier="1:1" id="nAi-Kb-Mid"/>
+                            <constraint firstAttribute="trailing" secondItem="He9-vt-pRI" secondAttribute="trailing" id="no4-CG-dZe"/>
+                            <constraint firstItem="WiX-66-u8x" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="wkW-3q-oUx"/>
+                            <constraint firstItem="He9-vt-pRI" firstAttribute="bottom" secondItem="vWP-KZ-vbN" secondAttribute="bottom" id="xdI-j2-V42"/>
+                            <constraint firstItem="WiX-66-u8x" firstAttribute="height" secondItem="vWP-KZ-vbN" secondAttribute="height" id="zJl-Q1-Zrs"/>
                             <constraint firstAttribute="centerY" secondItem="Ze5-m6-xwQ" secondAttribute="centerY" constant="-169" id="zpK-w8-JGP"/>
                         </constraints>
                         <variation key="default">
@@ -77,20 +104,21 @@
                                 <exclude reference="9WH-lv-5nf"/>
                                 <exclude reference="OnA-Dj-Zvq"/>
                                 <exclude reference="zpK-w8-JGP"/>
-                                <exclude reference="7TF-h5-VI7"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="decrementButton" destination="WiX-66-u8x" id="GsV-Pd-g0z"/>
+                        <outlet property="incrementButton" destination="He9-vt-pRI" id="uLJ-eW-npo"/>
                         <outlet property="tapButton" destination="y8r-1J-ZFl" id="dFV-bS-rBC"/>
                         <outlet property="tempoLabel" destination="Ze5-m6-xwQ" id="JWC-DK-Pzj"/>
-                        <outlet property="tempoSlider" destination="9em-ye-FqV" id="c67-fo-9dJ"/>
+                        <outlet property="tempoSlider" destination="vWP-KZ-vbN" id="c1I-h8-MxZ"/>
                         <outlet property="timeSignatureButton" destination="P3s-2O-r0N" id="7IR-xF-t7m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="280.80000000000001" y="442.12893553223392"/>
+            <point key="canvasLocation" x="-414" y="449"/>
         </scene>
     </scenes>
 </document>

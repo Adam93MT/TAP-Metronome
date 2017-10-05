@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		668726801F84830200AA62FA /* CustomHeightSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6687267F1F84830200AA62FA /* CustomHeightSlider.swift */; };
 		6695724D1C2C6024001BF1FF /* BeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6695724C1C2C6024001BF1FF /* BeatView.swift */; };
 		66C553B61D1383BE00FE56B4 /* MetronomeLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C553B51D1383BE00FE56B4 /* MetronomeLogic.swift */; };
 		66E4D1F21D164A4300811CCA /* BeatCircleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E4D1F11D164A4300811CCA /* BeatCircleView.xib */; };
@@ -32,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6687267F1F84830200AA62FA /* CustomHeightSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeightSlider.swift; sourceTree = "<group>"; };
 		6695724C1C2C6024001BF1FF /* BeatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatView.swift; sourceTree = "<group>"; };
 		66C553B51D1383BE00FE56B4 /* MetronomeLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetronomeLogic.swift; sourceTree = "<group>"; };
 		66E4D1F11D164A4300811CCA /* BeatCircleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BeatCircleView.xib; sourceTree = "<group>"; };
@@ -89,9 +91,10 @@
 		B897AC7319E4AC8700820251 /* TAPMetronome */ = {
 			isa = PBXGroup;
 			children = (
+				B897AC7619E4AC8700820251 /* AppDelegate.swift */,
 				66E4D1F31D16532900811CCA /* BeatContainerView.swift */,
 				6695724C1C2C6024001BF1FF /* BeatView.swift */,
-				B897AC7619E4AC8700820251 /* AppDelegate.swift */,
+				6687267F1F84830200AA62FA /* CustomHeightSlider.swift */,
 				B897AC7819E4AC8700820251 /* MetronomeViewController.swift */,
 				66C553B51D1383BE00FE56B4 /* MetronomeLogic.swift */,
 				B897AC7A19E4AC8700820251 /* Main.storyboard */,
@@ -243,6 +246,7 @@
 				B897AC7719E4AC8700820251 /* AppDelegate.swift in Sources */,
 				6695724D1C2C6024001BF1FF /* BeatView.swift in Sources */,
 				66C553B61D1383BE00FE56B4 /* MetronomeLogic.swift in Sources */,
+				668726801F84830200AA62FA /* CustomHeightSlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
