@@ -161,6 +161,14 @@ class Metronome {
         print("\n---Started---")
     }
     
+    func prepareForNextBeat() {
+        self.downBeatClick.pause()
+        self.downBeatClick.currentTime = 0
+        self.beatClick.pause()
+        self.beatClick.currentTime = 0
+        print("\nNext Beat ------ at \(self.tempo) bpm")
+    }
+    
     func playBeat() {
         print("Beat \(self.beat)")
         self.playSound()
@@ -192,14 +200,6 @@ class Metronome {
         
         // Check how many beats have been played w/o manually tapping
 //        self.beatsSinceLastReset += 1
-    }
-    
-    func prepareForNextBeat() {
-        self.downBeatClick.pause()
-        self.downBeatClick.currentTime = 0
-        self.beatClick.pause()
-        self.beatClick.currentTime = 0
-        print("\nNext Beat ------ at \(self.tempo) bpm")
     }
 
     func stop() {
@@ -284,14 +284,22 @@ class Metronome {
         self.interval = newTime
         self.tempo = TempoFromTime(time: newTime)
         print("New Tempo: \(self.tempo)")
-        self.newTempoIsSet = true
+        if self.isOn {
+            self.newTempoIsSet = true
+            self.scheduleNextBeats()
+        }
+        self.tempoChangeUpdateUI()
     }
     
     func setTempo(newTempo: Int){
         self.tempo = newTempo
         self.interval = TimeFromTempo(bpm: newTempo)
         print("New Tempo: \(self.tempo)")
-        self.newTempoIsSet = true
+        if self.isOn {
+            self.newTempoIsSet = true
+            self.scheduleNextBeats()
+        }
+        self.tempoChangeUpdateUI()
     }
 
     func TimeFromTempo(bpm: Int) -> Double {
@@ -300,6 +308,25 @@ class Metronome {
 
     func TempoFromTime(time: Double) -> Int {
         return Int(60.0/time)
+    }
+    
+    func decrementTempo() {
+        if (self.tempo > self.minTempo) {
+            self.setTempo(newTempo: self.tempo - 1)
+        }
+    }
+    
+    func incrementTempo() {
+        if (self.tempo < self.maxTempo) {
+            self.setTempo(newTempo: self.tempo + 1)
+        }
+    }
+    
+    func tempoChangeUpdateUI() {
+        DispatchQueue.main.async {
+            self.parentViewController.tempoSlider.value = Float(self.tempo)
+            self.parentViewController.tempoLabel.text = String(self.tempo)
+        }
     }
     
 //    func setTimeInterval(newInterval: TimeInterval){

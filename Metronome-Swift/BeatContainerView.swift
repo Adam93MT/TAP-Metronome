@@ -16,7 +16,7 @@ class BeatContainerView: UIView {
     var BeatViewsArray = [BeatView]()
     var allBeatsInitialized: Bool = false
     
-    let startColor = UIColor(red: (200.0/255.0), green: (200.0/255.0), blue: (200.0/255.0), alpha: 1.0)
+    let startColor = UIColor.white//UIColor(red: (200.0/255.0), green: (200.0/255.0), blue: (200.0/255.0), alpha: 1.0)
     let endColor = UIColor(red: (200.0/255.0), green: (200.0/255.0), blue: (200.0/255.0), alpha: 0.0)
     
     let startDiameter: CGFloat = 128
@@ -33,7 +33,7 @@ class BeatContainerView: UIView {
         let w2 = Double(view.frame.width) * Double(view.frame.width)
         let endDiameter = CGFloat(sqrt(h2 + w2))
         self.animationScale = CGFloat(endDiameter/self.startDiameter) * 1.2
-        print("Scale: \(animationScale)")
+//        print("Scale: \(animationScale)")
         
         let viewCentreX = rect.width/2
         let viewCentreY = rect.height/2
@@ -50,7 +50,7 @@ class BeatContainerView: UIView {
     }
     
     override init (frame : CGRect) {
-        print("Called override Init")
+        print("init BeatContainerView")
         super.init(frame : frame)
         setup()
     }
@@ -75,7 +75,7 @@ class BeatContainerView: UIView {
                 BeatViewsArray.append(newBeatView)
                 self.addSubview(BeatViewsArray[beat])
                 
-                print("Size: \(BeatViewsArray[beat].frame.height)")
+//                print("Size: \(BeatViewsArray[beat].frame.height)")
         }
             
         self.beatCircleLayer = CAShapeLayer()
