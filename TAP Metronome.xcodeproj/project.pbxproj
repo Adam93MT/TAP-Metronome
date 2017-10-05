@@ -10,6 +10,8 @@
 		668726801F84830200AA62FA /* CustomHeightSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6687267F1F84830200AA62FA /* CustomHeightSlider.swift */; };
 		6695724D1C2C6024001BF1FF /* BeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6695724C1C2C6024001BF1FF /* BeatView.swift */; };
 		66C553B61D1383BE00FE56B4 /* MetronomeLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C553B51D1383BE00FE56B4 /* MetronomeLogic.swift */; };
+		66CA84151F8682F7001E3485 /* beatClick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 66CA84141F868112001E3485 /* beatClick.wav */; };
+		66CA84161F8682F9001E3485 /* beatClick.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 66CA84131F8680A1001E3485 /* beatClick.aiff */; };
 		66E4D1F21D164A4300811CCA /* BeatCircleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E4D1F11D164A4300811CCA /* BeatCircleView.xib */; };
 		66E4D1F41D16532900811CCA /* BeatContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E4D1F31D16532900811CCA /* BeatContainerView.swift */; };
 		66E98B8A1C2919C00097E58E /* downBeatClick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66E98B881C2919C00097E58E /* downBeatClick.mp3 */; };
@@ -36,6 +38,8 @@
 		6687267F1F84830200AA62FA /* CustomHeightSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeightSlider.swift; sourceTree = "<group>"; };
 		6695724C1C2C6024001BF1FF /* BeatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatView.swift; sourceTree = "<group>"; };
 		66C553B51D1383BE00FE56B4 /* MetronomeLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetronomeLogic.swift; sourceTree = "<group>"; };
+		66CA84131F8680A1001E3485 /* beatClick.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = beatClick.aiff; sourceTree = "<group>"; };
+		66CA84141F868112001E3485 /* beatClick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = beatClick.wav; path = resources/beatClick.wav; sourceTree = SOURCE_ROOT; };
 		66E4D1F11D164A4300811CCA /* BeatCircleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BeatCircleView.xib; sourceTree = "<group>"; };
 		66E4D1F31D16532900811CCA /* BeatContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatContainerView.swift; sourceTree = "<group>"; };
 		66E98B881C2919C00097E58E /* downBeatClick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = downBeatClick.mp3; sourceTree = "<group>"; };
@@ -101,6 +105,8 @@
 				B897AC7D19E4AC8700820251 /* Images.xcassets */,
 				66E4D1F11D164A4300811CCA /* BeatCircleView.xib */,
 				B897AC7F19E4AC8700820251 /* LaunchScreen.xib */,
+				66CA84141F868112001E3485 /* beatClick.wav */,
+				66CA84131F8680A1001E3485 /* beatClick.aiff */,
 				66E98B881C2919C00097E58E /* downBeatClick.mp3 */,
 				66E98B891C2919C00097E58E /* metronomeClick.mp3 */,
 				B897AC7419E4AC8700820251 /* Supporting Files */,
@@ -220,7 +226,9 @@
 			files = (
 				B897AC7C19E4AC8700820251 /* Main.storyboard in Resources */,
 				66E98B8A1C2919C00097E58E /* downBeatClick.mp3 in Resources */,
+				66CA84151F8682F7001E3485 /* beatClick.wav in Resources */,
 				B897AC8119E4AC8700820251 /* LaunchScreen.xib in Resources */,
+				66CA84161F8682F9001E3485 /* beatClick.aiff in Resources */,
 				B897AC7E19E4AC8700820251 /* Images.xcassets in Resources */,
 				66E4D1F21D164A4300811CCA /* BeatCircleView.xib in Resources */,
 				66E98B8B1C2919C00097E58E /* metronomeClick.mp3 in Resources */,
