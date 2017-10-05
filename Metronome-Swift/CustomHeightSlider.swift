@@ -13,7 +13,7 @@ class CustomHeightSlider: UISlider {
     let sliderMinColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
     let sliderMaxColor = UIColor.black//UIColor(red:0.04, green: 0.04, blue: 0.04, alpha: 1)
     let sliderThumbColor = UIColor(red: 0.706, green: 0.706, blue: 0.706, alpha: 1)
-    let trackHeight: CGFloat = 64
+    let trackHeight: CGFloat = 72
 
     override init(frame: CGRect) {
         super.init(frame: frame)

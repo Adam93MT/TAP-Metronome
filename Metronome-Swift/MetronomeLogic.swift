@@ -12,8 +12,10 @@ import AVFoundation
 
 
 class Metronome {
-    let metronomeSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "metronomeClick", ofType: "mp3")!)
-    let downBeatSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "downBeatClick", ofType: "mp3")!)
+//    let metronomeSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "metronomeClick", ofType: "mp3")!)
+    let metronomeSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "beatClick", ofType: "wav")!)
+//    let downBeatSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "downBeatClick", ofType: "mp3")!)
+    
     var beatClick: AVAudioPlayer!
     var downBeatClick: AVAudioPlayer!
     
@@ -108,8 +110,7 @@ class Metronome {
                         }
                         else {
                             self.prepareForNextBeat()
-                            self.playBeat()
-                            self.animateCircleInMainThread()
+                            self.signalBeatInMainThread()
                             when += self.nanosToAbs(
                                 UInt64(self.interval * Double(NSEC_PER_SEC))
                             )
@@ -139,6 +140,13 @@ class Metronome {
         }
     }
     
+    func signalBeatInMainThread() {
+        DispatchQueue.main.async {
+            self.playBeat()
+            self.parentViewController.containerView.animateBeatCircle(self.beat, beatDuration: self.interval * 2)
+        }
+    }
+    
     func getNextBeatTime() -> UInt64{
         let now = mach_absolute_time()
         print("Using Rescheduled Click")
@@ -152,10 +160,10 @@ class Metronome {
     }
     
     func prepare() {
-        self.beatClick = try? AVAudioPlayer(contentsOf: metronomeSoundURL)
-        self.downBeatClick = try? AVAudioPlayer(contentsOf: downBeatSoundURL)
+        self.beatClick = try? AVAudioPlayer(contentsOf: metronomeSoundURL as URL)
+//        self.downBeatClick = try? AVAudioPlayer(contentsOf: downBeatSoundURL)
         self.beatClick.prepareToPlay()
-        self.downBeatClick.prepareToPlay()
+//        self.downBeatClick.prepareToPlay()
         self.beat = 1
         self.isPrepared = true
         
@@ -174,8 +182,8 @@ class Metronome {
     }
     
     func prepareForNextBeat() {
-        self.downBeatClick.pause()
-        self.downBeatClick.currentTime = 0
+//        self.downBeatClick.pause()
+//        self.downBeatClick.currentTime = 0
         self.beatClick.pause()
         self.beatClick.currentTime = 0
         print("\nNext Beat ------ at \(self.tempo) bpm")
@@ -183,9 +191,7 @@ class Metronome {
     
     func playBeat() {
         print("Beat \(self.beat)")
-        DispatchQueue.main.async {
-            self.playSound()
-        }
+        self.playSound()
         self.playedLastBeat = true
     }
     
