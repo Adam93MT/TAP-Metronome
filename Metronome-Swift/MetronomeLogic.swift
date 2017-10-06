@@ -9,15 +9,18 @@
 import UIKit
 import Foundation
 import AVFoundation
+import AudioToolbox
 
-
+@available(iOS 10.0, *)
 class Metronome {
 //    let metronomeSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "metronomeClick", ofType: "mp3")!)
     let metronomeSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "beatClick", ofType: "wav")!)
 //    let downBeatSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "downBeatClick", ofType: "mp3")!)
     
     var beatClick: AVAudioPlayer!
-    var downBeatClick: AVAudioPlayer!
+//    var downBeatClick: AVAudioPlayer!
+
+    var parentViewController: MetronomeViewController!
     
     let minTempo: Int = 60
     let maxTempo: Int = 240
@@ -34,7 +37,11 @@ class Metronome {
     var playedLastBeat: Bool = false
     var tapOverride: Bool = false
     
-    var parentViewController: MetronomeViewController!
+    // Beat Logging
+    var loggedDiffs = [Double]()
+    var lastTapTime = mach_absolute_time()
+    var untappedBeats: Int = 0
+    let beatsToHideUI: Int = 16
     
     // DEBUG ------
     var lastBeat = CFAbsoluteTimeGetCurrent()
@@ -89,7 +96,7 @@ class Metronome {
     }
     
     private func startMachTimer() {
-        if #available(iOS 10.0, *) {
+//        if #available(iOS 10.0, *) {
             Thread.detachNewThread {
                 autoreleasepool {
                     self.configureThread()
@@ -109,8 +116,12 @@ class Metronome {
                             when = self.getNextBeatTime()
                         }
                         else {
+                            self.untappedBeats += 1
                             self.prepareForNextBeat()
                             self.signalBeatInMainThread()
+                            if (self.untappedBeats >= self.beatsToHideUI) {
+                                self.hideUIinMainThread()
+                            }
                             when += self.nanosToAbs(
                                 UInt64(self.interval * Double(NSEC_PER_SEC))
                             )
@@ -122,9 +133,9 @@ class Metronome {
                     }
                 }
             }
-        } else {
-            // Fallback on earlier versions
-        }
+//        } else {
+//            // Fallback on earlier versions
+//        }
     }
     
     func animateCircleInMainThread() {
@@ -147,6 +158,18 @@ class Metronome {
         }
     }
     
+    func hideUIinMainThread(){
+        DispatchQueue.main.async {
+            self.parentViewController.hideUI()
+        }
+    }
+    
+    func showUIinMainThread(){
+        DispatchQueue.main.async {
+            self.parentViewController.showUI()
+        }
+    }
+    
     func getNextBeatTime() -> UInt64{
         let now = mach_absolute_time()
         print("Using Rescheduled Click")
@@ -166,6 +189,7 @@ class Metronome {
 //        self.downBeatClick.prepareToPlay()
         self.beat = 1
         self.isPrepared = true
+//        self.setVibrationPattern()
         
         if parentViewController != nil {
             parentViewController.containerView.initAllBeatCircles(timeSignature)
@@ -177,6 +201,7 @@ class Metronome {
             self.prepare()
         }
         self.isOn = true
+        
         self.startMachTimer()
         print("\n---Started---")
     }
@@ -247,14 +272,11 @@ class Metronome {
         }
     }
     
-    // Beat Logging
-    var loggedDiffs = [Double]()
-    var lastTapTime = mach_absolute_time()
-    
     func logTap() {
         print("\nLogging Tap")
         let tapTime = mach_absolute_time()
-        print("Tap Time: \(tapTime)")
+        self.untappedBeats = 0
+        self.showUIinMainThread()
         
         // on iPhones etc. mach_absolute_time does not return nanos, but something else
         // see https://shiftedbits.org/2008/10/01/mach_absolute_time-on-the-iphone/
@@ -346,16 +368,13 @@ class Metronome {
         }
     }
     
-//    func setTimeInterval(newInterval: TimeInterval){
-//        let timeInterval = newInterval
-//        self.tempo = Int(60.0/Double(timeInterval))
-//        print("New Time Interval \(timeInterval)")
-//        print("New Tempo: \(tempo)")
-//        self.newTempoIsSet = true
-//    }
-    
-//    func updateTimer() {
-//        self.beatTimer = Timer(timeInterval: self.timeInterval, target: self, selector: #selector(Metronome.startTimer(_:)), userInfo: nil, repeats: false)
-//        RunLoop.current.add(beatTimer, forMode: RunLoopMode.commonModes)
+//    func setVibrationPattern() {
+//        self.vibrateArray.add(NSNumber(value: true)) //vibrate
+//        self.vibrateArray.add(NSNumber(value: self.interval/2.0))
+//        self.vibrateArray.add(NSNumber(value: false)) //stop
+//        self.vibrateArray.add(NSNumber(value: self.interval/2.0))
+//
+//        self.vibratePattern.setObject(vibrateArray, forKey: "VibePattern" as NSCopying)
+//        self.vibratePattern.setObject(NSNumber(value: 0.5), forKey: "Intensity" as NSCopying)
 //    }
 }

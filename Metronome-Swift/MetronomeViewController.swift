@@ -9,7 +9,9 @@
 import UIKit
 import CoreFoundation
 import Dispatch
+import AudioToolbox
 
+@available(iOS 10.0, *)
 class MetronomeViewController: UIViewController {
     
     @IBOutlet weak var tempoTextField: UITextField!
@@ -18,7 +20,8 @@ class MetronomeViewController: UIViewController {
     @IBOutlet weak var decrementButton: UIButton!
     @IBOutlet weak var incrementButton: UIButton!
     @IBOutlet weak var tempoSlider: CustomHeightSlider!
-    
+    @IBOutlet weak var showControlsButton: UIButton!
+
     // The superView containing all animating Circles
     //@IBOutlet weak var beatCircleView: BeatCircleView!
     
@@ -32,6 +35,7 @@ class MetronomeViewController: UIViewController {
     let tempoLabelColorPressed = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1)
     let MinColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2)
     let MaxColor = UIColor(red:0.04, green: 0.04, blue: 0.04, alpha: 0.2)
+    let textLabelBottomSpace: CGFloat = 24
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +61,8 @@ class MetronomeViewController: UIViewController {
         
         // Set up Tempo Control Buttons, Slider and Text
         self.addDoneButtonOnKeyboard()
+        
+        showControlsButton.isHidden = true
         tempoTextField.text = String(metronome.tempo)
         tempoTextField.backgroundColor = UIColor.clear
         // add keyboard listeners to move UI up/down
@@ -73,12 +79,9 @@ class MetronomeViewController: UIViewController {
         tempoSlider.minimumValue = Float(metronome.minTempo)
         tempoSlider.value = Float(metronome.tempo)
         
-//        sliderIncrement.maximumValue = Float(metronome.maxTempo)
-//        sliderIncrement.minimumValue = Float(metronome.minTempo)
-//        tempoSlider.thumbTintColor = sliderThumbColor
-//        tempoSlider.minimumTrackTintColor = sliderMinColor
-//        tempoSlider.maximumTrackTintColor = sliderMaxColor
-//        tempoSlider.isEnabled = true
+        // Set up control button
+        showControlsButton.backgroundColor = MinColor
+        showControlsButton.isHidden = true
 
         metronome.prepare()
         
@@ -90,16 +93,16 @@ class MetronomeViewController: UIViewController {
     }
     
     @IBAction func swipeButton(_ sender: UIButton) {
-        if metronome.isOn { self.stopMetronome() }
+        if metronome.isOn { metronome.stop() }
     }
     
     @IBAction func tapDown(_ sender: UIButton) {
         if metronome.isOn { metronome.logTap() }
-        else { self.startMetronome() }
-        
+        else { metronome.start() }
     }
     @IBAction func tapUp(_ sender: UIButton) {
         // nothing but need to catch tapUp
+        self.showUI()
     }
     
     @IBAction func editedTextField(_ sender: UITextField) {
@@ -144,47 +147,37 @@ class MetronomeViewController: UIViewController {
     
     func keyboardWillHide(notification: NSNotification) {
         print("keyboard will hide: \(self.view.frame.origin.y)")
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let _ = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y != 0{
                 self.view.frame.origin.y = 0.0//+= keyboardSize.height
             }
         }
     }
     
-    func toggleMetronome() {
-        if metronome.isOn { self.stopMetronome() }
-        else { self.startMetronome() }
+    func hideUI() {
+        let viewHeight = view.frame.height
+        UIView.animate(withDuration: 10, delay: 0, options: .curveEaseIn, animations: {
+            let textHeight = self.tempoTextField.frame.height
+            let barHeight = self.tempoSlider.frame.height
+            self.tempoTextField.frame.origin.y = viewHeight + textHeight
+            self.incrementButton.frame.origin.y = viewHeight + textHeight + self.textLabelBottomSpace + barHeight
+            self.decrementButton.frame.origin.y = viewHeight + textHeight + self.textLabelBottomSpace + barHeight
+            self.tempoSlider.frame.origin.y = viewHeight + textHeight + self.textLabelBottomSpace + barHeight
+            self.tapButton.alpha = 0.1
+        })
     }
     
-    func startMetronome() {
-        if !metronome.isPrepared {
-            metronome.prepare()
-        }
-        print("Tempo: \(metronome.tempo)")
-        metronome.start()
-        startUI()
-    }
-    
-    func stopMetronome() {
-        metronome.stop()
-        stopUI()
-    }
-    
-    func startUI() {
-//        tempoTextField.isEnabled = false
-//        UIView.animate(withDuration: 0.2, animations: {() -> Void in
-//            self.tempoSlider.alpha = 0.4
-//        })
-    }
-    
-    func stopUI() {
-        tapButton.isEnabled = true
-        tapButton.isHidden = false
-        // Enable the metronome stepper.
-//        tempoSlider.isEnabled = true
-//        UIView.animate(withDuration: 0.2, animations: {() -> Void in
-//            self.tempoSlider.alpha = 1
-//        })
+    func showUI() {
+        let viewHeight = view.frame.height
+        UIView.animate(withDuration: 1, delay: 0, options: .curveEaseOut, animations: {
+            let textHeight = self.tempoTextField.frame.height
+            let barHeight = self.tempoSlider.frame.height
+            self.tempoTextField.frame.origin.y = viewHeight - barHeight - self.textLabelBottomSpace - textHeight
+            self.incrementButton.frame.origin.y = viewHeight - barHeight
+            self.decrementButton.frame.origin.y = viewHeight - barHeight
+            self.tempoSlider.frame.origin.y = viewHeight - barHeight
+            self.tapButton.alpha = 1
+        })
     }
     
     func addDoneButtonOnKeyboard() {
