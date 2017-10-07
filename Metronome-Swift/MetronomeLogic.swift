@@ -129,7 +129,9 @@ class Metronome {
                         print("Waiting...")
                         mach_wait_until(when) // wait until fire time
 //
-                        if (self.playedLastBeat) { self.incrementBeat() }
+//                        if (self.playedLastBeat) {
+                            self.incrementBeat()
+//                        }
                     }
                 }
             }
@@ -151,6 +153,7 @@ class Metronome {
         }
     }
     
+    // a combination of playBeat and animateCircleInMainThread
     func signalBeatInMainThread() {
         DispatchQueue.main.async {
             self.playBeat()
@@ -283,8 +286,8 @@ class Metronome {
         let lastDiff = Double(self.absToNanos(tapTime - lastTapTime)) / Double(NSEC_PER_SEC)
         
         print("Immediate Tempo: \(self.TempoFromTime(time: lastDiff))")
-        // Double tap means toggle
-        if (lastDiff < TimeFromTempo(bpm: self.maxTempo)) {
+        
+        if (lastDiff < TimeFromTempo(bpm: self.maxTempo)) { // Double tap means toggle
             self.toggle()
         }
             
@@ -315,7 +318,8 @@ class Metronome {
                 self.setTempo(newTempo: self.TempoFromTime(time: avgDiff))
             }
         }
-        else {
+        else { // too long
+            self.loggedDiffs.removeAll()
             self.scheduleNextBeats()
         }
         self.lastTapTime = tapTime
@@ -335,6 +339,7 @@ class Metronome {
             self.scheduleNextBeats()
         }
         self.tempoChangeUpdateUI()
+        self.untappedBeats = 0
     }
     
     func setTempo(newTempo: Int){
@@ -346,6 +351,7 @@ class Metronome {
             self.scheduleNextBeats()
         }
         self.tempoChangeUpdateUI()
+        self.untappedBeats = 0
     }
 
     func TimeFromTempo(bpm: Int) -> Double {
