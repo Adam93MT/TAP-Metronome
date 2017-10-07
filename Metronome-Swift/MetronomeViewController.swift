@@ -21,7 +21,7 @@ class MetronomeViewController: UIViewController {
     @IBOutlet weak var incrementButton: UIButton!
     @IBOutlet weak var tempoSlider: CustomHeightSlider!
     @IBOutlet weak var showControlsButton: UIButton!
-
+    
     // The superView containing all animating Circles
     //@IBOutlet weak var beatCircleView: BeatCircleView!
     
@@ -36,6 +36,7 @@ class MetronomeViewController: UIViewController {
     let MinColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2)
     let MaxColor = UIColor(red:0.04, green: 0.04, blue: 0.04, alpha: 0.2)
     let textLabelBottomSpace: CGFloat = 24
+    var controlsAreHidden: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,10 +55,17 @@ class MetronomeViewController: UIViewController {
         view.sendSubview(toBack: self.containerView)
         
         // Set up Tap button
-        tapButton.frame.size = CGSize(width: viewWidth, height: viewWidth);
-        tapButton.contentEdgeInsets = UIEdgeInsetsMake(viewWidth/2, viewWidth/2, viewWidth/2, viewWidth/2);
-        view.bringSubview(toFront: tapButton)
+        tapButton.frame.size = CGSize(width: viewWidth, height: viewHeight);
+        tapButton.contentEdgeInsets = UIEdgeInsetsMake(
+            viewHeight/2, viewWidth/2, viewHeight/2, viewWidth/2
+        )
+//        view.bringSubview(toFront: tapButton)
         view.backgroundColor = backgroundColor
+        
+        // Set up gesture recognizer
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
+        self.tapButton.addGestureRecognizer(tapGestureRecognizer)
+        
         
         // Set up Tempo Control Buttons, Slider and Text
         self.addDoneButtonOnKeyboard()
@@ -66,8 +74,12 @@ class MetronomeViewController: UIViewController {
         tempoTextField.text = String(metronome.tempo)
         tempoTextField.backgroundColor = UIColor.clear
         // add keyboard listeners to move UI up/down
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil
+        )
         incrementButton.backgroundColor = MaxColor
         decrementButton.backgroundColor = MinColor
         tempoSlider.thumbTintColor = UIColor.clear
@@ -101,7 +113,6 @@ class MetronomeViewController: UIViewController {
         else { metronome.start() }
     }
     @IBAction func tapUp(_ sender: UIButton) {
-        // nothing but need to catch tapUp
         self.showUI()
     }
     
@@ -135,6 +146,10 @@ class MetronomeViewController: UIViewController {
         self.metronome.setTempo(newTempo: Int(tempoSlider.value))
     }
     
+    func handleTap(gestureRecognizer: UITapGestureRecognizer) {
+        print("You tapped at \(gestureRecognizer.location(in: self.view))")
+    }
+    
     func keyboardWillShow(notification: NSNotification) {
         print("keyboard will show: \(self.view.frame.origin.y)")
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -155,29 +170,41 @@ class MetronomeViewController: UIViewController {
     }
     
     func hideUI() {
-        let viewHeight = view.frame.height
-        UIView.animate(withDuration: 10, delay: 0, options: .curveEaseIn, animations: {
-            let textHeight = self.tempoTextField.frame.height
-            let barHeight = self.tempoSlider.frame.height
-            self.tempoTextField.frame.origin.y = viewHeight + textHeight
-            self.incrementButton.frame.origin.y = viewHeight + textHeight + self.textLabelBottomSpace + barHeight
-            self.decrementButton.frame.origin.y = viewHeight + textHeight + self.textLabelBottomSpace + barHeight
-            self.tempoSlider.frame.origin.y = viewHeight + textHeight + self.textLabelBottomSpace + barHeight
+//        let viewHeight = view.frame.height
+//        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.animate(withDuration: 4, delay: 0, options: .curveEaseIn, animations: {
+//            let textHeight = self.tempoTextField.frame.height
+//            let barHeight = self.tempoSlider.frame.height
+//            self.tempoTextField.frame.origin.y = viewHeight + textHeight
+//            self.incrementButton.frame.origin.y = viewHeight + textHeight + self.textLabelBottomSpace + barHeight
+//            self.decrementButton.frame.origin.y = viewHeight + textHeight + self.textLabelBottomSpace + barHeight
+//            self.tempoSlider.frame.origin.y = viewHeight + textHeight + self.textLabelBottomSpace + barHeight
+            self.tempoTextField.alpha = 0
+            self.incrementButton.alpha = 0
+            self.decrementButton.alpha = 0
+            self.tempoSlider.alpha = 0
             self.tapButton.alpha = 0.1
         })
+        self.controlsAreHidden = true
     }
     
     func showUI() {
-        let viewHeight = view.frame.height
-        UIView.animate(withDuration: 1, delay: 0, options: .curveEaseOut, animations: {
-            let textHeight = self.tempoTextField.frame.height
-            let barHeight = self.tempoSlider.frame.height
-            self.tempoTextField.frame.origin.y = viewHeight - barHeight - self.textLabelBottomSpace - textHeight
-            self.incrementButton.frame.origin.y = viewHeight - barHeight
-            self.decrementButton.frame.origin.y = viewHeight - barHeight
-            self.tempoSlider.frame.origin.y = viewHeight - barHeight
+//        let viewHeight = view.frame.height
+//        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+//            let textHeight = self.tempoTextField.frame.height
+//            let barHeight = self.tempoSlider.frame.height
+//            self.tempoTextField.frame.origin.y = viewHeight - barHeight - self.textLabelBottomSpace - textHeight
+//            self.incrementButton.frame.origin.y = viewHeight - barHeight
+//            self.decrementButton.frame.origin.y = viewHeight - barHeight
+//            self.tempoSlider.frame.origin.y = viewHeight - barHeight
+            self.tempoTextField.alpha = 1
+            self.incrementButton.alpha = 1
+            self.decrementButton.alpha = 1
+            self.tempoSlider.alpha = 1
             self.tapButton.alpha = 1
         })
+        self.controlsAreHidden = false
     }
     
     func addDoneButtonOnKeyboard() {
