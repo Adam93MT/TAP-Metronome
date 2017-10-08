@@ -22,8 +22,8 @@ class Metronome {
 
     var parentViewController: MetronomeViewController!
     
-    let minTempo: Int = 60
-    let maxTempo: Int = 240
+    let minTempo: Int = 50
+    let maxTempo: Int = 220
     var timeSignature: Int = 4 // default is 4:4
     var beat = 1
     var tempo: Int = 100

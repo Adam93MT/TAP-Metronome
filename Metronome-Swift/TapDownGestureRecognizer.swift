@@ -17,11 +17,9 @@ class TapDownGestureRecognizer: UITapGestureRecognizer {
         }
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
-//        super.touchesMoved(touches, with: event) // Dont inherit super
         self.state = .failed
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
-//        super.touchesEnded(touches, with: event) // Dont inherit super
         self.state = .failed // fail on touch up
     }
 }

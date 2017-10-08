@@ -21,12 +21,13 @@ class MetronomeViewController: UIViewController {
     @IBOutlet weak var incrementButton: UIButton!
     @IBOutlet weak var tempoSlider: CustomHeightSlider!
     
-    // The superView containing all animating Circles
-    //@IBOutlet weak var beatCircleView: BeatCircleView!
-    
     let metronome = Metronome()
     var containerView: BeatContainerView!
     var metronomeDisplayLink: CADisplayLink!
+    
+    var orientationIsPortrait = true
+    var viewWidth: CGFloat!
+    var viewHeight: CGFloat!
     
     // Colours
     let backgroundColor = UIColor.black
@@ -42,9 +43,12 @@ class MetronomeViewController: UIViewController {
         // Lets us access the ViewController from metronome logic
         metronome.parentViewController = self
         
-        let viewWidth = view.frame.width
-        let viewHeight = view.frame.height
-        print("Height: \(viewHeight), Width: \(viewWidth)")
+        viewWidth = view.frame.width
+        viewHeight = view.frame.height
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.handleDeviceRotation), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil
+        )
         
         // Set Up Beat Circle Views
         self.containerView = BeatContainerView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight))
@@ -58,7 +62,6 @@ class MetronomeViewController: UIViewController {
         tapButton.contentEdgeInsets = UIEdgeInsetsMake(
             viewHeight/2, viewWidth/2, viewHeight/2, viewWidth/2
         )
-//        view.bringSubview(toFront: tapButton)
         view.backgroundColor = backgroundColor
         
         // Set up gesture recognizer
@@ -91,8 +94,6 @@ class MetronomeViewController: UIViewController {
         tempoSlider.value = Float(metronome.tempo)
 
         metronome.prepare()
-        
-        //self.startMetronome()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -145,7 +146,6 @@ class MetronomeViewController: UIViewController {
             self.showUI()
         }
         let tapLocation = gestureRecognizer.location(in: nil)
-//        print("You tapped at \(tapLocation)")
         self.metronome.playBeat()
         self.metronome.incrementBeat()
         self.containerView.animateBeatCircle(
@@ -229,8 +229,15 @@ class MetronomeViewController: UIViewController {
         self.view.layer.removeAllAnimations()
         self.view.layoutIfNeeded()
     }
-
     
-    // MARK: - UIResponder
+    func handleDeviceRotation() {
+        if UIDevice.current.orientation.isPortrait {
+            self.orientationIsPortrait = true
+            self.containerView.orientationIsPortrait = true
+        } else if UIDevice.current.orientation.isLandscape {
+            self.orientationIsPortrait = false
+            self.containerView.orientationIsPortrait = false
+        }
+    }
 }
 
