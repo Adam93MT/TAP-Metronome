@@ -149,6 +149,7 @@ class MetronomeViewController: UIViewController {
     func handleTap(gestureRecognizer: UITapGestureRecognizer) {
         if metronome.isOn {
             metronome.logTap()
+            killControlAnimations()
         }
         else {
             metronome.start()
@@ -185,15 +186,7 @@ class MetronomeViewController: UIViewController {
     }
     
     func hideUI() {
-//        let viewHeight = view.frame.height
-//        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.animate(withDuration: 4, delay: 0, options: .curveEaseIn, animations: {
-//            let textHeight = self.tempoTextField.frame.height
-//            let barHeight = self.tempoSlider.frame.height
-//            self.tempoTextField.frame.origin.y = viewHeight + textHeight
-//            self.incrementButton.frame.origin.y = viewHeight + textHeight + self.textLabelBottomSpace + barHeight
-//            self.decrementButton.frame.origin.y = viewHeight + textHeight + self.textLabelBottomSpace + barHeight
-//            self.tempoSlider.frame.origin.y = viewHeight + textHeight + self.textLabelBottomSpace + barHeight
+        UIView.animate(withDuration: 4, delay: 0, options: [.curveEaseIn, .allowUserInteraction], animations: {
             self.tempoTextField.alpha = 0
             self.incrementButton.alpha = 0
             self.decrementButton.alpha = 0
@@ -204,15 +197,7 @@ class MetronomeViewController: UIViewController {
     }
     
     func showUI() {
-//        let viewHeight = view.frame.height
-//        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-//            let textHeight = self.tempoTextField.frame.height
-//            let barHeight = self.tempoSlider.frame.height
-//            self.tempoTextField.frame.origin.y = viewHeight - barHeight - self.textLabelBottomSpace - textHeight
-//            self.incrementButton.frame.origin.y = viewHeight - barHeight
-//            self.decrementButton.frame.origin.y = viewHeight - barHeight
-//            self.tempoSlider.frame.origin.y = viewHeight - barHeight
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseOut, .allowUserInteraction], animations: {
             self.tempoTextField.alpha = 1
             self.incrementButton.alpha = 1
             self.decrementButton.alpha = 1
@@ -247,6 +232,17 @@ class MetronomeViewController: UIViewController {
             self.containerView.beatCircleReset(b)
         }
     }
+    
+    func killControlAnimations() {
+        self.tempoTextField.layer.removeAllAnimations()
+        self.incrementButton.layer.removeAllAnimations()
+        self.decrementButton.layer.removeAllAnimations()
+        self.tempoSlider.layer.removeAllAnimations()
+        self.tapButton.layer.removeAllAnimations()
+        self.view.layer.removeAllAnimations()
+        self.view.layoutIfNeeded()
+    }
+
     
     // MARK: - UIResponder
 }
