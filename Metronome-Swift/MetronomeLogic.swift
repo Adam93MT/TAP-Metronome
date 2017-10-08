@@ -36,6 +36,7 @@ class Metronome {
     var newTempoIsSet: Bool = false
     var playedLastBeat: Bool = false
     var tapOverride: Bool = false
+    var isFirstBeat: Bool = true
     
     // Beat Logging
     var loggedDiffs = [Double]()
@@ -105,20 +106,33 @@ class Metronome {
                     // we only play a beat if there has not just been a tap
                     print(self.timebaseInfo)
                     while self.isOn {
+                        // if there has been a logged tempo tap since the last timer firing
+                        // we skip playing this beat, and use the rescheduled beat
                         if (self.tapOverride){
-                            // there has been a tap since the last timer firing
                             self.tapOverride = false // reset tapOverride
                             when = self.getNextBeatTime()
                         }
+                        // if we just set a new tempo (tapping or otherwise)
+                        // we'll skip this beat, and use the rescheduled beat
                         else if (self.newTempoIsSet) {
-                            // if we just set a new tempo, we'll skip this beat
                             self.newTempoIsSet = false
                             when = self.getNextBeatTime()
                         }
+                        // if this is the first beat since starting
+                        // the tap to start played beat 1,
+                        // so we don't play anthing, and wait till the next beat
+                        else if (self.isFirstBeat) {
+                            self.isFirstBeat = false
+                            when += self.nanosToAbs(
+                                UInt64(self.interval * Double(NSEC_PER_SEC))
+                            )
+                        }
+                        // otherwise we play a beat normally
                         else {
                             self.untappedBeats += 1
                             self.prepareForNextBeat()
                             self.signalBeatInMainThread()
+                            // hide UI if there have been a lot of beats since tempo change
                             if (self.untappedBeats >= self.beatsToHideUI) {
                                 self.hideUIinMainThread()
                             }
@@ -128,10 +142,11 @@ class Metronome {
                         }
                         print("Waiting...")
                         mach_wait_until(when) // wait until fire time
-//
-//                        if (self.playedLastBeat) {
+                        // if the metronome is still on after the timer has fired
+                        // we increment to the next beat
+                        if (self.isOn) {
                             self.incrementBeat()
-//                        }
+                        }
                     }
                 }
             }
@@ -157,7 +172,9 @@ class Metronome {
     func signalBeatInMainThread() {
         DispatchQueue.main.async {
             self.playBeat()
-            self.parentViewController.containerView.animateBeatCircle(self.beat, beatDuration: self.interval * 2)
+            if !self.tapOverride {
+                self.parentViewController.containerView.animateBeatCircle(self.beat, beatDuration: self.interval * 2)
+            }
         }
     }
     
@@ -204,7 +221,7 @@ class Metronome {
             self.prepare()
         }
         self.isOn = true
-        
+        self.isFirstBeat = true
         self.startMachTimer()
         print("\n---Started---")
     }
@@ -218,7 +235,7 @@ class Metronome {
     }
     
     func playBeat() {
-        print("Beat \(self.beat)")
+        print("Play Beat \(self.beat)")
         self.playSound()
         self.playedLastBeat = true
     }
@@ -255,8 +272,10 @@ class Metronome {
         // Mark the metronome as off.
         self.isPrepared = false
         self.isOn = false
+        self.isFirstBeat = true
         self.beat = 1
         self.prepare()
+        self.parentViewController.resetAllBeatCircles()
         
         //-- Debug
         self.total_beats = 0
@@ -279,7 +298,7 @@ class Metronome {
         print("\nLogging Tap")
         let tapTime = mach_absolute_time()
         self.untappedBeats = 0
-        self.showUIinMainThread()
+//        self.showUIinMainThread() // handled in ViewController
         
         // on iPhones etc. mach_absolute_time does not return nanos, but something else
         // see https://shiftedbits.org/2008/10/01/mach_absolute_time-on-the-iphone/
@@ -287,18 +306,18 @@ class Metronome {
         
         print("Immediate Tempo: \(self.TempoFromTime(time: lastDiff))")
         
-        if (lastDiff < TimeFromTempo(bpm: self.maxTempo)) { // Double tap means toggle
+        if (lastDiff < TimeFromTempo(bpm: self.maxTempo)) {
+            // Double tap means toggle
             self.toggle()
         }
-            
-        else if ( // if the tap interval is in tempo range
+        else if (
+            // if the tap interval is in tempo range
             (lastDiff > TimeFromTempo(bpm: self.maxTempo))
             && (lastDiff < TimeFromTempo(bpm: self.minTempo))
         ) {
             self.tapOverride = true
             self.scheduleNextBeats()
-            self.incrementBeat()
-            self.animateCircleInMainThread()
+//            self.animateCircleInMainThread() // handled in ViewController
             
             self.loggedDiffs.append(lastDiff)
             
@@ -318,7 +337,8 @@ class Metronome {
                 self.setTempo(newTempo: self.TempoFromTime(time: avgDiff))
             }
         }
-        else { // too long
+        else {
+            // too long between taps
             self.loggedDiffs.removeAll()
             self.scheduleNextBeats()
         }

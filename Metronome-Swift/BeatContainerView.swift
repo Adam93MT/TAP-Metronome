@@ -39,11 +39,8 @@ class BeatContainerView: UIView {
         let viewCentreY = rect.height/2
         let startX = viewCentreX - CGFloat(self.startDiameter/2)
         let startY = viewCentreY - CGFloat(self.startDiameter/2)
-//        let endX = viewCentreX - CGFloat(self.endDiameter/2)
-//        let endY = viewCentreY - CGFloat(self.endDiameter/2)
         
         self.startShape = UIBezierPath(ovalIn: CGRect(x: startX, y: startY, width: self.startDiameter, height: self.startDiameter)).cgPath
-//        self.endShape = UIBezierPath(ovalIn: CGRect(x: endX, y: endY, width: self.endDiameter, height: self.endDiameter)).cgPath
         self.beatCircleLayer = CAShapeLayer()
         setup()
 //        addBehavior()
@@ -97,42 +94,40 @@ class BeatContainerView: UIView {
         }
     }
     
-    func animateBeatCircle(_ beat: Int, beatDuration: Double) {
-        print("Animating Beat Circle... \(beat)")
-        self.BeatViewsArray[beat-1].isHidden = false
+    func animateBeatCircle(_ beat: Int, beatDuration: Double, startPoint: CGPoint? = nil) {
+        print("Animating Beat Circle \(beat)")
+        let thisBeat = self.BeatViewsArray[beat-1]
+        
+//        if (startPoint != nil) {
+//            thisBeat.frame.origin.x = startPoint!.x - thisBeat.frame.width/2
+//            thisBeat.frame.origin.y = startPoint!.y - thisBeat.frame.height/2
+//        }
+//        else {
+//            thisBeat.frame.origin.x = view.frame.width/2 - thisBeat.frame.width/2
+//            thisBeat.frame.origin.y = view.frame.height/2 - thisBeat.frame.height/2
+//        }
+        
+        thisBeat.isHidden = false
         let beatAnimation = { () -> Void in
             let scaleTransform = CGAffineTransform(scaleX: self.animationScale, y: self.animationScale)
-            self.BeatViewsArray[beat-1].backgroundColor = self.endColor
-            self.BeatViewsArray[beat-1].transform = scaleTransform
+            thisBeat.backgroundColor = self.endColor
+            thisBeat.transform = scaleTransform
         }
         
         let animDelay = 1.5
         UIView.animate(withDuration: beatDuration * animDelay, animations: beatAnimation,
-           completion:  {
-            finished in self.beatCircleReset(beat) // reset circle once the animation is finished
+           completion:  { finished in
+                self.beatCircleReset(beat) // reset circle once the animation is finished
         })
     }
     
     func beatCircleReset(_ beat:Int) {
         let resetScaleTransform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        print("Resetting beat circle \(beat)")
+        print("... Resetting beat circle \(beat)")
         self.BeatViewsArray[beat-1].transform = resetScaleTransform
         self.BeatViewsArray[beat-1].backgroundColor = startColor
         self.BeatViewsArray[beat-1].isHidden = true
     }
-    
-//    func animateBeatCircle(beatDuration: Double) {
-//        // animate the `path`
-//        let animation = CABasicAnimation(keyPath: "path")
-//        animation.toValue = endShape
-//        animation.duration = beatDuration // duration is 1 sec
-//
-//        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut) // animation curve is Ease Out
-//        animation.fillMode = kCAFillModeBoth // keep to value after finishing
-//        animation.isRemovedOnCompletion = false // don't remove after finishing
-//
-//        beatCircleLayer.add(animation, forKey: animation.keyPath)
-//    }
     
     func setup() {
         view = loadViewFromNib()
