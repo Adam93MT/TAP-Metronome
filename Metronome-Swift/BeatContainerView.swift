@@ -16,11 +16,12 @@ class BeatContainerView: UIView {
     var BeatViewsArray = [BeatView]()
     var allBeatsInitialized: Bool = false
     
-    let startColor = UIColor.white//UIColor(red: (200.0/255.0), green: (200.0/255.0), blue: (200.0/255.0), alpha: 1.0)
+    let startColor = UIColor.white
     let endColor = UIColor(red: (200.0/255.0), green: (200.0/255.0), blue: (200.0/255.0), alpha: 0.0)
-    
     let startDiameter: CGFloat = 128
-//    var endDiameter: CGFloat!
+    var defaultLocationX: CGFloat!
+    var defaultLocationY: CGFloat!
+    
     var animationScale: CGFloat!
     var startShape: CGPath!
     var endShape: CGPath!
@@ -37,10 +38,10 @@ class BeatContainerView: UIView {
         
         let viewCentreX = rect.width/2
         let viewCentreY = rect.height/2
-        let startX = viewCentreX - CGFloat(self.startDiameter/2)
-        let startY = viewCentreY - CGFloat(self.startDiameter/2)
+        self.defaultLocationX = viewCentreX - CGFloat(self.startDiameter/2)
+        self.defaultLocationY = viewCentreY - CGFloat(self.startDiameter/2)
         
-        self.startShape = UIBezierPath(ovalIn: CGRect(x: startX, y: startY, width: self.startDiameter, height: self.startDiameter)).cgPath
+        self.startShape = UIBezierPath(ovalIn: CGRect(x: defaultLocationX, y: defaultLocationY, width: self.startDiameter, height: self.startDiameter)).cgPath
         self.beatCircleLayer = CAShapeLayer()
         setup()
 //        addBehavior()
@@ -98,14 +99,14 @@ class BeatContainerView: UIView {
         print("Animating Beat Circle \(beat)")
         let thisBeat = self.BeatViewsArray[beat-1]
         
-//        if (startPoint != nil) {
-//            thisBeat.frame.origin.x = startPoint!.x - thisBeat.frame.width/2
-//            thisBeat.frame.origin.y = startPoint!.y - thisBeat.frame.height/2
-//        }
-//        else {
-//            thisBeat.frame.origin.x = view.frame.width/2 - thisBeat.frame.width/2
-//            thisBeat.frame.origin.y = view.frame.height/2 - thisBeat.frame.height/2
-//        }
+        if (startPoint != nil) {
+            thisBeat.frame.origin.x = startPoint!.x - thisBeat.frame.width/2
+            thisBeat.frame.origin.y = startPoint!.y - thisBeat.frame.height/2
+        }
+        else {
+            thisBeat.frame.origin.x = self.defaultLocationX
+            thisBeat.frame.origin.y = self.defaultLocationY
+        }
         
         thisBeat.isHidden = false
         let beatAnimation = { () -> Void in
@@ -113,7 +114,6 @@ class BeatContainerView: UIView {
             thisBeat.backgroundColor = self.endColor
             thisBeat.transform = scaleTransform
         }
-        
         let animDelay = 1.5
         UIView.animate(withDuration: beatDuration * animDelay, animations: beatAnimation,
            completion:  { finished in

@@ -20,7 +20,6 @@ class MetronomeViewController: UIViewController {
     @IBOutlet weak var decrementButton: UIButton!
     @IBOutlet weak var incrementButton: UIButton!
     @IBOutlet weak var tempoSlider: CustomHeightSlider!
-    @IBOutlet weak var showControlsButton: UIButton!
     
     // The superView containing all animating Circles
     //@IBOutlet weak var beatCircleView: BeatCircleView!
@@ -70,7 +69,6 @@ class MetronomeViewController: UIViewController {
         // Set up Tempo Control Buttons, Slider and Text
         self.addDoneButtonOnKeyboard()
         
-        showControlsButton.isHidden = true
         tempoTextField.text = String(metronome.tempo)
         tempoTextField.backgroundColor = UIColor.clear
         // add keyboard listeners to move UI up/down
@@ -82,18 +80,15 @@ class MetronomeViewController: UIViewController {
         )
         incrementButton.backgroundColor = MaxColor
         decrementButton.backgroundColor = MinColor
-        tempoSlider.thumbTintColor = UIColor.clear
+//        tempoSlider.thumbTintColor = UIColor.clear
         tempoSlider.minimumTrackTintColor = MinColor
         tempoSlider.maximumTrackTintColor = MaxColor
         tempoSlider.setMinimumTrackImage(UIImage(named: "sliderCapMin"), for: UIControlState.normal)
         tempoSlider.setMaximumTrackImage(UIImage(named: "sliderCapMax"), for: UIControlState.normal)
+        tempoSlider.setThumbImage(UIImage(named: "sliderThumb"), for: UIControlState.normal)
         tempoSlider.maximumValue = Float(metronome.maxTempo)
         tempoSlider.minimumValue = Float(metronome.minTempo)
         tempoSlider.value = Float(metronome.tempo)
-        
-        // Set up control button
-        showControlsButton.backgroundColor = MinColor
-        showControlsButton.isHidden = true
 
         metronome.prepare()
         
@@ -107,14 +102,6 @@ class MetronomeViewController: UIViewController {
     @IBAction func swipeButton(_ sender: UIButton) {
         if metronome.isOn { metronome.stop() }
     }
-    
-//    @IBAction func tapDown(_ sender: UIButton) {
-//        if metronome.isOn { metronome.logTap() }
-//        else { metronome.start() }
-//    }
-//    @IBAction func tapUp(_ sender: UIButton) {
-//        self.showUI()
-//    }
     
     @IBAction func editedTextField(_ sender: UITextField) {
         var val: Int!
@@ -146,7 +133,7 @@ class MetronomeViewController: UIViewController {
         self.metronome.setTempo(newTempo: Int(tempoSlider.value))
     }
     
-    func handleTap(gestureRecognizer: UITapGestureRecognizer) {
+    func handleTap(gestureRecognizer: TapDownGestureRecognizer) {
         if metronome.isOn {
             metronome.logTap()
             killControlAnimations()
@@ -157,10 +144,10 @@ class MetronomeViewController: UIViewController {
         if self.controlsAreHidden {
             self.showUI()
         }
-        let tapLocation = gestureRecognizer.location(in: self.view)
-        print("You tapped at \(tapLocation)")
-//        self.metronome.playBeat()
-//        self.metronome.incrementBeat()
+        let tapLocation = gestureRecognizer.location(in: nil)
+//        print("You tapped at \(tapLocation)")
+        self.metronome.playBeat()
+        self.metronome.incrementBeat()
         self.containerView.animateBeatCircle(
             metronome.beat, beatDuration: metronome.interval, startPoint: tapLocation
         )
