@@ -25,7 +25,8 @@ class MetronomeViewController: UIViewController {
     var containerView: BeatContainerView!
     var metronomeDisplayLink: CADisplayLink!
     
-    var orientationIsPortrait = true
+    var currentOrientation: String = "portrait"
+    var originalOrientation: String = "portrait"
     var viewWidth: CGFloat!
     var viewHeight: CGFloat!
     
@@ -46,6 +47,7 @@ class MetronomeViewController: UIViewController {
         viewWidth = view.frame.width
         viewHeight = view.frame.height
         
+        // Listen for device rotation
         NotificationCenter.default.addObserver(
             self, selector: #selector(self.handleDeviceRotation), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil
         )
@@ -54,6 +56,7 @@ class MetronomeViewController: UIViewController {
         self.containerView = BeatContainerView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight))
         self.containerView.center = view.center
         self.containerView.backgroundColor = UIColor.clear
+        self.containerView.originalOrientation = self.originalOrientation
         view.addSubview(self.containerView)
         view.sendSubview(toBack: self.containerView)
         
@@ -97,7 +100,10 @@ class MetronomeViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+        self.currentOrientation = UIDevice.current.orientation.isPortrait ? "portrait" : "landscape"
+        print(self.currentOrientation)
+        self.originalOrientation = self.currentOrientation
+        self.containerView.originalOrientation = self.originalOrientation
     }
     
     @IBAction func swipeButton(_ sender: UIButton) {
@@ -145,7 +151,7 @@ class MetronomeViewController: UIViewController {
         if self.controlsAreHidden {
             self.showUI()
         }
-        let tapLocation = gestureRecognizer.location(in: nil)
+        let tapLocation = gestureRecognizer.location(in: self.view)
         self.metronome.playBeat()
         self.metronome.incrementBeat()
         self.containerView.animateBeatCircle(
@@ -232,11 +238,11 @@ class MetronomeViewController: UIViewController {
     
     func handleDeviceRotation() {
         if UIDevice.current.orientation.isPortrait {
-            self.orientationIsPortrait = true
-            self.containerView.orientationIsPortrait = true
+            self.currentOrientation = "portrait"
+            self.containerView.currentOrientation = "portrait"
         } else if UIDevice.current.orientation.isLandscape {
-            self.orientationIsPortrait = false
-            self.containerView.orientationIsPortrait = false
+            self.currentOrientation = "landscape"
+            self.containerView.currentOrientation = "landscape"
         }
     }
 }
