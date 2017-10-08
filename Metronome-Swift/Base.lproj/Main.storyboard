@@ -46,6 +46,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WiX-66-u8x">
                                 <rect key="frame" x="0.0" y="612" width="55" height="55"/>
                                 <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="WiX-66-u8x" secondAttribute="height" id="R2s-E4-Pv4"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="36"/>
                                 <state key="normal" title="-">
                                     <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -57,6 +60,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="He9-vt-pRI">
                                 <rect key="frame" x="320" y="612" width="55" height="55"/>
                                 <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="He9-vt-pRI" secondAttribute="height" id="aiq-8y-CPO"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="36"/>
                                 <state key="normal" title="+">
                                     <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -76,7 +82,7 @@
                                 </connections>
                             </textField>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minValue="60" maxValue="250" translatesAutoresizingMaskIntoConstraints="NO" id="vWP-KZ-vbN" customClass="CustomHeightSlider" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="53" y="612" width="269" height="56"/>
+                                <rect key="frame" x="53" y="612" width="265" height="56"/>
                                 <connections>
                                     <action selector="sliderValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="UwC-k3-Qi3"/>
                                 </connections>
@@ -87,9 +93,8 @@
                         <constraints>
                             <constraint firstItem="WiX-66-u8x" firstAttribute="bottom" secondItem="vWP-KZ-vbN" secondAttribute="bottom" id="0z9-RP-SAt"/>
                             <constraint firstAttribute="centerX" secondItem="y8r-1J-ZFl" secondAttribute="centerX" id="6fM-Xn-aF0"/>
-                            <constraint firstItem="He9-vt-pRI" firstAttribute="leading" secondItem="vWP-KZ-vbN" secondAttribute="trailing" id="8en-ks-o2a"/>
+                            <constraint firstItem="He9-vt-pRI" firstAttribute="leading" secondItem="vWP-KZ-vbN" secondAttribute="trailing" constant="4" id="8en-ks-o2a"/>
                             <constraint firstItem="y8r-1J-ZFl" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="9WH-lv-5nf"/>
-                            <constraint firstItem="WiX-66-u8x" firstAttribute="width" secondItem="vWP-KZ-vbN" secondAttribute="height" id="CNC-43-zHJ"/>
                             <constraint firstItem="y8r-1J-ZFl" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1:1" id="OnA-Dj-Zvq"/>
                             <constraint firstAttribute="centerY" secondItem="y8r-1J-ZFl" secondAttribute="centerY" id="PGb-wO-03X"/>
                             <constraint firstItem="vWP-KZ-vbN" firstAttribute="top" secondItem="eZ1-Sw-uwE" secondAttribute="bottom" constant="24" id="WKW-19-9L5"/>
@@ -97,7 +102,6 @@
                             <constraint firstItem="He9-vt-pRI" firstAttribute="height" secondItem="vWP-KZ-vbN" secondAttribute="height" id="Zqg-6F-Q3X"/>
                             <constraint firstItem="eZ1-Sw-uwE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cfK-Yf-yy3"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="vWP-KZ-vbN" secondAttribute="bottom" id="iBM-Cd-kB1"/>
-                            <constraint firstItem="He9-vt-pRI" firstAttribute="width" secondItem="vWP-KZ-vbN" secondAttribute="height" multiplier="1:1" id="nAi-Kb-Mid"/>
                             <constraint firstAttribute="trailing" secondItem="He9-vt-pRI" secondAttribute="trailing" id="no4-CG-dZe"/>
                             <constraint firstItem="eZ1-Sw-uwE" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="q7P-pq-EPP"/>
                             <constraint firstItem="WiX-66-u8x" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="wkW-3q-oUx"/>

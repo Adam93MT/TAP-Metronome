@@ -21,6 +21,9 @@ class BeatContainerView: UIView {
     let startDiameter: CGFloat = 128
     var defaultLocationX: CGFloat!
     var defaultLocationY: CGFloat!
+    var viewCentreX: CGFloat!
+    var viewCentreY: CGFloat!
+    var orientationIsPortrait = true
     
     var animationScale: CGFloat!
     var startShape: CGPath!
@@ -36,8 +39,8 @@ class BeatContainerView: UIView {
         self.animationScale = CGFloat(endDiameter/self.startDiameter) * 1.2
 //        print("Scale: \(animationScale)")
         
-        let viewCentreX = rect.width/2
-        let viewCentreY = rect.height/2
+        self.viewCentreX = rect.width/2
+        self.viewCentreY = rect.height/2
         self.defaultLocationX = viewCentreX - CGFloat(self.startDiameter/2)
         self.defaultLocationY = viewCentreY - CGFloat(self.startDiameter/2)
         
@@ -100,12 +103,23 @@ class BeatContainerView: UIView {
         let thisBeat = self.BeatViewsArray[beat-1]
         
         if (startPoint != nil) {
-            thisBeat.frame.origin.x = startPoint!.x - thisBeat.frame.width/2
-            thisBeat.frame.origin.y = startPoint!.y - thisBeat.frame.height/2
+            if self.orientationIsPortrait {
+                thisBeat.frame.origin.x = startPoint!.x - thisBeat.frame.width/2
+                thisBeat.frame.origin.y = startPoint!.y - thisBeat.frame.height/2
+            } else {
+                thisBeat.frame.origin.x = startPoint!.x - thisBeat.frame.width/2
+                thisBeat.frame.origin.y = startPoint!.y - thisBeat.frame.height/2
+            }
         }
         else {
-            thisBeat.frame.origin.x = self.defaultLocationX
-            thisBeat.frame.origin.y = self.defaultLocationY
+            if self.orientationIsPortrait {
+                thisBeat.frame.origin.x = self.defaultLocationX
+                thisBeat.frame.origin.y = self.defaultLocationY
+            }
+            else { // this will probably only work when rotated in one direction
+                thisBeat.frame.origin.x = self.defaultLocationY
+                thisBeat.frame.origin.y = self.defaultLocationX
+            }
         }
         
         thisBeat.isHidden = false
@@ -141,6 +155,12 @@ class BeatContainerView: UIView {
         let nib = UINib(nibName: "BeatCircleView", bundle: bundle)
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         return view
+    }
+    
+    func deviceRotated() {
+        let tmp = self.defaultLocationY
+        self.defaultLocationY = self.defaultLocationX
+        self.defaultLocationX = tmp
     }
 
     /*
