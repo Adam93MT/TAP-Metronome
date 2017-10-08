@@ -23,7 +23,8 @@ class BeatContainerView: UIView {
     var defaultLocationY: CGFloat!
     var viewCentreX: CGFloat!
     var viewCentreY: CGFloat!
-    var orientationIsPortrait = true
+    var currentOrientation: String = "portrait"
+    var originalOrientation: String = "portrait"
     
     var animationScale: CGFloat!
     var startShape: CGPath!
@@ -103,7 +104,8 @@ class BeatContainerView: UIView {
         let thisBeat = self.BeatViewsArray[beat-1]
         
         if (startPoint != nil) {
-            if self.orientationIsPortrait {
+            print("Tap Location: \(String(describing: startPoint))")
+            if self.currentOrientation == "portrait" {
                 thisBeat.frame.origin.x = startPoint!.x - thisBeat.frame.width/2
                 thisBeat.frame.origin.y = startPoint!.y - thisBeat.frame.height/2
             } else {
@@ -112,11 +114,11 @@ class BeatContainerView: UIView {
             }
         }
         else {
-            if self.orientationIsPortrait {
+            if self.currentOrientation == self.originalOrientation{
                 thisBeat.frame.origin.x = self.defaultLocationX
                 thisBeat.frame.origin.y = self.defaultLocationY
             }
-            else { // this will probably only work when rotated in one direction
+            else {
                 thisBeat.frame.origin.x = self.defaultLocationY
                 thisBeat.frame.origin.y = self.defaultLocationX
             }
