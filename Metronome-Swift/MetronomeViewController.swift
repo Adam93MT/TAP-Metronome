@@ -63,8 +63,8 @@ class MetronomeViewController: UIViewController {
         view.backgroundColor = backgroundColor
         
         // Set up gesture recognizer
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
-        self.tapButton.addGestureRecognizer(tapGestureRecognizer)
+        let tapDownGestureRecognizer = TapDownGestureRecognizer(target: self, action: #selector(self.handleTap))
+        self.tapButton.addGestureRecognizer(tapDownGestureRecognizer)
         
         
         // Set up Tempo Control Buttons, Slider and Text
@@ -108,13 +108,13 @@ class MetronomeViewController: UIViewController {
         if metronome.isOn { metronome.stop() }
     }
     
-    @IBAction func tapDown(_ sender: UIButton) {
-        if metronome.isOn { metronome.logTap() }
-        else { metronome.start() }
-    }
-    @IBAction func tapUp(_ sender: UIButton) {
-        self.showUI()
-    }
+//    @IBAction func tapDown(_ sender: UIButton) {
+//        if metronome.isOn { metronome.logTap() }
+//        else { metronome.start() }
+//    }
+//    @IBAction func tapUp(_ sender: UIButton) {
+//        self.showUI()
+//    }
     
     @IBAction func editedTextField(_ sender: UITextField) {
         var val: Int!
@@ -147,7 +147,22 @@ class MetronomeViewController: UIViewController {
     }
     
     func handleTap(gestureRecognizer: UITapGestureRecognizer) {
-        print("You tapped at \(gestureRecognizer.location(in: self.view))")
+        if metronome.isOn {
+            metronome.logTap()
+        }
+        else {
+            metronome.start()
+        }
+        if self.controlsAreHidden {
+            self.showUI()
+        }
+        let tapLocation = gestureRecognizer.location(in: self.view)
+        print("You tapped at \(tapLocation)")
+//        self.metronome.playBeat()
+//        self.metronome.incrementBeat()
+        self.containerView.animateBeatCircle(
+            metronome.beat, beatDuration: metronome.interval, startPoint: tapLocation
+        )
     }
     
     func keyboardWillShow(notification: NSNotification) {
@@ -225,6 +240,12 @@ class MetronomeViewController: UIViewController {
     
     func doneButtonAction() {
         self.tempoTextField.resignFirstResponder()
+    }
+    
+    func resetAllBeatCircles(){
+        for b in 1...metronome.timeSignature {
+            self.containerView.beatCircleReset(b)
+        }
     }
     
     // MARK: - UIResponder
