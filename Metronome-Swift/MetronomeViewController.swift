@@ -33,7 +33,6 @@ class MetronomeViewController: UIViewController {
     // Colours
     let backgroundColor = UIColor.black
     let tempoLabelColor = UIColor(red: 0.14, green: 0.14, blue: 0.14, alpha: 1)
-    let tempoLabelColorPressed = UIColor(red: 0.7, green: 0.7, blue: 0.7, alpha: 1)
     let MinColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2)
     let MaxColor = UIColor(red:0.04, green: 0.04, blue: 0.04, alpha: 0.2)
     let textLabelBottomSpace: CGFloat = 24
@@ -68,9 +67,15 @@ class MetronomeViewController: UIViewController {
             viewHeight/2, viewWidth/2, viewHeight/2, viewWidth/2
         )
         view.backgroundColor = backgroundColor
+//        view.backgroundColor = UIColor.purple
         
         // Set up gesture recognizer
         let tapDownGestureRecognizer = TapDownGestureRecognizer(target: self, action: #selector(self.handleTap))
+        tapDownGestureRecognizer.delaysTouchesBegan = false
+        tapDownGestureRecognizer.delaysTouchesEnded = false
+        tapDownGestureRecognizer.numberOfTapsRequired = 1
+        tapDownGestureRecognizer.numberOfTouchesRequired = 1
+//        self.tapButton.backgroundColor = UIColor.red // DEBUG (obviously)
         self.tapButton.addGestureRecognizer(tapDownGestureRecognizer)
         
         
@@ -151,13 +156,13 @@ class MetronomeViewController: UIViewController {
             killControlAnimations()
         }
         else {
+            metronome.playBeat()
             metronome.start()
         }
         if self.controlsAreHidden {
             self.showUI()
         }
         let tapLocation = gestureRecognizer.location(in: self.view)
-//        self.metronome.playBeat()
         let tapIdx = metronome.getBeatIndex() + metronome.getTimeSignature()
         self.metronome.incrementBeat()
         self.containerView.animateBeatCircle(
@@ -227,7 +232,7 @@ class MetronomeViewController: UIViewController {
     }
     
     func resetAllBeatCircles(){
-        for b in 1...metronome.timeSignature {
+        for b in 0...metronome.timeSignature * 2 - 1{
             self.containerView.beatCircleReset(b)
         }
     }

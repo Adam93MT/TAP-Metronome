@@ -46,7 +46,7 @@ class Metronome {
     
     // DEBUG ------
     var lastBeat: UInt64 = 0
-    var expectedBeatTime: UInt64 = 0
+    var expected_fire_time: UInt64 = 0
     var current_time: UInt64 = 0
     
     var total_beats = 0
@@ -122,12 +122,13 @@ class Metronome {
             autoreleasepool {
                 self.configureThread()
                 var when = mach_absolute_time()
-                self.current_time = self.absToNanos(when)
-                self.expectedBeatTime = self.absToNanos(when)
+                self.current_time = when
+                self.expected_fire_time = when
                 // We only loop if the timer is on
                 // we only play a beat if there has not just been a tap
                 print(self.timebaseInfo)
                 while self.isOn {
+                    self.prepareForNextBeat()
                     // if there has been a logged tempo tap since the last timer firing
                     // we skip playing this beat, and use the rescheduled beat
                     if (self.tapOverride){
@@ -152,7 +153,6 @@ class Metronome {
                     // otherwise we play a beat normally
                     else {
                         self.untappedBeats += 1
-                        self.prepareForNextBeat()
                         self.signalBeatInMainThread()
                         // hide UI if there have been a lot of beats since tempo change
                         if (self.untappedBeats >= self.beatsToHideUI) {
@@ -162,7 +162,13 @@ class Metronome {
                             UInt64(self.interval * Double(NSEC_PER_SEC))
                         )
                     }
-
+                    self.current_time = mach_absolute_time()
+                    self.error = self.current_time - self.expected_fire_time
+                    let err_ms = Double(self.absToNanos(self.error))/Double(NSEC_PER_MSEC)
+                    print("Error: \(err_ms) msec")
+                    print("Error: \(err_ms/Double(self.interval * 1000))%")
+                    
+                    self.expected_fire_time = when
                     print("Waiting...")
                     mach_wait_until(when) // wait until fire time
                     // if the metronome is still on after the timer has fired
@@ -246,6 +252,7 @@ class Metronome {
         }
         self.isOn = true
         self.isFirstBeat = true
+        self.prepareForNextBeat()
         self.startMachTimer()
         print("\n---Started---")
     }

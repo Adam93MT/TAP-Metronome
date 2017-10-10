@@ -14,7 +14,7 @@ class BeatView: UIView {
     var startShape: CGPath!
     var endShape: CGPath!
     var beatCircleLayer: CAShapeLayer!
-    var startColor = UIColor(red: (200.0/255.0), green: (200.0/255.0), blue: (200.0/255.0), alpha: 1.0)
+    var startColor = UIColor.white //UIColor(red: (200.0/255.0), green: (200.0/255.0), blue: (200.0/255.0), alpha: 1.0)
     
     override init (frame : CGRect) {
         super.init(frame : frame)

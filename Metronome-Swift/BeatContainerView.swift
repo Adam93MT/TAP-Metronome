@@ -108,21 +108,17 @@ class BeatContainerView: UIView {
     }
     
     func animateBeatCircle(beatIndex: Int, beatDuration: Double, startPoint: CGPoint? = nil) {
-        print("Animating Beat index \(beatIndex)")
         let thisBeat = self.BeatViewsArray[beatIndex]
+//        self.beatCircleReset(beatIndex) // make sure it's reset
+//        print("Animating Beat index \(beatIndex)")
         
-        // handle startPoint
-//        if (startPoint != nil) {
+       //  handle startPoint
+        if (startPoint != nil) {
 //            print("Tap Location: \(String(describing: startPoint))")
-//            if self.currentOrientation == "portrait" {
-//                thisBeat.frame.origin.x = startPoint!.x - thisBeat.frame.width/2
-//                thisBeat.frame.origin.y = startPoint!.y - thisBeat.frame.height/2
-//            } else {
-//                thisBeat.frame.origin.x = startPoint!.x - thisBeat.frame.width/2
-//                thisBeat.frame.origin.y = startPoint!.y - thisBeat.frame.height/2
-//            }
-//        }
-//        else {
+            thisBeat.frame.origin.x = startPoint!.x - thisBeat.frame.width/2
+            thisBeat.frame.origin.y = startPoint!.y - thisBeat.frame.height/2
+        }
+        else {
             if self.currentOrientation == self.originalOrientation{
                 thisBeat.frame.origin.x = self.defaultLocationX
                 thisBeat.frame.origin.y = self.defaultLocationY
@@ -131,7 +127,7 @@ class BeatContainerView: UIView {
                 thisBeat.frame.origin.x = self.defaultLocationY
                 thisBeat.frame.origin.y = self.defaultLocationX
             }
-//        }
+        }
         
         // setup the animation
         thisBeat.isHidden = false
@@ -142,16 +138,16 @@ class BeatContainerView: UIView {
         }
         
         // Do the animation
-        UIView.animate(withDuration: beatDuration * 2, delay: 0, options: .curveEaseOut, animations: beatAnimation,
+        UIView.animate(withDuration: beatDuration * 2, delay: 0, options: [.curveEaseOut], animations: beatAnimation,
            completion:  { finished in
                 self.beatCircleReset(beatIndex) // reset circle once the animation is finished
         })
     }
     
     func beatCircleReset(_ beatIndex:Int) {
+        let thisBeat = self.BeatViewsArray[beatIndex]
         let resetScaleTransform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         print("... Resetting beat index \(beatIndex)")
-        let thisBeat = self.BeatViewsArray[beatIndex]
         thisBeat.transform = resetScaleTransform
         thisBeat.alpha = 1
         thisBeat.isHidden = true
