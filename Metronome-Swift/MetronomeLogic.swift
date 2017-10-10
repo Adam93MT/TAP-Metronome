@@ -118,73 +118,61 @@ class Metronome {
     }
     
     private func startMachTimer() {
-//        if #available(iOS 10.0, *) {
-            Thread.detachNewThread {
-                autoreleasepool {
-                    self.configureThread()
-                    var when = mach_absolute_time()
-                    self.current_time = self.absToNanos(when)
-                    self.expectedBeatTime = self.absToNanos(when)
-                    // We only loop if the timer is on
-                    // we only play a beat if there has not just been a tap
-                    print(self.timebaseInfo)
-                    while self.isOn {
-                        // DEBUG //
-//                        self.error = self.current_time - self.expectedBeatTime
-//                        print("Error: \(Double(self.error)/Double(NSEC_PER_SEC)) secs")
-                        
-                        
-                        // if there has been a logged tempo tap since the last timer firing
-                        // we skip playing this beat, and use the rescheduled beat
-                        if (self.tapOverride){
-                            self.tapOverride = false // reset tapOverride
-                            when = self.getNextBeatTime()
+        Thread.detachNewThread {
+            autoreleasepool {
+                self.configureThread()
+                var when = mach_absolute_time()
+                self.current_time = self.absToNanos(when)
+                self.expectedBeatTime = self.absToNanos(when)
+                // We only loop if the timer is on
+                // we only play a beat if there has not just been a tap
+                print(self.timebaseInfo)
+                while self.isOn {
+                    // if there has been a logged tempo tap since the last timer firing
+                    // we skip playing this beat, and use the rescheduled beat
+                    if (self.tapOverride){
+                        self.tapOverride = false // reset tapOverride
+                        when = self.getNextBeatTime()
+                    }
+                    // if we just set a new tempo (tapping or otherwise)
+                    // we'll skip this beat, and use the rescheduled beat
+                    else if (self.newTempoIsSet) {
+                        self.newTempoIsSet = false
+                        when = self.getNextBeatTime()
+                    }
+                    // if this is the first beat since starting
+                    // the tap to start played beat 1,
+                    // so we don't play anthing, and wait till the next beat
+                    else if (self.isFirstBeat) {
+                        self.isFirstBeat = false
+                        when += self.nanosToAbs(
+                            UInt64(self.interval * Double(NSEC_PER_SEC))
+                        )
+                    }
+                    // otherwise we play a beat normally
+                    else {
+                        self.untappedBeats += 1
+                        self.prepareForNextBeat()
+                        self.signalBeatInMainThread()
+                        // hide UI if there have been a lot of beats since tempo change
+                        if (self.untappedBeats >= self.beatsToHideUI) {
+                            self.hideUIinMainThread()
                         }
-                        // if we just set a new tempo (tapping or otherwise)
-                        // we'll skip this beat, and use the rescheduled beat
-                        else if (self.newTempoIsSet) {
-                            self.newTempoIsSet = false
-                            when = self.getNextBeatTime()
-                        }
-                        // if this is the first beat since starting
-                        // the tap to start played beat 1,
-                        // so we don't play anthing, and wait till the next beat
-                        else if (self.isFirstBeat) {
-                            self.isFirstBeat = false
-                            when += self.nanosToAbs(
-                                UInt64(self.interval * Double(NSEC_PER_SEC))
-                            )
-                        }
-                        // otherwise we play a beat normally
-                        else {
-                            self.untappedBeats += 1
-                            self.prepareForNextBeat()
-                            self.signalBeatInMainThread()
-                            // hide UI if there have been a lot of beats since tempo change
-                            if (self.untappedBeats >= self.beatsToHideUI) {
-                                self.hideUIinMainThread()
-                            }
-                            when += self.nanosToAbs(
-                                UInt64(self.interval * Double(NSEC_PER_SEC))
-                            )
-                        }
-//                        // DEBUG //
-//                        self.current_time = self.absToNanos(mach_absolute_time())
-//                        self.expectedBeatTime = self.absToNanos(when)
-                        
-                        print("Waiting...")
-                        mach_wait_until(when) // wait until fire time
-                        // if the metronome is still on after the timer has fired
-                        // we increment to the next beat
-                        if (self.isOn) {
-                            self.incrementBeat()
-                        }
+                        when += self.nanosToAbs(
+                            UInt64(self.interval * Double(NSEC_PER_SEC))
+                        )
+                    }
+
+                    print("Waiting...")
+                    mach_wait_until(when) // wait until fire time
+                    // if the metronome is still on after the timer has fired
+                    // we increment to the next beat
+                    if (self.isOn && !self.isFirstBeat) {
+                        self.incrementBeat()
                     }
                 }
             }
-//        } else {
-//            // Fallback on earlier versions
-//        }
+        }
     }
     
     func animateCircleInMainThread() {

@@ -157,7 +157,7 @@ class MetronomeViewController: UIViewController {
             self.showUI()
         }
         let tapLocation = gestureRecognizer.location(in: self.view)
-        self.metronome.playBeat()
+//        self.metronome.playBeat()
         let tapIdx = metronome.getBeatIndex() + metronome.getTimeSignature()
         self.metronome.incrementBeat()
         self.containerView.animateBeatCircle(

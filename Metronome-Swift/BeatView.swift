@@ -15,8 +15,6 @@ class BeatView: UIView {
     var endShape: CGPath!
     var beatCircleLayer: CAShapeLayer!
     var startColor = UIColor(red: (200.0/255.0), green: (200.0/255.0), blue: (200.0/255.0), alpha: 1.0)
-    var endColor = UIColor(red: (200.0/255.0), green: (200.0/255.0), blue: (200.0/255.0), alpha: 0.0)
-    var startDiameter: CGFloat = 2.0
     
     override init (frame : CGRect) {
         super.init(frame : frame)
@@ -38,10 +36,6 @@ class BeatView: UIView {
         print("Drawing Beat Circle")
         self.beatCircleLayer = CAShapeLayer()
         beatCircleLayer.path = startShape
-        //change the fill color
-        beatCircleLayer.fillColor = UIColor.red.cgColor
-        beatCircleLayer.strokeColor = UIColor.clear.cgColor
-        beatCircleLayer.lineWidth = 3.0
         
         self.layer.addSublayer(beatCircleLayer)
     }
