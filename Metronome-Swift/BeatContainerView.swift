@@ -19,12 +19,15 @@ class BeatContainerView: UIView {
     let startColor = UIColor.white
     let endColor = UIColor(red: (200.0/255.0), green: (200.0/255.0), blue: (200.0/255.0), alpha: 0.0)
     let startDiameter: CGFloat = 128
+    var screenWidth: CGFloat!
+    var screenHeight: CGFloat!
     var defaultLocationX: CGFloat!
     var defaultLocationY: CGFloat!
     var viewCentreX: CGFloat!
     var viewCentreY: CGFloat!
     var currentOrientation: String = "portrait"
     var originalOrientation: String = "portrait"
+    
     
     var animationScale: CGFloat!
     var startShape: CGPath!
@@ -64,8 +67,9 @@ class BeatContainerView: UIView {
     func initAllBeatCircles(_ timeSignature: Int) {
         if allBeatsInitialized == false {
             print("Initializing All Circles")
-            // Create one BeatView for each beat in the Time Signature
-            for beat in 0...timeSignature-1 {
+            // Create two BeatView for each beat in the Time Signature
+            // plus one for timer and one for taps
+            for beat in 0...timeSignature*2-1 {
                 print("Initializing \(beat) ")
                 let newBeatView = BeatView(frame: CGRect(x: 0.0, y: 0.0, width: startDiameter, height: startDiameter))
                 newBeatView.center = self.center
@@ -91,18 +95,19 @@ class BeatContainerView: UIView {
     }
     
     func removeAllBeatCircles() {
-        for _ in 0...BeatViewsArray.count-1 {
+        for b in 0...BeatViewsArray.count-1 {
             print(BeatViewsArray.count)
-            beatCircleReset(1)
-            BeatViewsArray[0].removeFromSuperview()
-            BeatViewsArray.remove(at: 0)
+            beatCircleReset(b)
+            BeatViewsArray[b].removeFromSuperview()
+            BeatViewsArray.remove(at: b)
         }
     }
     
-    func animateBeatCircle(_ beat: Int, beatDuration: Double, startPoint: CGPoint? = nil) {
-        print("Animating Beat Circle \(beat)")
-        let thisBeat = self.BeatViewsArray[beat-1]
+    func animateBeatCircle(beatIndex: Int, beatDuration: Double, startPoint: CGPoint? = nil) {
+        print("Animating Beat index \(beatIndex)")
+        let thisBeat = self.BeatViewsArray[beatIndex]
         
+        // handle startPoint
         if (startPoint != nil) {
             print("Tap Location: \(String(describing: startPoint))")
             if self.currentOrientation == "portrait" {
@@ -130,19 +135,21 @@ class BeatContainerView: UIView {
             thisBeat.backgroundColor = self.endColor
             thisBeat.transform = scaleTransform
         }
-        let animDelay = 1.5
-        UIView.animate(withDuration: beatDuration * animDelay, animations: beatAnimation,
+        
+        // Do the animation
+        UIView.animate(withDuration: beatDuration * 2, animations: beatAnimation,
            completion:  { finished in
-                self.beatCircleReset(beat) // reset circle once the animation is finished
+                self.beatCircleReset(beatIndex) // reset circle once the animation is finished
         })
     }
     
-    func beatCircleReset(_ beat:Int) {
+    func beatCircleReset(_ beatIndex:Int) {
         let resetScaleTransform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        print("... Resetting beat circle \(beat)")
-        self.BeatViewsArray[beat-1].transform = resetScaleTransform
-        self.BeatViewsArray[beat-1].backgroundColor = startColor
-        self.BeatViewsArray[beat-1].isHidden = true
+        print("... Resetting beat index \(beatIndex)")
+        let thisBeat = self.BeatViewsArray[beatIndex]
+        thisBeat.transform = resetScaleTransform
+        thisBeat.backgroundColor = startColor
+        thisBeat.isHidden = true
     }
     
     func setup() {
@@ -157,12 +164,6 @@ class BeatContainerView: UIView {
         let nib = UINib(nibName: "BeatCircleView", bundle: bundle)
         let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
         return view
-    }
-    
-    func deviceRotated() {
-        let tmp = self.defaultLocationY
-        self.defaultLocationY = self.defaultLocationX
-        self.defaultLocationX = tmp
     }
 
     /*

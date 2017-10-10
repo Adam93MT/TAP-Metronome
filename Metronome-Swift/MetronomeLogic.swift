@@ -45,16 +45,37 @@ class Metronome {
     let beatsToHideUI: Int = 16
     
     // DEBUG ------
-    var lastBeat = CFAbsoluteTimeGetCurrent()
-    var expectedBeatTime: Date!
-    var current_time = CFAbsoluteTimeGetCurrent()
+    var lastBeat: UInt64 = 0
+    var expectedBeatTime: UInt64 = 0
+    var current_time: UInt64 = 0
     
     var total_beats = 0
-    var error: CFTimeInterval = 0
+    var error: UInt64 = 0
     var total_error: CFTimeInterval = 0
     var avg_error: CFTimeInterval = 0
     // ------------
     
+    // Getter functions
+    
+    func getBeat() -> Int {
+        return self.beat
+    }
+    
+    func getBeatIndex() -> Int {
+        return self.beat - 1
+    }
+    
+    func getTempo() -> Int {
+        return self.tempo
+    }
+    
+    func getInterval() -> Double {
+        return self.interval
+    }
+    
+    func getTimeSignature() -> Int {
+        return self.timeSignature
+    }
     
     // Configure High-Priority Timer
     var timebaseInfo = mach_timebase_info_data_t()
@@ -102,10 +123,17 @@ class Metronome {
                 autoreleasepool {
                     self.configureThread()
                     var when = mach_absolute_time()
+                    self.current_time = self.absToNanos(when)
+                    self.expectedBeatTime = self.absToNanos(when)
                     // We only loop if the timer is on
                     // we only play a beat if there has not just been a tap
                     print(self.timebaseInfo)
                     while self.isOn {
+                        // DEBUG //
+//                        self.error = self.current_time - self.expectedBeatTime
+//                        print("Error: \(Double(self.error)/Double(NSEC_PER_SEC)) secs")
+                        
+                        
                         // if there has been a logged tempo tap since the last timer firing
                         // we skip playing this beat, and use the rescheduled beat
                         if (self.tapOverride){
@@ -140,6 +168,10 @@ class Metronome {
                                 UInt64(self.interval * Double(NSEC_PER_SEC))
                             )
                         }
+//                        // DEBUG //
+//                        self.current_time = self.absToNanos(mach_absolute_time())
+//                        self.expectedBeatTime = self.absToNanos(when)
+                        
                         print("Waiting...")
                         mach_wait_until(when) // wait until fire time
                         // if the metronome is still on after the timer has fired
@@ -157,14 +189,9 @@ class Metronome {
     
     func animateCircleInMainThread() {
         DispatchQueue.main.async {
-            self.parentViewController.containerView.animateBeatCircle(self.beat, beatDuration: self.interval * 2)
-        }
-    }
-    
-    func tempoChangeUpdateUI() {
-        DispatchQueue.main.async {
-            self.parentViewController.tempoSlider.value = Float(self.tempo)
-            self.parentViewController.tempoTextField.text = String(self.tempo)
+            self.parentViewController.containerView.animateBeatCircle(
+                beatIndex: self.getBeatIndex(), beatDuration: self.getInterval()
+            )
         }
     }
     
@@ -173,8 +200,17 @@ class Metronome {
         DispatchQueue.main.async {
             self.playBeat()
             if !self.tapOverride {
-                self.parentViewController.containerView.animateBeatCircle(self.beat, beatDuration: self.interval * 2)
+                self.parentViewController.containerView.animateBeatCircle(
+                    beatIndex: self.getBeatIndex(), beatDuration: self.getInterval()
+                )
             }
+        }
+    }
+    
+    func tempoChangeUpdateUI() {
+        DispatchQueue.main.async {
+            self.parentViewController.tempoSlider.value = Float(self.tempo)
+            self.parentViewController.tempoTextField.text = String(self.tempo)
         }
     }
     
@@ -235,13 +271,13 @@ class Metronome {
     }
     
     func playBeat() {
-        print("Play Beat \(self.beat)")
+//        print("Play Beat \(self.beat)")
         self.playSound()
         self.playedLastBeat = true
     }
     
     func playSound() {
-        print("Playing Sound...")
+//        print("Playing Sound...")
 //        if (self.beat == 1) {
 //            self.downBeatClick.play()
 //            self.playedLastBeat = true

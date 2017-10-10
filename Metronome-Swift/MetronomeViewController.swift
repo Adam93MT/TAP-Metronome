@@ -44,8 +44,8 @@ class MetronomeViewController: UIViewController {
         // Lets us access the ViewController from metronome logic
         metronome.parentViewController = self
         
-        viewWidth = view.frame.width
-        viewHeight = view.frame.height
+        self.viewWidth = view.frame.width
+        self.viewHeight = view.frame.height
         
         // Listen for device rotation
         NotificationCenter.default.addObserver(
@@ -57,6 +57,8 @@ class MetronomeViewController: UIViewController {
         self.containerView.center = view.center
         self.containerView.backgroundColor = UIColor.clear
         self.containerView.originalOrientation = self.originalOrientation
+        self.containerView.screenWidth = self.viewWidth
+        self.containerView.screenHeight = self.viewHeight
         view.addSubview(self.containerView)
         view.sendSubview(toBack: self.containerView)
         
@@ -101,7 +103,10 @@ class MetronomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         self.currentOrientation = UIDevice.current.orientation.isPortrait ? "portrait" : "landscape"
-        print(self.currentOrientation)
+        if UIDevice.current.orientation.isFlat {
+            self.currentOrientation = "portrait"
+        }
+        print("Initial orientation \(self.currentOrientation)")
         self.originalOrientation = self.currentOrientation
         self.containerView.originalOrientation = self.originalOrientation
     }
@@ -153,9 +158,10 @@ class MetronomeViewController: UIViewController {
         }
         let tapLocation = gestureRecognizer.location(in: self.view)
         self.metronome.playBeat()
+        let tapIdx = metronome.getBeatIndex() + metronome.getTimeSignature()
         self.metronome.incrementBeat()
         self.containerView.animateBeatCircle(
-            metronome.beat, beatDuration: metronome.interval, startPoint: tapLocation
+            beatIndex: tapIdx, beatDuration: metronome.getInterval(), startPoint: tapLocation
         )
     }
     
