@@ -51,9 +51,14 @@ class Metronome {
     
     var total_beats = 0
     var error: UInt64 = 0
-    var total_error: CFTimeInterval = 0
-    var avg_error: CFTimeInterval = 0
+    var total_error: UInt64 = 0
+    var avg_error: Double = 0
     // ------------
+    
+    init() {
+        print("init metronome")
+        self.configureThread()
+    }
     
     // Getter functions
     
@@ -120,7 +125,7 @@ class Metronome {
     private func startMachTimer() {
         Thread.detachNewThread {
             autoreleasepool {
-                self.configureThread()
+//                self.configureThread()
                 var when = mach_absolute_time()
                 self.current_time = when
                 self.expected_fire_time = when
@@ -128,7 +133,7 @@ class Metronome {
                 // we only play a beat if there has not just been a tap
                 print(self.timebaseInfo)
                 while self.isOn {
-                    self.prepareForNextBeat()
+                    print("\nNext Beat: \(self.beat) - at \(self.tempo) bpm")
                     // if there has been a logged tempo tap since the last timer firing
                     // we skip playing this beat, and use the rescheduled beat
                     if (self.tapOverride){
@@ -164,6 +169,8 @@ class Metronome {
                     }
                     self.current_time = mach_absolute_time()
                     self.error = self.current_time - self.expected_fire_time
+                    self.total_error += self.error
+                    self.total_beats += 1
                     let err_ms = Double(self.absToNanos(self.error))/Double(NSEC_PER_MSEC)
                     print("Error: \(err_ms) msec")
                     print("Error: \(err_ms/Double(self.interval * 1000))%")
@@ -171,6 +178,7 @@ class Metronome {
                     self.expected_fire_time = when
                     print("Waiting...")
                     mach_wait_until(when) // wait until fire time
+                    self.prepareForNextBeat()
                     // if the metronome is still on after the timer has fired
                     // we increment to the next beat
                     if (self.isOn && !self.isFirstBeat) {
@@ -239,6 +247,7 @@ class Metronome {
 //        self.downBeatClick.prepareToPlay()
         self.beat = 1
         self.isPrepared = true
+        self.prepareForNextBeat()
 //        self.setVibrationPattern()
         
         if parentViewController != nil {
@@ -252,7 +261,6 @@ class Metronome {
         }
         self.isOn = true
         self.isFirstBeat = true
-        self.prepareForNextBeat()
         self.startMachTimer()
         print("\n---Started---")
     }
@@ -262,7 +270,6 @@ class Metronome {
 //        self.downBeatClick.currentTime = 0
         self.beatClick.pause()
         self.beatClick.currentTime = 0
-        print("\nNext Beat ------ at \(self.tempo) bpm")
     }
     
     func playBeat() {
@@ -307,6 +314,9 @@ class Metronome {
         self.beat = 1
         self.prepare()
         self.parentViewController.resetAllBeatCircles()
+//        self.parentViewController.tapButton.setImage(UIImage(named: "Play"), for: .normal)
+        self.avg_error = (Double(self.absToNanos(self.total_error))/Double(NSEC_PER_MSEC))/Double(self.total_beats)
+        print("Avg. Error: \(self.avg_error) msec")
         
         //-- Debug
         self.total_beats = 0

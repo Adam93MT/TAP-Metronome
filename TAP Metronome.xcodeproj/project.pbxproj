@@ -10,6 +10,7 @@
 		6636EFFF1F89CD8F0000D99A /* TapDownGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */; };
 		668726801F84830200AA62FA /* CustomHeightSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6687267F1F84830200AA62FA /* CustomHeightSlider.swift */; };
 		6695724D1C2C6024001BF1FF /* BeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6695724C1C2C6024001BF1FF /* BeatView.swift */; };
+		66AB01241F8D6CE4000D5E38 /* GradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */; };
 		66C553B61D1383BE00FE56B4 /* MetronomeLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C553B51D1383BE00FE56B4 /* MetronomeLogic.swift */; };
 		66CA84151F8682F7001E3485 /* beatClick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 66CA84141F868112001E3485 /* beatClick.wav */; };
 		66CA84161F8682F9001E3485 /* beatClick.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 66CA84131F8680A1001E3485 /* beatClick.aiff */; };
@@ -39,6 +40,7 @@
 		6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapDownGestureRecognizer.swift; sourceTree = "<group>"; };
 		6687267F1F84830200AA62FA /* CustomHeightSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeightSlider.swift; sourceTree = "<group>"; };
 		6695724C1C2C6024001BF1FF /* BeatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatView.swift; sourceTree = "<group>"; };
+		66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLayer.swift; sourceTree = "<group>"; };
 		66C553B51D1383BE00FE56B4 /* MetronomeLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetronomeLogic.swift; sourceTree = "<group>"; };
 		66CA84131F8680A1001E3485 /* beatClick.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = beatClick.aiff; sourceTree = "<group>"; };
 		66CA84141F868112001E3485 /* beatClick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = beatClick.wav; path = resources/beatClick.wav; sourceTree = SOURCE_ROOT; };
@@ -101,6 +103,7 @@
 				66E4D1F31D16532900811CCA /* BeatContainerView.swift */,
 				6695724C1C2C6024001BF1FF /* BeatView.swift */,
 				6687267F1F84830200AA62FA /* CustomHeightSlider.swift */,
+				66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */,
 				B897AC7819E4AC8700820251 /* MetronomeViewController.swift */,
 				66C553B51D1383BE00FE56B4 /* MetronomeLogic.swift */,
 				6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */,
@@ -188,7 +191,7 @@
 		B897AC6919E4AC8700820251 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Adam Thompson";
 				TargetAttributes = {
 					B897AC7019E4AC8700820251 = {
@@ -253,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66E4D1F41D16532900811CCA /* BeatContainerView.swift in Sources */,
+				66AB01241F8D6CE4000D5E38 /* GradientLayer.swift in Sources */,
 				B897AC7919E4AC8700820251 /* MetronomeViewController.swift in Sources */,
 				B897AC7719E4AC8700820251 /* AppDelegate.swift in Sources */,
 				6636EFFF1F89CD8F0000D99A /* TapDownGestureRecognizer.swift in Sources */,
@@ -308,13 +312,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: tml_lover@mac.com (BRUN4R8X84)";
@@ -322,8 +334,10 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = F9JXH3N2LB;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -353,13 +367,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -367,6 +389,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -377,6 +400,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -390,6 +414,7 @@
 				INFOPLIST_FILE = "Metronome-Swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.adamthompson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "TAP Metronome-Swift";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -404,6 +429,7 @@
 				INFOPLIST_FILE = "Metronome-Swift/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.adamthompson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "TAP Metronome-Swift";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -424,6 +450,7 @@
 				);
 				INFOPLIST_FILE = "Metronome-SwiftTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.adamthompson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "TAP Metronome-SwiftTests";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Metronome-Swift.app/Metronome-Swift";
 			};
@@ -439,6 +466,7 @@
 				);
 				INFOPLIST_FILE = "Metronome-SwiftTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.adamthompson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "TAP Metronome-SwiftTests";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Metronome-Swift.app/Metronome-Swift";
 			};
