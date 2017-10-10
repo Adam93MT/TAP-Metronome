@@ -31,8 +31,11 @@ class MetronomeViewController: UIViewController {
     var viewHeight: CGFloat!
     
     // Colours
+    let gradientLayer = GradientView()
     let backgroundColor = UIColor.black
-    let tempoLabelColor = UIColor(red: 0.14, green: 0.14, blue: 0.14, alpha: 1)
+    var gradientStartColor: UIColor = UIColor(red: 29/255.0, green: 71/255.0, blue: 140/255.0, alpha: 0.5)
+    var gradientEndColor: UIColor = UIColor(red: 19/255.0, green: 48/255.0, blue: 93/255.0, alpha: 0.5)
+    let textColor = UIColor(red: 0.14, green: 0.14, blue: 0.14, alpha: 1)
     let MinColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2)
     let MaxColor = UIColor(red:0.04, green: 0.04, blue: 0.04, alpha: 0.2)
     let textLabelBottomSpace: CGFloat = 24
@@ -45,6 +48,10 @@ class MetronomeViewController: UIViewController {
         
         self.viewWidth = view.frame.width
         self.viewHeight = view.frame.height
+        
+        // Setup BG Color
+        self.view.backgroundColor = backgroundColor
+//        self.view.backgroundColor = UIColor.purple
         
         // Listen for device rotation
         NotificationCenter.default.addObserver(
@@ -62,12 +69,15 @@ class MetronomeViewController: UIViewController {
         view.sendSubview(toBack: self.containerView)
         
         // Set up Tap button
+//        tapButton.setTitleColor(self.textColor, for: .normal)
         tapButton.frame.size = CGSize(width: viewWidth, height: viewHeight);
         tapButton.contentEdgeInsets = UIEdgeInsetsMake(
             viewHeight/2, viewWidth/2, viewHeight/2, viewWidth/2
         )
-        view.backgroundColor = backgroundColor
-//        view.backgroundColor = UIColor.purple
+        tapButton.setTitle("TAP", for: .normal)
+        tapButton.alpha = 0.75
+//        tapButton.setImage(UIImage(named: "Play"), for: .normal)
+//        tapButton.setImage(UIImage(named: "Circle"), for: .normal)
         
         // Set up gesture recognizer
         let tapDownGestureRecognizer = TapDownGestureRecognizer(target: self, action: #selector(self.handleTap))
@@ -75,14 +85,13 @@ class MetronomeViewController: UIViewController {
         tapDownGestureRecognizer.delaysTouchesEnded = false
         tapDownGestureRecognizer.numberOfTapsRequired = 1
         tapDownGestureRecognizer.numberOfTouchesRequired = 1
-//        self.tapButton.backgroundColor = UIColor.red // DEBUG (obviously)
         self.tapButton.addGestureRecognizer(tapDownGestureRecognizer)
         
         
         // Set up Tempo Control Buttons, Slider and Text
         self.addDoneButtonOnKeyboard()
-        
         tempoTextField.text = String(metronome.tempo)
+        tempoTextField.tintColor = self.textColor
         tempoTextField.backgroundColor = UIColor.clear
         // add keyboard listeners to move UI up/down
         NotificationCenter.default.addObserver(
@@ -107,6 +116,11 @@ class MetronomeViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Make Gradient
+        self.createGradientLayer()
+        
+        // Get original orientation
         self.currentOrientation = UIDevice.current.orientation.isPortrait ? "portrait" : "landscape"
         if UIDevice.current.orientation.isFlat {
             self.currentOrientation = "portrait"
@@ -206,7 +220,7 @@ class MetronomeViewController: UIViewController {
             self.incrementButton.alpha = 1
             self.decrementButton.alpha = 1
             self.tempoSlider.alpha = 1
-            self.tapButton.alpha = 1
+            self.tapButton.alpha = 0.75
         })
         self.controlsAreHidden = false
     }
@@ -255,6 +269,16 @@ class MetronomeViewController: UIViewController {
             self.currentOrientation = "landscape"
             self.containerView.currentOrientation = "landscape"
         }
+        self.gradientLayer.gl.frame = self.view.bounds
+        
+    }
+    
+    func createGradientLayer() {
+        // Set up the background colors
+        self.gradientLayer.setColors(startColor: gradientStartColor, endColor: gradientEndColor)
+        self.gradientLayer.setLocations(start: 0.0, end: 0.5)
+        self.gradientLayer.gl.frame = self.view.bounds
+        self.view.layer.insertSublayer(self.gradientLayer.gl, at: 0)
     }
 }
 
