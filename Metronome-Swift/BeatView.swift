@@ -33,7 +33,7 @@ class BeatView: UIView {
     }
 
     func drawBeatCircle() {
-//        print("Drawing Beat Circle")
+        print("Drawing Beat Circle")
         self.beatCircleLayer = CAShapeLayer()
         beatCircleLayer.path = startShape
         

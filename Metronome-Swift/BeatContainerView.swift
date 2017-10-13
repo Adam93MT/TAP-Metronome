@@ -19,8 +19,7 @@ class BeatContainerView: UIView {
     let startColor = UIColor.white
     let endAlpha: CGFloat = 0
     var startDiameter: CGFloat = 128
-    var startScale: CGFloat = 0.1
-    var endScale: CGFloat = 1
+    var endScale: CGFloat = 10
 //    let initialCirclePadding: CGFloat = 128
     
     var screenWidth: CGFloat!
@@ -69,22 +68,21 @@ class BeatContainerView: UIView {
         if allBeatsInitialized == false {
             print("Initializing All Circles")
             let hypotenuse = CGFloat(sqrt(Double(self.screenWidth * self.screenWidth + self.screenHeight * self.screenHeight)))
-            let initDiameter = hypotenuse * 1.1
-            self.startDiameter = min(self.screenWidth, self.screenHeight) * 0.5
             
-//            self.endScale = hypotenuse/self.startDiameter * 1.5
-            self.startScale = 1 / (hypotenuse/self.startDiameter * 1.1)
+            self.startDiameter = min(self.screenWidth, self.screenHeight) * 0.5
+//            self.endScale = 0.1
+            
+            self.endScale = hypotenuse/self.startDiameter * 1.5
             
             // Create two BeatView for each beat in the Time Signature
             // plus one for timer and one for taps
             for beat in 0...timeSignature*2-1 {
                 print("Initializing \(beat) ")
                 let newBeatView = BeatView(
-                    frame: CGRect(x: 0.0, y: 0.0, width: initDiameter, height: initDiameter)
+                    frame: CGRect(x: 0.0, y: 0.0, width: startDiameter, height: startDiameter)
                 )
-                newBeatView.transform = CGAffineTransform(scaleX: self.startScale, y: self.startScale)
                 newBeatView.center = self.center
-                newBeatView.layer.cornerRadius = CGFloat(initDiameter/2.0)
+                newBeatView.layer.cornerRadius = CGFloat(startDiameter/2.0)
                 newBeatView.backgroundColor = startColor//UIColor.redColor()
                 newBeatView.isHidden = true
                 BeatViewsArray.append(newBeatView)
@@ -148,7 +146,7 @@ class BeatContainerView: UIView {
     
     func beatCircleReset(_ beatIndex:Int) {
         let thisBeat = self.BeatViewsArray[beatIndex]
-        let resetScaleTransform = CGAffineTransform(scaleX: self.startScale, y: self.startScale)
+        let resetScaleTransform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         print("... Resetting beat index \(beatIndex)")
         thisBeat.transform = resetScaleTransform
         thisBeat.alpha = 1
