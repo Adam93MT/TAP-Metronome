@@ -12,7 +12,7 @@ import AVFoundation
 import AudioToolbox
 
 @available(iOS 10.0, *)
-class Metronome {
+class MachMetronome {
 //    let metronomeSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "metronomeClick", ofType: "mp3")!)
     let metronomeSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "beatClick", ofType: "wav")!)
 //    let downBeatSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "downBeatClick", ofType: "mp3")!)
@@ -27,7 +27,7 @@ class Metronome {
     var timeSignature: Int = 4 // default is 4:4
     var beat = 1
     var tempo: Int = 100
-    var interval: Double = 0.6
+    var interval: Float = 0.6
     var nextWhen: UInt64!
     var nextNextWhen: UInt64!
     
@@ -39,13 +39,14 @@ class Metronome {
     var isFirstBeat: Bool = true
     
     // Beat Logging
-    var loggedDiffs = [Double]()
+    var loggedDiffs = [Float]()
     var lastTapTime = mach_absolute_time()
     var untappedBeats: Int = 0
     let beatsToHideUI: Int = 16
     
     // DEBUG ------
     var lastBeat: UInt64 = 0
+    var last_fire_time: UInt64 = 0
     var expected_fire_time: UInt64 = 0
     var current_time: UInt64 = 0
     
@@ -74,7 +75,7 @@ class Metronome {
         return self.tempo
     }
     
-    func getInterval() -> Double {
+    func getInterval() -> Float {
         return self.interval
     }
     
@@ -152,7 +153,7 @@ class Metronome {
                     else if (self.isFirstBeat) {
                         self.isFirstBeat = false
                         when += self.nanosToAbs(
-                            UInt64(self.interval * Double(NSEC_PER_SEC))
+                            UInt64(self.interval * Float(NSEC_PER_SEC))
                         )
                     }
                     // otherwise we play a beat normally
@@ -164,20 +165,32 @@ class Metronome {
                             self.hideUIinMainThread()
                         }
                         when += self.nanosToAbs(
-                            UInt64(self.interval * Double(NSEC_PER_SEC))
+                            UInt64(self.interval * Float(NSEC_PER_SEC))
                         )
+                        self.last_fire_time = mach_absolute_time()
                     }
-                    self.current_time = mach_absolute_time()
-                    self.error = self.current_time - self.expected_fire_time
-                    self.total_error += self.error
-                    self.total_beats += 1
-                    let err_ms = Double(self.absToNanos(self.error))/Double(NSEC_PER_MSEC)
-                    print("Error: \(err_ms) msec")
-                    print("Error: \(err_ms/Double(self.interval * 1000))%")
                     
-                    self.expected_fire_time = when
+//                    self.current_time = mach_absolute_time()
+//                    self.error = self.current_time - self.expected_fire_time
+//                    self.total_error += self.error
+//                    self.total_beats += 1
+//                    let err_ms = Double(self.absToNanos(self.error))/Double(NSEC_PER_MSEC)
+//                    print("Error: \(err_ms) msec")
+//                    print("Error: \(err_ms/Double(self.interval * 1000))%")
+                    
+//                    self.expected_fire_time = when
+                    
                     print("Waiting...")
                     mach_wait_until(when) // wait until fire time
+                    
+                    self.current_time = mach_absolute_time()
+                    let actual = Float(self.absToNanos(self.current_time - self.last_fire_time))/Float(NSEC_PER_MSEC)
+                    print("\(actual) ms interval")
+                    let expect = self.interval * 1000
+                    let err_ms = expect - actual
+                    print("Error: \(err_ms) msec")
+                    
+                    
                     self.prepareForNextBeat()
                     // if the metronome is still on after the timer has fired
                     // we increment to the next beat
@@ -192,7 +205,7 @@ class Metronome {
     func animateCircleInMainThread() {
         DispatchQueue.main.async {
             self.parentViewController.containerView.animateBeatCircle(
-                beatIndex: self.getBeatIndex(), beatDuration: self.getInterval()
+                beatIndex: self.getBeatIndex(), beatDuration: Float(self.getInterval())
             )
         }
     }
@@ -203,7 +216,7 @@ class Metronome {
             self.playBeat()
             if !self.tapOverride {
                 self.parentViewController.containerView.animateBeatCircle(
-                    beatIndex: self.getBeatIndex(), beatDuration: self.getInterval()
+                    beatIndex: self.getBeatIndex(), beatDuration: Float(self.getInterval())
                 )
             }
         }
@@ -343,7 +356,7 @@ class Metronome {
         
         // on iPhones etc. mach_absolute_time does not return nanos, but something else
         // see https://shiftedbits.org/2008/10/01/mach_absolute_time-on-the-iphone/
-        let lastDiff = Double(self.absToNanos(tapTime - lastTapTime)) / Double(NSEC_PER_SEC)
+        let lastDiff = Float(self.absToNanos(tapTime - lastTapTime)) / Float(NSEC_PER_SEC)
         
         print("Immediate Tempo: \(self.TempoFromTime(time: lastDiff))")
         
@@ -369,10 +382,10 @@ class Metronome {
             
             // only change tempo when 2 beats have been tapped
             if (self.loggedDiffs.count >= 2) {
-                var sum = 0.0
-                let len = Double(self.loggedDiffs.count)
+                var sum: Float = 0.0
+                let len = Float(self.loggedDiffs.count)
                 for t in self.loggedDiffs {
-                    sum += Double(t)
+                    sum += Float(t)
                 }
                 let avgDiff = sum/len // calculate new interval
                 self.setTempo(newTempo: self.TempoFromTime(time: avgDiff))
@@ -387,11 +400,11 @@ class Metronome {
     }
     
     func scheduleNextBeats() {
-        self.nextWhen = mach_absolute_time() + self.nanosToAbs(UInt64(self.interval * Double(NSEC_PER_SEC)))
-        self.nextNextWhen = self.nextWhen + self.nanosToAbs(UInt64(self.interval * Double(NSEC_PER_SEC)))
+        self.nextWhen = mach_absolute_time() + self.nanosToAbs(UInt64(self.interval * Float(NSEC_PER_SEC)))
+        self.nextNextWhen = self.nextWhen + self.nanosToAbs(UInt64(self.interval * Float(NSEC_PER_SEC)))
     }
     
-    func setTempofromTime(newTime: Double){
+    func setTempofromTime(newTime: Float){
         self.interval = newTime
         self.tempo = TempoFromTime(time: newTime)
         print("New Tempo: \(self.tempo)")
@@ -415,11 +428,11 @@ class Metronome {
         self.untappedBeats = 0
     }
 
-    func TimeFromTempo(bpm: Int) -> Double {
-        return Double(60.0/Double(bpm))
+    func TimeFromTempo(bpm: Int) -> Float {
+        return Float(60.0/Float(bpm))
     }
 
-    func TempoFromTime(time: Double) -> Int {
+    func TempoFromTime(time: Float) -> Int {
         return Int(60.0/time)
     }
     

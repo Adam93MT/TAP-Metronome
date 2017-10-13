@@ -109,10 +109,10 @@ class BeatContainerView: UIView {
         }
     }
     
-    func animateBeatCircle(beatIndex: Int, beatDuration: Double, startPoint: CGPoint? = nil) {
+    func animateBeatCircle(beatIndex: Int, beatDuration: Float, startPoint: CGPoint? = nil) {
+        print("Animating Beat index \(beatIndex)")
         let thisBeat = self.BeatViewsArray[beatIndex]
 //        self.beatCircleReset(beatIndex) // make sure it's reset
-//        print("Animating Beat index \(beatIndex)")
         
        //  handle startPoint
         if (startPoint != nil) {
@@ -140,7 +140,7 @@ class BeatContainerView: UIView {
         }
         
         // Do the animation
-        UIView.animate(withDuration: beatDuration * 2, delay: 0, options: [.curveEaseOut], animations: beatAnimation,
+        UIView.animate(withDuration: TimeInterval(beatDuration * 2), delay: 0, options: [.curveEaseOut], animations: beatAnimation,
            completion:  { finished in
                 self.beatCircleReset(beatIndex) // reset circle once the animation is finished
         })

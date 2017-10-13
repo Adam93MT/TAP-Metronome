@@ -21,7 +21,7 @@ class MetronomeViewController: UIViewController {
     @IBOutlet weak var incrementButton: UIButton!
     @IBOutlet weak var tempoSlider: CustomHeightSlider!
     
-    let metronome = Metronome()
+    let metronome = MachMetronome()
     var containerView: BeatContainerView!
     var metronomeDisplayLink: CADisplayLink!
     
@@ -32,11 +32,11 @@ class MetronomeViewController: UIViewController {
     
     // Colours
     let gradientLayer = GradientView()
-    let backgroundColor: UIColor = UIColor(red: 19/255.0, green: 48/255.0, blue: 93/255.0, alpha: 1)
-//    var gradientStartColor: UIColor = UIColor(red: 29/255.0, green: 71/255.0, blue: 140/255.0, alpha: 0.5)
-//    var gradientEndColor: UIColor = UIColor(red: 19/255.0, green: 48/255.0, blue: 93/255.0, alpha: 0.5)
-    var gradientStartColor: UIColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.05)
-    var gradientEndColor: UIColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.0)
+    let backgroundColor: UIColor = UIColor(red: 7/255.0, green: 24/255.0, blue: 51/255.0, alpha: 1)
+    var gradientStartColor: UIColor = UIColor(red: 29/255.0, green: 71/255.0, blue: 140/255.0, alpha: 0.5)
+    var gradientEndColor: UIColor = UIColor(red: 19/255.0, green: 48/255.0, blue: 93/255.0, alpha: 0.5)
+//    var gradientStartColor: UIColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.1)
+//    var gradientEndColor: UIColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.0)
     let textColor = UIColor(red: 0.14, green: 0.14, blue: 0.14, alpha: 1)
     let MinColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2)
     let MaxColor = UIColor(red:0.04, green: 0.04, blue: 0.04, alpha: 0.2)
@@ -92,7 +92,7 @@ class MetronomeViewController: UIViewController {
         
         // Set up Tempo Control Buttons, Slider and Text
         self.addDoneButtonOnKeyboard()
-        tempoTextField.text = String(metronome.tempo)
+        tempoTextField.text = String(metronome.getTempo())
         tempoTextField.tintColor = self.textColor
         tempoTextField.backgroundColor = UIColor.clear
         // add keyboard listeners to move UI up/down
@@ -112,15 +112,18 @@ class MetronomeViewController: UIViewController {
         tempoSlider.setThumbImage(UIImage(named: "sliderThumb"), for: UIControlState.normal)
         tempoSlider.maximumValue = Float(metronome.maxTempo)
         tempoSlider.minimumValue = Float(metronome.minTempo)
-        tempoSlider.value = Float(metronome.tempo)
+        tempoSlider.value = Float(metronome.getTempo())
 
-        metronome.prepare()
+//        metronome.prepare()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Make Gradient
         self.createGradientLayer()
+        
+        // Initialize the beat Circles
+//        containerView.initAllBeatCircles(metronome.getTimeSignature())
         
         // Get original orientation
         self.currentOrientation = UIDevice.current.orientation.isPortrait ? "portrait" : "landscape"
@@ -141,7 +144,7 @@ class MetronomeViewController: UIViewController {
         if let v: Int = Int(self.tempoTextField.text!) {
             val = v
         } else {
-            val = self.metronome.tempo
+            val = self.metronome.getTempo()
         }
         if (val! > metronome.maxTempo){
             val = metronome.maxTempo
@@ -172,7 +175,7 @@ class MetronomeViewController: UIViewController {
             killControlAnimations()
         }
         else {
-            metronome.playBeat()
+            metronome.last_fire_time = mach_absolute_time()
             metronome.start()
         }
         if self.controlsAreHidden {
@@ -278,7 +281,7 @@ class MetronomeViewController: UIViewController {
     func createGradientLayer() {
         // Set up the background colors
         self.gradientLayer.setColors(startColor: gradientStartColor, endColor: gradientEndColor)
-        self.gradientLayer.setLocations(start: 0.0, end: 0.5)
+        self.gradientLayer.setLocations(start: 0.0, end: 0.3)
         self.gradientLayer.gl.frame = self.view.bounds
         self.view.layer.insertSublayer(self.gradientLayer.gl, at: 0)
     }
