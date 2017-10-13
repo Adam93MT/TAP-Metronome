@@ -32,11 +32,9 @@ class MetronomeViewController: UIViewController {
     
     // Colours
     let gradientLayer = GradientView()
-    let backgroundColor: UIColor = UIColor(red: 19/255.0, green: 48/255.0, blue: 93/255.0, alpha: 1)
-//    var gradientStartColor: UIColor = UIColor(red: 29/255.0, green: 71/255.0, blue: 140/255.0, alpha: 0.5)
-//    var gradientEndColor: UIColor = UIColor(red: 19/255.0, green: 48/255.0, blue: 93/255.0, alpha: 0.5)
-    var gradientStartColor: UIColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.05)
-    var gradientEndColor: UIColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.0)
+    let backgroundColor = UIColor.black
+    var gradientStartColor: UIColor = UIColor(red: 29/255.0, green: 71/255.0, blue: 140/255.0, alpha: 0.5)
+    var gradientEndColor: UIColor = UIColor(red: 19/255.0, green: 48/255.0, blue: 93/255.0, alpha: 0.5)
     let textColor = UIColor(red: 0.14, green: 0.14, blue: 0.14, alpha: 1)
     let MinColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2)
     let MaxColor = UIColor(red:0.04, green: 0.04, blue: 0.04, alpha: 0.2)
