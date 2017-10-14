@@ -138,7 +138,10 @@ class BeatContainerView: UIView {
         }
         
         // Do the animation
-        UIView.animate(withDuration: beatDuration * 2, delay: 0, options: [.curveEaseOut], animations: beatAnimation,
+        let a = 1.0
+        let b = 1.5
+        let animationDuration = (beatDuration)*(beatDuration)/b + a
+        UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseOut], animations: beatAnimation,
            completion:  { finished in
                 self.beatCircleReset(beatIndex) // reset circle once the animation is finished
         })
@@ -147,7 +150,7 @@ class BeatContainerView: UIView {
     func beatCircleReset(_ beatIndex:Int) {
         let thisBeat = self.BeatViewsArray[beatIndex]
         let resetScaleTransform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        print("... Resetting beat index \(beatIndex)")
+        print("... Resetting circle index \(beatIndex)")
         thisBeat.transform = resetScaleTransform
         thisBeat.alpha = 1
         thisBeat.isHidden = true

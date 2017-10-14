@@ -170,6 +170,7 @@ class MetronomeViewController: UIViewController {
             killControlAnimations()
         }
         else {
+            metronome.last_fire_time = mach_absolute_time()
             metronome.playBeat()
             metronome.start()
         }
