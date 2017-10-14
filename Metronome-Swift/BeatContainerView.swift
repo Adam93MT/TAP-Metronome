@@ -77,7 +77,7 @@ class BeatContainerView: UIView {
             // Create two BeatView for each beat in the Time Signature
             // plus one for timer and one for taps
             for beat in 0...timeSignature*2-1 {
-                print("Initializing \(beat) ")
+//                print("Initializing \(beat) ")
                 let newBeatView = BeatView(
                     frame: CGRect(x: 0.0, y: 0.0, width: startDiameter, height: startDiameter)
                 )

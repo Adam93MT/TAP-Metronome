@@ -12,7 +12,7 @@ import AVFoundation
 import AudioToolbox
 
 @available(iOS 10.0, *)
-class Metronome {
+class MachMetronome {
 //    let metronomeSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "metronomeClick", ofType: "mp3")!)
     let metronomeSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "beatClick", ofType: "wav")!)
 //    let downBeatSoundURL = URL(fileURLWithPath: Bundle.main.path(forResource: "downBeatClick", ofType: "mp3")!)
@@ -26,7 +26,7 @@ class Metronome {
     let maxTempo: Int = 220
     var timeSignature: Int = 4 // default is 4:4
     var beat = 1
-    var tempo: Int = 100
+    var tempoBPM: Int = 100
     var interval: Double = 0.6
     var nextWhen: UInt64!
     var nextNextWhen: UInt64!
@@ -64,25 +64,11 @@ class Metronome {
     
     // Getter functions
     
-    func getBeat() -> Int {
-        return self.beat
-    }
-    
-    func getBeatIndex() -> Int {
-        return self.beat - 1
-    }
-    
-    func getTempo() -> Int {
-        return self.tempo
-    }
-    
-    func getInterval() -> Double {
-        return self.interval
-    }
-    
-    func getTimeSignature() -> Int {
-        return self.timeSignature
-    }
+    func getBeat() -> Int { return self.beat}
+    func getBeatIndex() -> Int { return self.beat - 1 }
+    func getTempo() -> Int { return self.tempoBPM }
+    func getInterval() -> Double { return self.interval }
+    func getTimeSignature() -> Int { return self.timeSignature }
     
     // Configure High-Priority Timer
     var timebaseInfo = mach_timebase_info_data_t()
@@ -135,7 +121,7 @@ class Metronome {
                 // we only play a beat if there has not just been a tap
                 print(self.timebaseInfo)
                 while self.isOn {
-                    print("\nNext Beat: \(self.beat) - at \(self.tempo) bpm")
+                    print("\nNext Beat: \(self.beat) - at \(self.tempoBPM) bpm")
                     // if there has been a logged tempo tap since the last timer firing
                     // we skip playing this beat, and use the rescheduled beat
                     if (self.tapOverride){
@@ -225,8 +211,8 @@ class Metronome {
     
     func tempoChangeUpdateUI() {
         DispatchQueue.main.async {
-            self.parentViewController.tempoSlider.value = Float(self.tempo)
-            self.parentViewController.tempoTextField.text = String(self.tempo)
+            self.parentViewController.tempoSlider.value = Float(self.tempoBPM)
+            self.parentViewController.tempoTextField.text = String(self.tempoBPM)
         }
     }
     
@@ -409,8 +395,8 @@ class Metronome {
     
     func setTempofromTime(newTime: Double){
         self.interval = newTime
-        self.tempo = TempoFromTime(time: newTime)
-        print("New Tempo: \(self.tempo)")
+        self.tempoBPM = TempoFromTime(time: newTime)
+        print("New Tempo: \(self.tempoBPM)")
         if self.isOn {
             self.newTempoIsSet = true
             self.scheduleNextBeats()
@@ -420,9 +406,9 @@ class Metronome {
     }
     
     func setTempo(newTempo: Int){
-        self.tempo = newTempo
+        self.tempoBPM = newTempo
         self.interval = TimeFromTempo(bpm: newTempo)
-        print("New Tempo: \(self.tempo)")
+        print("New Tempo: \(self.tempoBPM)")
         if self.isOn {
             self.newTempoIsSet = true
             self.scheduleNextBeats()
@@ -440,14 +426,14 @@ class Metronome {
     }
     
     func decrementTempo() {
-        if (self.tempo > self.minTempo) {
-            self.setTempo(newTempo: self.tempo - 1)
+        if (self.tempoBPM > self.minTempo) {
+            self.setTempo(newTempo: self.tempoBPM - 1)
         }
     }
     
     func incrementTempo() {
-        if (self.tempo < self.maxTempo) {
-            self.setTempo(newTempo: self.tempo + 1)
+        if (self.tempoBPM < self.maxTempo) {
+            self.setTempo(newTempo: self.tempoBPM + 1)
         }
     }
     
