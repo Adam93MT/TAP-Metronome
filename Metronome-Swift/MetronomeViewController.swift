@@ -180,7 +180,7 @@ class MetronomeViewController: UIViewController {
         }
         
         if self.controlsAreHidden {
-            self.showUI()
+            self.showControls()
         }
         
         let tapLocation = gestureRecognizer.location(in: self.view)
@@ -210,18 +210,27 @@ class MetronomeViewController: UIViewController {
         }
     }
     
-    func hideUI() {
-        UIView.animate(withDuration: 4, delay: 0, options: [.curveEaseIn, .allowUserInteraction], animations: {
-            self.tempoTextField.alpha = 0
-            self.incrementButton.alpha = 0
-            self.decrementButton.alpha = 0
-            self.tempoSlider.alpha = 0
-            self.tapButton.alpha = 0.1
+    func animateBeatCircle(_ metronome: HelloMetronome, beatIndex: Int, beatDuration: Double) {
+        DispatchQueue.main.async(execute: {() -> Void in
+            print("metronome ticking: \(beatIndex)")
+            self.containerView.animateBeatCircle(beatIndex: beatIndex, beatDuration: beatDuration)
         })
-        self.controlsAreHidden = true
     }
     
-    func showUI() {
+    func hideControls(_ metronome: HelloMetronome) {
+        DispatchQueue.main.async(execute: {() -> Void in
+            UIView.animate(withDuration: 4, delay: 0, options: [.curveEaseIn, .allowUserInteraction], animations: {
+                self.tempoTextField.alpha = 0
+                self.incrementButton.alpha = 0
+                self.decrementButton.alpha = 0
+                self.tempoSlider.alpha = 0
+                self.tapButton.alpha = 0.1
+            })
+            self.controlsAreHidden = true
+        })
+    }
+    
+    func showControls() {
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseOut, .allowUserInteraction], animations: {
             self.tempoTextField.alpha = 1
             self.incrementButton.alpha = 1
@@ -286,13 +295,6 @@ class MetronomeViewController: UIViewController {
         self.gradientLayer.setLocations(start: 0.0, end: 0.5)
         self.gradientLayer.gl.frame = self.view.bounds
         self.view.layer.insertSublayer(self.gradientLayer.gl, at: 0)
-    }
-    
-    func animateBeatCircle(_ metronome: HelloMetronome, beatIndex: Int, beatDuration: Double) {
-        DispatchQueue.main.async(execute: {() -> Void in
-            print("metronome ticking: \(beatIndex)")
-            self.containerView.animateBeatCircle(beatIndex: beatIndex, beatDuration: beatDuration)
-        })
     }
 }
 

@@ -152,7 +152,7 @@ class MachMetronome {
                         self.signalBeatInMainThread()
                         // hide UI if there have been a lot of beats since tempo change
                         if (self.untappedBeats >= self.beatsToHideUI) {
-                            self.hideUIinMainThread()
+//                            self.hideUIinMainThread()
                         }
                         when += self.nanosToAbs(
                             UInt64(self.interval * Double(NSEC_PER_SEC))
@@ -216,17 +216,17 @@ class MachMetronome {
         }
     }
     
-    func hideUIinMainThread(){
-        DispatchQueue.main.async {
-            self.parentViewController.hideUI()
-        }
-    }
-    
-    func showUIinMainThread(){
-        DispatchQueue.main.async {
-            self.parentViewController.showUI()
-        }
-    }
+//    func hideUIinMainThread(){
+//        DispatchQueue.main.async {
+//            self.parentViewController.hideControls(self)
+//        }
+//    }
+//
+//    func showUIinMainThread(){
+//        DispatchQueue.main.async {
+//            self.parentViewController.showControls(self)
+//        }
+//    }
     
     func getNextBeatTime() -> UInt64{
         let now = mach_absolute_time()
