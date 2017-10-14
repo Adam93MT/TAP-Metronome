@@ -33,25 +33,12 @@ class BeatView: UIView {
     }
 
     func drawBeatCircle() {
-        print("Drawing Beat Circle")
+//        print("Drawing Beat Circle")
         self.beatCircleLayer = CAShapeLayer()
         beatCircleLayer.path = startShape
         
         self.layer.addSublayer(beatCircleLayer)
     }
-    
-//    func animateBeatCircle(beatDuration: Double) {
-//        // animate the `path`
-//        let animation = CABasicAnimation(keyPath: "path")
-//        animation.toValue = endShape
-//        animation.duration = beatDuration // duration is 1 sec
-//        // 3
-//        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut) // animation curve is Ease Out
-//        animation.fillMode = kCAFillModeBoth // keep to value after finishing
-//        animation.isRemovedOnCompletion = false // don't remove after finishing
-//        // 4
-//        beatCircleLayer.add(animation, forKey: animation.keyPath)
-//    }
     
     func loadViewFromNib() -> UIView {
         let bundle = Bundle(for: type(of: self))

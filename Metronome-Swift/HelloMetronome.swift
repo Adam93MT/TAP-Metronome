@@ -45,13 +45,13 @@ class HelloMetronome : NSObject {
     var beatsScheduled: Int = 0
     
     // Beat Logging
+    var tapOverride: Bool = false
     var loggedDiffs = [Double]()
     var lastTapTime = mach_absolute_time()
     var untappedBeats: Int = 0
     let beatsToHideUI: Int = 16
     
     // UI -----
-//    var parentViewController: MetronomeViewController!
     weak var delegate: MetronomeViewController!
     
     // DEBUG vars ------
@@ -116,6 +116,7 @@ class HelloMetronome : NSObject {
     
     private func absToNanos(_ abs: UInt64) -> UInt64 {
         mach_timebase_info(&timebaseInfo)
+        // https://shiftedbits.org/2008/10/01/mach_absolute_time-on-the-iphone/
         return abs * UInt64(timebaseInfo.numer)/UInt64(timebaseInfo.denom)
     }
     
@@ -143,7 +144,7 @@ class HelloMetronome : NSObject {
             let playerBeatTime: AVAudioTime = AVAudioTime(sampleTime: AVAudioFramePosition(beatSampleTime), atRate: bufferSampleRate)
             // This time is relative to the player's start time.
             
-            player.scheduleBuffer(soundBuffer[bufferNumber]!, at: playerBeatTime, options: AVAudioPlayerNodeBufferOptions(rawValue: 0), completionHandler: {
+            player.scheduleBuffer(soundBuffer[0]!, at: playerBeatTime, options: AVAudioPlayerNodeBufferOptions(rawValue: 0), completionHandler: {
                 self.syncQueue!.sync() {
                     self.beatsScheduled -= 1
                     self.bufferNumber ^= 1
@@ -165,6 +166,7 @@ class HelloMetronome : NSObject {
             })
             
             beatsScheduled += 1
+            untappedBeats += 1
             
             if (!playerStarted) {
                 // We defer the starting of the player so that the first beat will play precisely
@@ -174,25 +176,31 @@ class HelloMetronome : NSObject {
                 playerStarted = true
             }
             
-            // Schedule the delegate callback (metronomeTicking:bar:beat:) if necessary.
+            // Schedule the delegate callback
             let callbackBeat = self.getBeatIndex()
             let callbackInterval = self.getInterval()
-            beatNumber += 1
-            if delegate?.animateBeatCircle != nil {
+            
+            if (delegate?.animateBeatCircle != nil && delegate?.hideControls != nil) {
                 let nodeBeatTime: AVAudioTime = player.nodeTime(forPlayerTime: playerBeatTime)!
                 let output: AVAudioIONode = engine.outputNode
-                
-//                print(" \(playerBeatTime), \(nodeBeatTime), \(output.presentationLatency)")
+
                 let latencyHostTicks: UInt64 = AVAudioTime.hostTime(forSeconds: output.presentationLatency)
                 let dispatchTime = DispatchTime(uptimeNanoseconds: nodeBeatTime.hostTime + latencyHostTicks)
                 
                 DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: dispatchTime) {
                     if (self.isOn) {
-                        self.delegate!.animateBeatCircle(self, beatIndex: (callbackBeat), beatDuration: (callbackInterval))
+                        if !self.tapOverride && self.beatNumber > 0 {
+                            self.delegate!.animateBeatCircle(self, beatIndex: (callbackBeat), beatDuration: (callbackInterval))
+                        }
+                        if self.untappedBeats > self.beatsToHideUI {
+                            self.delegate!.hideControls(self)
+                        }
+                        self.tapOverride = false
                     }
                 }
             }
             
+            beatNumber += 1
             nextBeatSampleTime += Float64(samplesPerBeat)
         }
     }
@@ -252,10 +260,8 @@ class HelloMetronome : NSObject {
         print("\nLogging Tap")
         let tapTime = mach_absolute_time()
         self.untappedBeats = 0
-        //        self.showUIinMainThread() // handled in ViewController
+        self.tapOverride = true
         
-        // on iPhones etc. mach_absolute_time does not return nanos, but something else
-        // see https://shiftedbits.org/2008/10/01/mach_absolute_time-on-the-iphone/
         let lastDiff = Double(self.absToNanos(tapTime - lastTapTime)) / Double(NSEC_PER_SEC)
         
         print("Immediate Tempo: \(self.getTempoGivenTime(lastDiff))")
@@ -265,32 +271,31 @@ class HelloMetronome : NSObject {
             self.stop()
         }
         // if the tap interval is in tempo range
-//        else if (
-//        (lastDiff > getTimeGivenTempo(self.maxTempo))
-//            && (lastDiff < getTimeGivenTempo(self.minTempo))
-//        )
-//        {
-//            self.tapOverride = true
+        else if (
+        (lastDiff > getTimeGivenTempo(self.maxTempo))
+            && (lastDiff < getTimeGivenTempo(self.minTempo))
+        )
+        {
 //            self.scheduleNextBeats()
-//
-//            self.loggedDiffs.append(lastDiff)
-//
-//        // limit array to length of 2 bars
-//            if (self.loggedDiffs.count > self.timeSignature * 2) {
-//                self.loggedDiffs.remove(at: 0)
-//            }
-//
-//        // only change tempo when 2 beats have been tapped
-//            if (self.loggedDiffs.count >= 2) {
-//                var sum = 0.0
-//                let len = Double(self.loggedDiffs.count)
-//                for t in self.loggedDiffs {
-//                    sum += Double(t)
-//                }
-//                let avgDiff = sum/len // calculate new interval
-//                self.setTempo(newTempo: self.TempoFromTime(time: avgDiff))
-//            }
-//        }
+
+            self.loggedDiffs.append(lastDiff)
+
+        // limit array to length of 2 bars
+            if (self.loggedDiffs.count > self.timeSignature * 2) {
+                self.loggedDiffs.remove(at: 0)
+            }
+
+        // only change tempo when 2 beats have been tapped
+            if (self.loggedDiffs.count >= 2) {
+                var sum = 0.0
+                let len = Double(self.loggedDiffs.count)
+                for t in self.loggedDiffs {
+                    sum += Double(t)
+                }
+                let avgDiff = sum/len // calculate new interval
+                self.setTempo(self.getTempoGivenTime(avgDiff))
+            }
+        }
         
         // too long between taps
         else {
