@@ -45,13 +45,15 @@ class Metronome {
     let beatsToHideUI: Int = 16
     
     // DEBUG ------
-    var lastBeat: UInt64 = 0
+    var last_fire_time: UInt64 = 0
     var expected_fire_time: UInt64 = 0
     var current_time: UInt64 = 0
     
     var total_beats = 0
     var error: UInt64 = 0
-    var total_error: UInt64 = 0
+    var error_ms: Double = 0
+    var max_error: Double = 0
+    var total_error: Double = 0
     var avg_error: Double = 0
     // ------------
     
@@ -139,12 +141,14 @@ class Metronome {
                     if (self.tapOverride){
                         self.tapOverride = false // reset tapOverride
                         when = self.getNextBeatTime()
+                        self.last_fire_time = mach_absolute_time()
                     }
                     // if we just set a new tempo (tapping or otherwise)
                     // we'll skip this beat, and use the rescheduled beat
                     else if (self.newTempoIsSet) {
                         self.newTempoIsSet = false
                         when = self.getNextBeatTime()
+                        self.last_fire_time = mach_absolute_time()
                     }
                     // if this is the first beat since starting
                     // the tap to start played beat 1,
@@ -154,6 +158,7 @@ class Metronome {
                         when += self.nanosToAbs(
                             UInt64(self.interval * Double(NSEC_PER_SEC))
                         )
+                        self.last_fire_time = mach_absolute_time()
                     }
                     // otherwise we play a beat normally
                     else {
@@ -166,16 +171,25 @@ class Metronome {
                         when += self.nanosToAbs(
                             UInt64(self.interval * Double(NSEC_PER_SEC))
                         )
-                    }
-                    self.current_time = mach_absolute_time()
-                    self.error = self.current_time - self.expected_fire_time
-                    self.total_error += self.error
-                    self.total_beats += 1
-                    let err_ms = Double(self.absToNanos(self.error))/Double(NSEC_PER_MSEC)
-                    print("Error: \(err_ms) msec")
-                    print("Error: \(err_ms/Double(self.interval * 1000))%")
+                        
+                        self.current_time = mach_absolute_time()
+                        let actual_ms = Double(self.absToNanos(self.current_time - self.last_fire_time)) / Double(NSEC_PER_MSEC)
+                        let expect_ms = Double(self.interval * 1000)
+                        
+                        print("actual time: \(actual_ms) msec")
+                        print("expected time \(expect_ms) msec")
+                        self.error_ms = actual_ms - expect_ms
+                        
+                        self.max_error = max(self.max_error, abs(self.error_ms))
+                        
+                        print("Error: \(self.error_ms) msec")
+                        self.total_error += abs(self.error_ms)
+                        self.total_beats += 1
+                        
+                        self.last_fire_time = mach_absolute_time()
                     
-                    self.expected_fire_time = when
+                    }
+                    
                     print("Waiting...")
                     mach_wait_until(when) // wait until fire time
                     self.prepareForNextBeat()
@@ -315,14 +329,16 @@ class Metronome {
         self.prepare()
         self.parentViewController.resetAllBeatCircles()
 //        self.parentViewController.tapButton.setImage(UIImage(named: "Play"), for: .normal)
-        self.avg_error = (Double(self.absToNanos(self.total_error))/Double(NSEC_PER_MSEC))/Double(self.total_beats)
+        self.avg_error = self.total_error/Double(self.total_beats)
         print("Avg. Error: \(self.avg_error) msec")
+        print("Max Error: \(self.max_error)")
         
         //-- Debug
         self.total_beats = 0
         self.error = 0
         self.total_error = 0
         self.avg_error = 0
+        self.max_error = 0
         //
     }
     
