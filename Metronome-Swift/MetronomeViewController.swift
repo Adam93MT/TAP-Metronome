@@ -21,7 +21,7 @@ class MetronomeViewController: UIViewController {
     @IBOutlet weak var incrementButton: UIButton!
     @IBOutlet weak var tempoSlider: CustomHeightSlider!
     
-    let metronome = Metronome()
+    let metronome = HelloMetronome()
     var containerView: BeatContainerView!
     var metronomeDisplayLink: CADisplayLink!
     
@@ -44,7 +44,8 @@ class MetronomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Lets us access the ViewController from metronome logic
-        metronome.parentViewController = self
+//        metronome.parentViewController = self
+        metronome.delegate = self
         
         self.viewWidth = view.frame.width
         self.viewHeight = view.frame.height
@@ -60,11 +61,13 @@ class MetronomeViewController: UIViewController {
         
         // Set Up Beat Circle Views
         self.containerView = BeatContainerView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight))
-        self.containerView.center = view.center
-        self.containerView.backgroundColor = UIColor.clear
         self.containerView.originalOrientation = self.originalOrientation
         self.containerView.screenWidth = self.viewWidth
         self.containerView.screenHeight = self.viewHeight
+        self.containerView.center = view.center
+        self.containerView.initAllBeatCircles(metronome.getTimeSignature())
+        self.containerView.backgroundColor = UIColor.clear
+        
         view.addSubview(self.containerView)
         view.sendSubview(toBack: self.containerView)
         
@@ -90,7 +93,7 @@ class MetronomeViewController: UIViewController {
         
         // Set up Tempo Control Buttons, Slider and Text
         self.addDoneButtonOnKeyboard()
-        tempoTextField.text = String(metronome.tempo)
+        tempoTextField.text = String(metronome.tempoBPM)
         tempoTextField.tintColor = self.textColor
         tempoTextField.backgroundColor = UIColor.clear
         // add keyboard listeners to move UI up/down
@@ -110,9 +113,9 @@ class MetronomeViewController: UIViewController {
         tempoSlider.setThumbImage(UIImage(named: "sliderThumb"), for: UIControlState.normal)
         tempoSlider.maximumValue = Float(metronome.maxTempo)
         tempoSlider.minimumValue = Float(metronome.minTempo)
-        tempoSlider.value = Float(metronome.tempo)
+        tempoSlider.value = Float(metronome.tempoBPM)
 
-        metronome.prepare()
+//        metronome.prepare()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -139,7 +142,7 @@ class MetronomeViewController: UIViewController {
         if let v: Int = Int(self.tempoTextField.text!) {
             val = v
         } else {
-            val = self.metronome.tempo
+            val = Int(self.metronome.tempoBPM)
         }
         if (val! > metronome.maxTempo){
             val = metronome.maxTempo
@@ -149,7 +152,7 @@ class MetronomeViewController: UIViewController {
             self.tempoTextField.text = String(metronome.minTempo)
         }
         print("text box value: \(String(describing: val))")
-        self.metronome.setTempo(newTempo: val!)
+        self.metronome.setTempo(val!)
     }
     
     @IBAction func incrementButtonPressed(_ sender: UIButton) {
@@ -161,25 +164,28 @@ class MetronomeViewController: UIViewController {
     }
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {
-        self.metronome.setTempo(newTempo: Int(tempoSlider.value))
+        self.metronome.setTempo(Int(tempoSlider.value))
     }
     
     func handleTap(gestureRecognizer: TapDownGestureRecognizer) {
+        
         if metronome.isOn {
             metronome.logTap()
             killControlAnimations()
         }
         else {
             metronome.last_fire_time = mach_absolute_time()
-            metronome.playBeat()
+//            metronome.playBeat() // for machMetronome
             metronome.start()
         }
+        
         if self.controlsAreHidden {
             self.showUI()
         }
+        
         let tapLocation = gestureRecognizer.location(in: self.view)
         let tapIdx = metronome.getBeatIndex() + metronome.getTimeSignature()
-        self.metronome.incrementBeat()
+//        self.metronome.incrementBeat()
         self.containerView.animateBeatCircle(
             beatIndex: tapIdx, beatDuration: metronome.getInterval(), startPoint: tapLocation
         )
@@ -280,6 +286,13 @@ class MetronomeViewController: UIViewController {
         self.gradientLayer.setLocations(start: 0.0, end: 0.5)
         self.gradientLayer.gl.frame = self.view.bounds
         self.view.layer.insertSublayer(self.gradientLayer.gl, at: 0)
+    }
+    
+    func animateBeatCircle(_ metronome: HelloMetronome, beatIndex: Int, beatDuration: Double) {
+        DispatchQueue.main.async(execute: {() -> Void in
+            print("metronome ticking: \(beatIndex)")
+            self.containerView.animateBeatCircle(beatIndex: beatIndex, beatDuration: beatDuration)
+        })
     }
 }
 
