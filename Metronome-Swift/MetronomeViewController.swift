@@ -21,7 +21,7 @@ class MetronomeViewController: UIViewController {
     @IBOutlet weak var incrementButton: UIButton!
     @IBOutlet weak var tempoSlider: CustomHeightSlider!
     
-    let metronome = HelloMetronome()
+    let metronome = AVMetronome()
     var containerView: BeatContainerView!
     var metronomeDisplayLink: CADisplayLink!
     
@@ -156,14 +156,17 @@ class MetronomeViewController: UIViewController {
     }
     
     @IBAction func incrementButtonPressed(_ sender: UIButton) {
+        print("tempo++")
         self.metronome.incrementTempo()
     }
     
     @IBAction func decrementButtonPressed(_ sender: UIButton) {
+        print("tempo--")
         self.metronome.decrementTempo()
     }
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {
+        print("changed slider")
         self.metronome.setTempo(Int(tempoSlider.value))
     }
     
@@ -210,14 +213,13 @@ class MetronomeViewController: UIViewController {
         }
     }
     
-    func animateBeatCircle(_ metronome: HelloMetronome, beatIndex: Int, beatDuration: Double) {
+    func animateBeatCircle(_ metronome: AVMetronome, beatIndex: Int, beatDuration: Double) {
         DispatchQueue.main.async(execute: {() -> Void in
-            print("metronome ticking: \(beatIndex)")
             self.containerView.animateBeatCircle(beatIndex: beatIndex, beatDuration: beatDuration)
         })
     }
     
-    func hideControls(_ metronome: HelloMetronome) {
+    func hideControls(_ metronome: AVMetronome) {
         DispatchQueue.main.async(execute: {() -> Void in
             UIView.animate(withDuration: 4, delay: 0, options: [.curveEaseIn, .allowUserInteraction], animations: {
                 self.tempoTextField.alpha = 0

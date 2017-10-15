@@ -34,6 +34,20 @@ class BeatContainerView: UIView {
     var startShape: CGPath!
     var beatCircleLayer: CAShapeLayer!
     
+    // DEBUG vars ------
+    var timebaseInfo = mach_timebase_info_data_t()
+    var last_fire_time: UInt64 = 0
+    var expected_fire_time: UInt64 = 0
+    var current_time: UInt64 = 0
+    
+    var total_beats = 0
+    var error: UInt64 = 0
+    var error_ms: Float = 0
+    var max_error: Float = 0
+    var total_error: Float = 0
+    var avg_error: Float = 0
+    // ------------
+    
     override func draw(_ rect: CGRect) {
         print("Called DrawRect")
 //        self.startDiameter = 10.0
@@ -60,6 +74,12 @@ class BeatContainerView: UIView {
         setup()
     }
     
+    private func absToNanos(_ abs: UInt64) -> UInt64 {
+        mach_timebase_info(&timebaseInfo)
+        // https://shiftedbits.org/2008/10/01/mach_absolute_time-on-the-iphone/
+        return abs * UInt64(timebaseInfo.numer)/UInt64(timebaseInfo.denom)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -77,7 +97,6 @@ class BeatContainerView: UIView {
             // Create two BeatView for each beat in the Time Signature
             // plus one for timer and one for taps
             for beat in 0...timeSignature*2-1 {
-//                print("Initializing \(beat) ")
                 let newBeatView = BeatView(
                     frame: CGRect(x: 0.0, y: 0.0, width: startDiameter, height: startDiameter)
                 )
@@ -87,8 +106,6 @@ class BeatContainerView: UIView {
                 newBeatView.isHidden = true
                 BeatViewsArray.append(newBeatView)
                 self.addSubview(BeatViewsArray[beat])
-                
-//                print("Size: \(BeatViewsArray[beat].frame.height)")
         }
             
         self.beatCircleLayer = CAShapeLayer()
@@ -109,10 +126,22 @@ class BeatContainerView: UIView {
     
     func animateBeatCircle(beatIndex: Int, beatDuration: Double, startPoint: CGPoint? = nil) {
         let thisBeat = self.BeatViewsArray[beatIndex]
-//        self.beatCircleReset(beatIndex) // make sure it's reset
-//        print("Animating Beat index \(beatIndex)")
         
-       //  handle startPoint
+        // Error logging
+        self.current_time = mach_absolute_time()
+        let actual_ms = Float(self.absToNanos(self.current_time - self.last_fire_time)) / Float(NSEC_PER_MSEC)
+        let expect_ms = Float(beatDuration * 1000)
+        self.last_fire_time = mach_absolute_time()
+//        print("actual time: \(actual_ms) msec")
+//        print("expected time \(expect_ms) msec")
+        self.error_ms = actual_ms - expect_ms
+        self.max_error = max(self.max_error, abs(self.error_ms))
+//        print("Animation error: \(self.error_ms) msec")
+        self.total_error += abs(self.error_ms)
+        self.total_beats += 1
+        
+        
+       //  handle startPoint finger press
         if (startPoint != nil) {
 //            print("Tap Location: \(String(describing: startPoint))")
             thisBeat.frame.origin.x = startPoint!.x - thisBeat.frame.width/2
@@ -138,9 +167,10 @@ class BeatContainerView: UIView {
         }
         
         // Do the animation
-        let a = 1.0
-        let b = 1.5
-        let animationDuration = (beatDuration)*(beatDuration)/b + a
+//        let a = 1.0
+//        let b = 1.5
+//        let animationDuration = (beatDuration)*(beatDuration)/b + a
+        let animationDuration = beatDuration * 2.0
         UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseOut], animations: beatAnimation,
            completion:  { finished in
                 self.beatCircleReset(beatIndex) // reset circle once the animation is finished
@@ -150,7 +180,7 @@ class BeatContainerView: UIView {
     func beatCircleReset(_ beatIndex:Int) {
         let thisBeat = self.BeatViewsArray[beatIndex]
         let resetScaleTransform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        print("... Resetting circle index \(beatIndex)")
+//        print("... Resetting circle index \(beatIndex)")
         thisBeat.transform = resetScaleTransform
         thisBeat.alpha = 1
         thisBeat.isHidden = true

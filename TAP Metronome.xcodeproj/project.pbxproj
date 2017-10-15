@@ -11,7 +11,7 @@
 		668726801F84830200AA62FA /* CustomHeightSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6687267F1F84830200AA62FA /* CustomHeightSlider.swift */; };
 		6695724D1C2C6024001BF1FF /* BeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6695724C1C2C6024001BF1FF /* BeatView.swift */; };
 		66AB01241F8D6CE4000D5E38 /* GradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */; };
-		66B9FF2C1F929D80006EDC19 /* HelloMetronome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9FF2B1F929D7F006EDC19 /* HelloMetronome.swift */; };
+		66B9FF2C1F929D80006EDC19 /* AVMetronome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9FF2B1F929D7F006EDC19 /* AVMetronome.swift */; };
 		66B9FF2E1F929DBC006EDC19 /* TWGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9FF2D1F929DBB006EDC19 /* TWGenerator.swift */; };
 		66C553B61D1383BE00FE56B4 /* MachMetronome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66C553B51D1383BE00FE56B4 /* MachMetronome.swift */; };
 		66CA84151F8682F7001E3485 /* beatClick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 66CA84141F868112001E3485 /* beatClick.wav */; };
@@ -43,7 +43,7 @@
 		6687267F1F84830200AA62FA /* CustomHeightSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeightSlider.swift; sourceTree = "<group>"; };
 		6695724C1C2C6024001BF1FF /* BeatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatView.swift; sourceTree = "<group>"; };
 		66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLayer.swift; sourceTree = "<group>"; };
-		66B9FF2B1F929D7F006EDC19 /* HelloMetronome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloMetronome.swift; sourceTree = "<group>"; };
+		66B9FF2B1F929D7F006EDC19 /* AVMetronome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVMetronome.swift; sourceTree = "<group>"; };
 		66B9FF2D1F929DBB006EDC19 /* TWGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWGenerator.swift; sourceTree = "<group>"; };
 		66C553B51D1383BE00FE56B4 /* MachMetronome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MachMetronome.swift; sourceTree = "<group>"; };
 		66CA84131F8680A1001E3485 /* beatClick.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = beatClick.aiff; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 				6687267F1F84830200AA62FA /* CustomHeightSlider.swift */,
 				66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */,
 				B897AC7819E4AC8700820251 /* MetronomeViewController.swift */,
-				66B9FF2B1F929D7F006EDC19 /* HelloMetronome.swift */,
+				66B9FF2B1F929D7F006EDC19 /* AVMetronome.swift */,
 				66C553B51D1383BE00FE56B4 /* MachMetronome.swift */,
 				6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */,
 				66B9FF2D1F929DBB006EDC19 /* TWGenerator.swift */,
@@ -262,7 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66B9FF2E1F929DBC006EDC19 /* TWGenerator.swift in Sources */,
-				66B9FF2C1F929D80006EDC19 /* HelloMetronome.swift in Sources */,
+				66B9FF2C1F929D80006EDC19 /* AVMetronome.swift in Sources */,
 				66E4D1F41D16532900811CCA /* BeatContainerView.swift in Sources */,
 				66AB01241F8D6CE4000D5E38 /* GradientLayer.swift in Sources */,
 				B897AC7919E4AC8700820251 /* MetronomeViewController.swift in Sources */,
