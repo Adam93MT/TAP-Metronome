@@ -15,10 +15,10 @@ struct GlobalConstants {
 }
 
 @objc protocol MetronomeDelegate: class {
-    @objc optional func metronomeTicking(_ metronome: HelloMetronome, bar: Int, beat: Int)
+    @objc optional func metronomeTicking(_ metronome: AVMetronome, bar: Int, beat: Int)
 }
 
-class HelloMetronome : NSObject {
+class AVMetronome : NSObject {
     
     // Sound playing & timing -----
     var engine: AVAudioEngine = AVAudioEngine()
@@ -45,7 +45,7 @@ class HelloMetronome : NSObject {
     var beatsScheduled: Int = 0
     
     // Beat Logging
-    var tapOverride: Bool = false
+    var didRegisterTap: Bool = false
     var loggedDiffs = [Double]()
     var lastTapTime = mach_absolute_time()
     var untappedBeats: Int = 0
@@ -136,9 +136,9 @@ class HelloMetronome : NSObject {
         
         while (beatsScheduled < beatsToScheduleAhead) {
             print("\nNext Beat \(self.getAbsoluteBeat()) - at \(self.tempoBPM) bpm")
-            // Schedule the beat.
             
-            let secondsPerBeat = 60.0 / Double(tempoBPM)
+            // Schedule the beat.
+            let secondsPerBeat = self.getInterval()
             let samplesPerBeat = Double(secondsPerBeat * Double(bufferSampleRate))
             let beatSampleTime: AVAudioFramePosition = AVAudioFramePosition(nextBeatSampleTime)
             let playerBeatTime: AVAudioTime = AVAudioTime(sampleTime: AVAudioFramePosition(beatSampleTime), atRate: bufferSampleRate)
@@ -155,11 +155,11 @@ class HelloMetronome : NSObject {
                     let actual_ms = Float(self.absToNanos(self.current_time - self.last_fire_time)) / Float(NSEC_PER_MSEC)
                     let expect_ms = Float(secondsPerBeat * 1000)
                     self.last_fire_time = mach_absolute_time()
-                    print("actual time: \(actual_ms) msec")
-                    print("expected time \(expect_ms) msec")
+//                    print("actual time: \(actual_ms) msec")
+//                    print("expected time \(expect_ms) msec")
                     self.error_ms = actual_ms - expect_ms
                     self.max_error = max(self.max_error, abs(self.error_ms))
-                    print("Error: \(self.error_ms) msec")
+//                    print("Error: \(self.error_ms) msec")
                     self.total_error += abs(self.error_ms)
                     self.total_beats += 1
                 }
@@ -189,20 +189,33 @@ class HelloMetronome : NSObject {
                 
                 DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: dispatchTime) {
                     if (self.isOn) {
-                        if !self.tapOverride && self.beatNumber > 0 {
+                        if !self.didRegisterTap && self.beatNumber > 0 {
                             self.delegate!.animateBeatCircle(self, beatIndex: (callbackBeat), beatDuration: (callbackInterval))
                         }
                         if self.untappedBeats > self.beatsToHideUI {
                             self.delegate!.hideControls(self)
                         }
-                        self.tapOverride = false
+                        self.didRegisterTap = false
                     }
                 }
             }
             
             beatNumber += 1
-            nextBeatSampleTime += Float64(samplesPerBeat)
+            if !self.didRegisterTap {
+                scheduleNextBeatTime(samplesFromLastBeat: samplesPerBeat)
+            }
         }
+    }
+    
+    func scheduleNextBeatTime(samplesFromLastBeat: Float64) {
+        self.nextBeatSampleTime += Float64(samplesFromLastBeat)
+        print("next beat sample time: \(nextBeatSampleTime)")
+    }
+    
+    func scheduleNextBeatTime(samplesFromNow: Float64) {
+        let now = Float64((player.playerTime(forNodeTime: player.lastRenderTime!)?.sampleTime)!)
+        print("Now: \(now)")
+        self.nextBeatSampleTime = now + samplesFromNow
     }
     
     @discardableResult func start() -> Bool {
@@ -231,22 +244,9 @@ class HelloMetronome : NSObject {
         print("Stopping")
         isOn = false;
         
-        /* Note that pausing or stopping all AVAudioPlayerNode's connected to an engine does
-         NOT pause or stop the engine or the underlying hardware.
-         
-         The engine must be explicitly paused or stopped for the hardware to stop.
-        */
         player.stop()
         player.reset()
         
-        /* Stop the audio hardware and the engine and release the resources allocated by the prepare method.
-         
-         Note that pause will also stop the audio hardware and the flow of audio through the engine, but
-         will not deallocate the resources allocated by the prepare method.
-         
-         It is recommended that the engine be paused or stopped (as applicable) when not in use,
-         to minimize power consumption.
-        */
         engine.stop()
         
         playerStarted = false
@@ -256,19 +256,24 @@ class HelloMetronome : NSObject {
         print("Max Error: \(self.max_error)")
     }
     
+    func playNow() {
+        player.play()
+    }
+    
     func logTap() {
         print("\nLogging Tap")
         let tapTime = mach_absolute_time()
         self.untappedBeats = 0
-        self.tapOverride = true
+        self.didRegisterTap = true
         
         let lastDiff = Double(self.absToNanos(tapTime - lastTapTime)) / Double(NSEC_PER_SEC)
         
-        print("Immediate Tempo: \(self.getTempoGivenTime(lastDiff))")
+//        print("Immediate Tempo: \(self.getTempoGivenTime(lastDiff))")
         
         // Double tap means stop
         if (lastDiff < self.getTimeGivenTempo(self.maxTempo)) {
             self.stop()
+            self.loggedDiffs.removeAll()
         }
         // if the tap interval is in tempo range
         else if (
@@ -276,24 +281,30 @@ class HelloMetronome : NSObject {
             && (lastDiff < getTimeGivenTempo(self.minTempo))
         )
         {
-//            self.scheduleNextBeats()
-
+//            self.playNow()
             self.loggedDiffs.append(lastDiff)
 
-        // limit array to length of 2 bars
+            // limit array to length of 2 bars
             if (self.loggedDiffs.count > self.timeSignature * 2) {
                 self.loggedDiffs.remove(at: 0)
             }
 
-        // only change tempo when 2 beats have been tapped
+            // Here we actually change the tempo
             if (self.loggedDiffs.count >= 2) {
+                // find the average of all logged diffs
                 var sum = 0.0
                 let len = Double(self.loggedDiffs.count)
                 for t in self.loggedDiffs {
                     sum += Double(t)
                 }
-                let avgDiff = sum/len // calculate new interval
+                let avgDiff = sum/len
                 self.setTempo(self.getTempoGivenTime(avgDiff))
+                
+                // reschedule the beat click
+                let samplesPerBeat = Double(self.getInterval() * Double(bufferSampleRate))
+                print("rescheduling in logTaps")
+                scheduleNextBeatTime(samplesFromNow: samplesPerBeat)
+                self.incrementBeat()
             }
         }
         
@@ -306,11 +317,12 @@ class HelloMetronome : NSObject {
     }
     
     func setTempo(_ tempo: Int) {
-        tempoBPM = tempo
+        self.tempoBPM = tempo
         
-        let secondsPerBeat: Double = 60.0 / Double(tempoBPM)
-        beatsToScheduleAhead = Int(Int32(GlobalConstants.kTempoChangeResponsivenessSeconds / secondsPerBeat))
+        self.tempoInterval = 60.0 / Double(tempoBPM)
+        beatsToScheduleAhead = Int(Int32(GlobalConstants.kTempoChangeResponsivenessSeconds / self.tempoInterval))
         if (beatsToScheduleAhead < 1) { beatsToScheduleAhead = 1 }
+        self.tempoChangeUpdateUI()
     }
     
     func decrementTempo() {
@@ -327,6 +339,15 @@ class HelloMetronome : NSObject {
     
     func incrementBeat() {
         self.beatNumber += 1
+    }
+    
+    func tempoChangeUpdateUI() {
+        if (delegate?.tempoSlider) != nil && (delegate?.tempoTextField) != nil {
+            DispatchQueue.main.async {
+                self.delegate.tempoSlider.value = Float(self.tempoBPM)
+                self.delegate.tempoTextField.text = String(self.tempoBPM)
+            }
+        }
     }
     
 }
