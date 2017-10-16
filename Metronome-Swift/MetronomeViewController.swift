@@ -14,12 +14,10 @@ import AudioToolbox
 @available(iOS 10.0, *)
 class MetronomeViewController: UIViewController {
     
-    @IBOutlet weak var tempoTextField: UITextField!
     @IBOutlet weak var tapButton: UIButton!
-    @IBOutlet weak var timeSignatureButton: UIButton!
     @IBOutlet weak var decrementButton: UIButton!
     @IBOutlet weak var incrementButton: UIButton!
-    @IBOutlet weak var tempoSlider: CustomHeightSlider!
+    @IBOutlet weak var tempoButton: UIButton!
     
     let metronome = AVMetronome()
     var containerView: BeatContainerView!
@@ -33,8 +31,10 @@ class MetronomeViewController: UIViewController {
     // Colours
     let gradientLayer = GradientView()
     let backgroundColor = UIColor.black
-    var gradientStartColor: UIColor = UIColor(red: 29/255.0, green: 71/255.0, blue: 140/255.0, alpha: 0.5)
-    var gradientEndColor: UIColor = UIColor(red: 19/255.0, green: 48/255.0, blue: 93/255.0, alpha: 0.5)
+    var gradientStartColor: UIColor = UIColor(rgb: 0x1A1A1A)//UIColor(red: 29/255.0, green: 71/255.0, blue: 140/255.0, alpha: 0.5)
+    var gradientEndColor: UIColor = UIColor(rgb: 0x030303)//UIColor(red: 19/255.0, green: 48/255.0, blue: 93/255.0, alpha: 0.5)
+    
+    
     let textColor = UIColor(red: 0.14, green: 0.14, blue: 0.14, alpha: 1)
     let MinColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2)
     let MaxColor = UIColor(red:0.04, green: 0.04, blue: 0.04, alpha: 0.2)
@@ -72,15 +72,12 @@ class MetronomeViewController: UIViewController {
         view.sendSubview(toBack: self.containerView)
         
         // Set up Tap button
-//        tapButton.setTitleColor(self.textColor, for: .normal)
         tapButton.frame.size = CGSize(width: viewWidth, height: viewHeight);
         tapButton.contentEdgeInsets = UIEdgeInsetsMake(
             viewHeight/2, viewWidth/2, viewHeight/2, viewWidth/2
         )
         tapButton.setTitle("TAP", for: .normal)
         tapButton.alpha = 0.75
-//        tapButton.setImage(UIImage(named: "Play"), for: .normal)
-//        tapButton.setImage(UIImage(named: "Circle"), for: .normal)
         
         // Set up gesture recognizer
         let tapDownGestureRecognizer = TapDownGestureRecognizer(target: self, action: #selector(self.handleTap))
@@ -93,9 +90,8 @@ class MetronomeViewController: UIViewController {
         
         // Set up Tempo Control Buttons, Slider and Text
         self.addDoneButtonOnKeyboard()
-        tempoTextField.text = String(metronome.tempoBPM)
-        tempoTextField.tintColor = self.textColor
-        tempoTextField.backgroundColor = UIColor.clear
+        tempoButton.setTitle(String(metronome.tempoBPM), for: .normal)
+        tempoButton.backgroundColor = UIColor.clear
         // add keyboard listeners to move UI up/down
         NotificationCenter.default.addObserver(
             self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil
@@ -103,17 +99,16 @@ class MetronomeViewController: UIViewController {
         NotificationCenter.default.addObserver(
             self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil
         )
-        incrementButton.backgroundColor = MaxColor
-        decrementButton.backgroundColor = MinColor
+
 //        tempoSlider.thumbTintColor = UIColor.clear
-        tempoSlider.minimumTrackTintColor = MinColor
-        tempoSlider.maximumTrackTintColor = MaxColor
-        tempoSlider.setMinimumTrackImage(UIImage(named: "sliderCapMin"), for: UIControlState.normal)
-        tempoSlider.setMaximumTrackImage(UIImage(named: "sliderCapMax"), for: UIControlState.normal)
-        tempoSlider.setThumbImage(UIImage(named: "sliderThumb"), for: UIControlState.normal)
-        tempoSlider.maximumValue = Float(metronome.maxTempo)
-        tempoSlider.minimumValue = Float(metronome.minTempo)
-        tempoSlider.value = Float(metronome.tempoBPM)
+//        tempoSlider.minimumTrackTintColor = MinColor
+//        tempoSlider.maximumTrackTintColor = MaxColor
+//        tempoSlider.setMinimumTrackImage(UIImage(named: "sliderCapMin"), for: UIControlState.normal)
+//        tempoSlider.setMaximumTrackImage(UIImage(named: "sliderCapMax"), for: UIControlState.normal)
+//        tempoSlider.setThumbImage(UIImage(named: "sliderThumb"), for: UIControlState.normal)
+//        tempoSlider.maximumValue = Float(metronome.maxTempo)
+//        tempoSlider.minimumValue = Float(metronome.minTempo)
+//        tempoSlider.value = Float(metronome.tempoBPM)
 
 //        metronome.prepare()
     }
@@ -138,21 +133,21 @@ class MetronomeViewController: UIViewController {
     }
     
     @IBAction func editedTextField(_ sender: UITextField) {
-        var val: Int!
-        if let v: Int = Int(self.tempoTextField.text!) {
-            val = v
-        } else {
-            val = Int(self.metronome.tempoBPM)
-        }
-        if (val! > metronome.maxTempo){
-            val = metronome.maxTempo
-            self.tempoTextField.text = String(metronome.maxTempo)
-        } else if (val! < metronome.minTempo){
-            val = metronome.minTempo
-            self.tempoTextField.text = String(metronome.minTempo)
-        }
-        print("text box value: \(String(describing: val))")
-        self.metronome.setTempo(val!)
+//        var val: Int!
+//        if let v: Int = Int(self.tempoTextField.text!) {
+//            val = v
+//        } else {
+//            val = Int(self.metronome.tempoBPM)
+//        }
+//        if (val! > metronome.maxTempo){
+//            val = metronome.maxTempo
+////            self.tempoTextField.text = String(metronome.maxTempo)
+//        } else if (val! < metronome.minTempo){
+//            val = metronome.minTempo
+////            self.tempoTextField.text = String(metronome.minTempo)
+//        }
+//        print("text box value: \(String(describing: val))")
+//        self.metronome.setTempo(val!)
     }
     
     @IBAction func incrementButtonPressed(_ sender: UIButton) {
@@ -167,7 +162,7 @@ class MetronomeViewController: UIViewController {
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {
         print("changed slider")
-        self.metronome.setTempo(Int(tempoSlider.value))
+//        self.metronome.setTempo(Int(tempoSlider.value))
     }
     
     func handleTap(gestureRecognizer: TapDownGestureRecognizer) {
@@ -222,10 +217,10 @@ class MetronomeViewController: UIViewController {
     func hideControls(_ metronome: AVMetronome) {
         DispatchQueue.main.async(execute: {() -> Void in
             UIView.animate(withDuration: 4, delay: 0, options: [.curveEaseIn, .allowUserInteraction], animations: {
-                self.tempoTextField.alpha = 0
+                self.tempoButton.alpha = 0
                 self.incrementButton.alpha = 0
                 self.decrementButton.alpha = 0
-                self.tempoSlider.alpha = 0
+//                self.tempoSlider.alpha = 0
                 self.tapButton.alpha = 0.1
             })
             self.controlsAreHidden = true
@@ -234,10 +229,10 @@ class MetronomeViewController: UIViewController {
     
     func showControls() {
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseOut, .allowUserInteraction], animations: {
-            self.tempoTextField.alpha = 1
+            self.tempoButton.alpha = 1
             self.incrementButton.alpha = 1
             self.decrementButton.alpha = 1
-            self.tempoSlider.alpha = 1
+//            self.tempoSlider.alpha = 1
             self.tapButton.alpha = 0.75
         })
         self.controlsAreHidden = false
@@ -256,11 +251,11 @@ class MetronomeViewController: UIViewController {
         doneToolbar.items = items
         doneToolbar.sizeToFit()
         
-        self.tempoTextField.inputAccessoryView = doneToolbar
+//        self.tempoTextField.inputAccessoryView = doneToolbar
     }
     
     func doneButtonAction() {
-        self.tempoTextField.resignFirstResponder()
+//        self.tempoTextField.resignFirstResponder()
     }
     
     func resetAllBeatCircles(){
@@ -270,10 +265,10 @@ class MetronomeViewController: UIViewController {
     }
     
     func killControlAnimations() {
-        self.tempoTextField.layer.removeAllAnimations()
+        self.tempoButton.layer.removeAllAnimations()
         self.incrementButton.layer.removeAllAnimations()
         self.decrementButton.layer.removeAllAnimations()
-        self.tempoSlider.layer.removeAllAnimations()
+//        self.tempoSlider.layer.removeAllAnimations()
         self.tapButton.layer.removeAllAnimations()
         self.view.layer.removeAllAnimations()
         self.view.layoutIfNeeded()
@@ -298,5 +293,23 @@ class MetronomeViewController: UIViewController {
         self.gradientLayer.gl.frame = self.view.bounds
         self.view.layer.insertSublayer(self.gradientLayer.gl, at: 0)
     }
+    
+    
 }
-
+    extension UIColor {
+        convenience init(red: Int, green: Int, blue: Int) {
+            assert(red >= 0 && red <= 255, "Invalid red component")
+            assert(green >= 0 && green <= 255, "Invalid green component")
+            assert(blue >= 0 && blue <= 255, "Invalid blue component")
+            
+            self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+        }
+        
+        convenience init(rgb: Int) {
+            self.init(
+                red: (rgb >> 16) & 0xFF,
+                green: (rgb >> 8) & 0xFF,
+                blue: rgb & 0xFF
+            )
+        }
+    }
