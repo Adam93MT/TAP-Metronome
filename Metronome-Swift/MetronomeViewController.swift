@@ -207,7 +207,7 @@ class MetronomeViewController: UIViewController {
     func keyboardWillHide(notification: NSNotification) {
         print("keyboard will hide: \(self.view.frame.origin.y)")
         if let _ = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y != 0{
+            if self.view.frame.origin.y != 0 {
                 self.view.frame.origin.y = 0.0//+= keyboardSize.height
             }
         }

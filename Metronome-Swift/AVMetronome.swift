@@ -1,10 +1,12 @@
-/*
- Copyright (C) 2017 Apple Inc. All Rights Reserved.
- See LICENSE.txt for this sample’s licensing information
- 
- Abstract:
- It's a Metronome!
-*/
+//
+//  MetronomeLogic.swift
+//  Metronome-Swift
+//
+//  Created by Adam Thompson on 2017-10-14.
+//  Copyright (c) 2017 Adam Thompson. All rights reserved.
+//
+// https://developer.apple.com/library/content/samplecode/HelloMetronome/Listings/HelloMetronome_main_m.html
+//
 
 import Foundation
 import AVFoundation
@@ -40,7 +42,7 @@ class AVMetronome : NSObject {
     var tempoBPM: Int = 0
     var tempoInterval: Double = 0
     var beatNumber: Int = 0
-    var nextBeatSampleTime: Double = 0.0
+    var nextBeatSampleTime: AVAudioFramePosition = AVAudioFramePosition(0)
     var beatsToScheduleAhead: Int = 0     // controls responsiveness to tempo changes
     var beatsScheduled: Int = 0
     
@@ -139,7 +141,7 @@ class AVMetronome : NSObject {
             
             // Schedule the beat.
             let secondsPerBeat = self.getInterval()
-            let samplesPerBeat = Double(secondsPerBeat * Double(bufferSampleRate))
+            let samplesPerBeat = AVAudioFramePosition(secondsPerBeat * Double(bufferSampleRate))
             let beatSampleTime: AVAudioFramePosition = AVAudioFramePosition(nextBeatSampleTime)
             let playerBeatTime: AVAudioTime = AVAudioTime(sampleTime: AVAudioFramePosition(beatSampleTime), atRate: bufferSampleRate)
             // This time is relative to the player's start time.
@@ -159,7 +161,7 @@ class AVMetronome : NSObject {
 //                    print("expected time \(expect_ms) msec")
                     self.error_ms = actual_ms - expect_ms
                     self.max_error = max(self.max_error, abs(self.error_ms))
-//                    print("Error: \(self.error_ms) msec")
+                    print("Error: \(self.error_ms) msec")
                     self.total_error += abs(self.error_ms)
                     self.total_beats += 1
                 }
@@ -200,21 +202,20 @@ class AVMetronome : NSObject {
                 }
             }
             
-            beatNumber += 1
+            self.incrementBeat()
             if !self.didRegisterTap {
                 scheduleNextBeatTime(samplesFromLastBeat: samplesPerBeat)
             }
         }
     }
     
-    func scheduleNextBeatTime(samplesFromLastBeat: Float64) {
-        self.nextBeatSampleTime += Float64(samplesFromLastBeat)
-        print("next beat sample time: \(nextBeatSampleTime)")
+    func scheduleNextBeatTime(samplesFromLastBeat: AVAudioFramePosition) {
+        self.nextBeatSampleTime += AVAudioFramePosition(samplesFromLastBeat)
     }
     
-    func scheduleNextBeatTime(samplesFromNow: Float64) {
-        let now = Float64((player.playerTime(forNodeTime: player.lastRenderTime!)?.sampleTime)!)
-        print("Now: \(now)")
+    func scheduleNextBeatTime(samplesFromNow: AVAudioFramePosition) {
+        let now = AVAudioFramePosition((player.playerTime(forNodeTime: player.lastRenderTime!)?.sampleTime)!)
+//        print("Now: \(now)")
         self.nextBeatSampleTime = now + samplesFromNow
     }
     
@@ -265,6 +266,7 @@ class AVMetronome : NSObject {
         let tapTime = mach_absolute_time()
         self.untappedBeats = 0
         self.didRegisterTap = true
+        self.incrementBeat()
         
         let lastDiff = Double(self.absToNanos(tapTime - lastTapTime)) / Double(NSEC_PER_SEC)
         
@@ -281,7 +283,6 @@ class AVMetronome : NSObject {
             && (lastDiff < getTimeGivenTempo(self.minTempo))
         )
         {
-//            self.playNow()
             self.loggedDiffs.append(lastDiff)
 
             // limit array to length of 2 bars
@@ -301,10 +302,8 @@ class AVMetronome : NSObject {
                 self.setTempo(self.getTempoGivenTime(avgDiff))
                 
                 // reschedule the beat click
-                let samplesPerBeat = Double(self.getInterval() * Double(bufferSampleRate))
-                print("rescheduling in logTaps")
+                let samplesPerBeat = AVAudioFramePosition(self.getInterval() * Double(bufferSampleRate))
                 scheduleNextBeatTime(samplesFromNow: samplesPerBeat)
-                self.incrementBeat()
             }
         }
         
