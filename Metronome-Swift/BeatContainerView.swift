@@ -136,7 +136,7 @@ class BeatContainerView: UIView {
 //        print("expected time \(expect_ms) msec")
         self.error_ms = actual_ms - expect_ms
         self.max_error = max(self.max_error, abs(self.error_ms))
-//        print("Animation error: \(self.error_ms) msec")
+        print("Animation error: \(self.error_ms) msec")
         self.total_error += abs(self.error_ms)
         self.total_beats += 1
         
