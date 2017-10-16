@@ -341,10 +341,9 @@ class AVMetronome : NSObject {
     }
     
     func tempoChangeUpdateUI() {
-        if (delegate?.tempoSlider) != nil && (delegate?.tempoTextField) != nil {
+        if (delegate?.tempoButton) != nil {
             DispatchQueue.main.async {
-                self.delegate.tempoSlider.value = Float(self.tempoBPM)
-                self.delegate.tempoTextField.text = String(self.tempoBPM)
+                self.delegate.tempoButton.setTitle(String(self.tempoBPM), for: .normal)
             }
         }
     }
