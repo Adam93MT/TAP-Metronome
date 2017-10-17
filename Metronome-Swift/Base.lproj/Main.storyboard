@@ -55,6 +55,9 @@
                                 <state key="normal" title="120" backgroundImage="tempo button">
                                     <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <segue destination="9i7-qK-ccy" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="H5N-fU-8m3"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.047058823529411764" green="0.047058823529411764" blue="0.047058823529411764" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -89,8 +92,44 @@
             </objects>
             <point key="canvasLocation" x="-415.19999999999999" y="448.42578710644682"/>
         </scene>
+        <!--Tempo Slider View Controller-->
+        <scene sceneID="JCw-eD-wxe">
+            <objects>
+                <viewController id="9i7-qK-ccy" customClass="TempoSliderViewController" customModule="TAP_Metronome_Swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qRK-GQ-xfM"/>
+                        <viewControllerLayoutGuide type="bottom" id="4l9-JP-ljz"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="gI4-uK-P8r">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cST-cU-Civ">
+                                <rect key="frame" x="164" y="589" width="46" height="46"/>
+                                <state key="normal" image="cross"/>
+                                <connections>
+                                    <action selector="closeTempoModal:" destination="9i7-qK-ccy" eventType="touchUpInside" id="AfJ-7M-ftc"/>
+                                    <action selector="incrementButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yrf-bJ-Nje"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="4l9-JP-ljz" firstAttribute="top" secondItem="cST-cU-Civ" secondAttribute="bottom" constant="32" id="E2X-9U-mie"/>
+                            <constraint firstItem="cST-cU-Civ" firstAttribute="centerX" secondItem="gI4-uK-P8r" secondAttribute="centerX" id="Mab-Mu-l9J"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="closeButton" destination="cST-cU-Civ" id="6D6-zW-RBP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J9Y-Lx-I3n" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="382" y="590"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="cross" width="46" height="46"/>
         <image name="decrement" width="46" height="46"/>
         <image name="increment" width="46" height="46"/>
         <image name="tempo button" width="98" height="46"/>
