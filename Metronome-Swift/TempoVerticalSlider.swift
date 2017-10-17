@@ -9,6 +9,28 @@
 import UIKit
 
 class TempoVerticalSlider: UISlider {
+    
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.setup()
+    }
+    
+    func setup() {
+        print("setup slider")
+        
+        self.thumbTintColor = .clear//delegate.bgColorDark.withAlphaComponent(0.8)
+        self.backgroundColor = .clear
+        self.minimumTrackTintColor = .white
+        self.maximumTrackTintColor = UIColor.white.withAlphaComponent(0.1)
+        self.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2 )
+    }
 
     /*
     // Only override draw() if you perform custom drawing.

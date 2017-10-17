@@ -30,16 +30,7 @@ class MetronomeViewController: UIViewController {
     var viewWidth: CGFloat!
     var viewHeight: CGFloat!
     
-    // Colours
     let gradientLayer = GradientView()
-    let backgroundColor = UIColor.black
-    var gradientStartColor: UIColor = UIColor(rgb: 0x1A1A1A)//UIColor(red: 29/255.0, green: 71/255.0, blue: 140/255.0, alpha: 0.5)
-    var gradientEndColor: UIColor = UIColor(rgb: 0x030303)//UIColor(red: 19/255.0, green: 48/255.0, blue: 93/255.0, alpha: 0.5)
-    
-    
-    let textColor = UIColor(red: 0.14, green: 0.14, blue: 0.14, alpha: 1)
-    let MinColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.2)
-    let MaxColor = UIColor(red:0.04, green: 0.04, blue: 0.04, alpha: 0.2)
     let textLabelBottomSpace: CGFloat = 24
     var controlsAreHidden: Bool = false
     
@@ -54,8 +45,7 @@ class MetronomeViewController: UIViewController {
         self.viewHeight = view.frame.height
         
         // Setup BG Color
-        self.view.backgroundColor = backgroundColor
-//        self.view.backgroundColor = UIColor.purple
+        self.view.backgroundColor = delegate.bgColor
         
         // Listen for device rotation
         NotificationCenter.default.addObserver(
@@ -276,7 +266,7 @@ class MetronomeViewController: UIViewController {
     
     func createGradientLayer() {
         // Set up the background colors
-        self.gradientLayer.setColors(startColor: gradientStartColor, endColor: gradientEndColor)
+        self.gradientLayer.setColors(startColor: delegate.bgColorLight, endColor: delegate.bgColorDark)
         self.gradientLayer.setLocations(start: 0.0, end: 0.5)
         self.gradientLayer.gl.frame = self.view.bounds
         self.view.layer.insertSublayer(self.gradientLayer.gl, at: 0)
@@ -284,20 +274,3 @@ class MetronomeViewController: UIViewController {
     
     
 }
-    extension UIColor {
-        convenience init(red: Int, green: Int, blue: Int) {
-            assert(red >= 0 && red <= 255, "Invalid red component")
-            assert(green >= 0 && green <= 255, "Invalid green component")
-            assert(blue >= 0 && blue <= 255, "Invalid blue component")
-            
-            self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
-        }
-        
-        convenience init(rgb: Int) {
-            self.init(
-                red: (rgb >> 16) & 0xFF,
-                green: (rgb >> 8) & 0xFF,
-                blue: rgb & 0xFF
-            )
-        }
-    }

@@ -14,6 +14,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     let metronome: AVMetronome = AVMetronome()
+    
+    // Colours
+    let bgColor = UIColor.black
+    var bgColorLight: UIColor = UIColor(rgb: 0x1A1A1A)
+    //UIColor(red: 29/255.0, green: 71/255.0, blue: 140/255.0, alpha: 0.5)
+    var bgColorDark: UIColor = UIColor(rgb: 0x030303)
+    //UIColor(red: 19/255.0, green: 48/255.0, blue: 93/255.0, alpha: 0.5)
+    var textColor = UIColor(rgb: 0xFAFAFA)
+    var beatCircleStartColor = UIColor(rgb: 0xFFFFFF)
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -40,6 +50,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+}
+
+extension UIColor {
+    convenience init(red: Int, green: Int, blue: Int) {
+        assert(red >= 0 && red <= 255, "Invalid red component")
+        assert(green >= 0 && green <= 255, "Invalid green component")
+        assert(blue >= 0 && blue <= 255, "Invalid blue component")
+        
+        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+    }
+    
+    convenience init(rgb: Int) {
+        self.init(
+            red: (rgb >> 16) & 0xFF,
+            green: (rgb >> 8) & 0xFF,
+            blue: rgb & 0xFF
+        )
     }
 }
 
