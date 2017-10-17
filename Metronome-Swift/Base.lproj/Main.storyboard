@@ -112,7 +112,7 @@
                                     <action selector="incrementButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yrf-bJ-Nje"/>
                                 </connections>
                             </button>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ws2-DH-D3A">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ws2-DH-D3A" customClass="TempoVerticalSlider" customModule="TAP_Metronome_Swift" customModuleProvider="target">
                                 <rect key="frame" x="-2" y="318.5" width="379" height="31"/>
                                 <connections>
                                     <action selector="sliderValueChanged:" destination="9i7-qK-ccy" eventType="valueChanged" id="SAO-Ke-HHq"/>
