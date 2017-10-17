@@ -112,15 +112,25 @@
                                     <action selector="incrementButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yrf-bJ-Nje"/>
                                 </connections>
                             </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ws2-DH-D3A">
+                                <rect key="frame" x="-2" y="318.5" width="379" height="31"/>
+                                <connections>
+                                    <action selector="sliderValueChanged:" destination="9i7-qK-ccy" eventType="valueChanged" id="SAO-Ke-HHq"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="Ws2-DH-D3A" firstAttribute="width" secondItem="gI4-uK-P8r" secondAttribute="width" id="2NY-mh-MUy"/>
+                            <constraint firstItem="Ws2-DH-D3A" firstAttribute="centerY" secondItem="gI4-uK-P8r" secondAttribute="centerY" id="45T-8a-e5c"/>
                             <constraint firstItem="4l9-JP-ljz" firstAttribute="top" secondItem="cST-cU-Civ" secondAttribute="bottom" constant="32" id="E2X-9U-mie"/>
                             <constraint firstItem="cST-cU-Civ" firstAttribute="centerX" secondItem="gI4-uK-P8r" secondAttribute="centerX" id="Mab-Mu-l9J"/>
+                            <constraint firstItem="Ws2-DH-D3A" firstAttribute="centerX" secondItem="gI4-uK-P8r" secondAttribute="centerX" id="qTV-jg-TZw"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="closeButton" destination="cST-cU-Civ" id="6D6-zW-RBP"/>
+                        <outlet property="tempoSlider" destination="Ws2-DH-D3A" id="44f-rW-Dd0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J9Y-Lx-I3n" userLabel="First Responder" sceneMemberID="firstResponder"/>

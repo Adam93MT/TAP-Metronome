@@ -19,7 +19,9 @@ class MetronomeViewController: UIViewController {
     @IBOutlet weak var incrementButton: UIButton!
     @IBOutlet weak var tempoButton: UIButton!
     
-    let metronome = AVMetronome()
+//    let metronome = AVMetronome()
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    var metronome: AVMetronome!
     var containerView: BeatContainerView!
     var metronomeDisplayLink: CADisplayLink!
     
@@ -45,6 +47,7 @@ class MetronomeViewController: UIViewController {
         super.viewDidLoad()
         // Lets us access the ViewController from metronome logic
 //        metronome.parentViewController = self
+        metronome = delegate.metronome
         metronome.delegate = self
         
         self.viewWidth = view.frame.width
@@ -100,16 +103,6 @@ class MetronomeViewController: UIViewController {
             self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil
         )
 
-//        tempoSlider.thumbTintColor = UIColor.clear
-//        tempoSlider.minimumTrackTintColor = MinColor
-//        tempoSlider.maximumTrackTintColor = MaxColor
-//        tempoSlider.setMinimumTrackImage(UIImage(named: "sliderCapMin"), for: UIControlState.normal)
-//        tempoSlider.setMaximumTrackImage(UIImage(named: "sliderCapMax"), for: UIControlState.normal)
-//        tempoSlider.setThumbImage(UIImage(named: "sliderThumb"), for: UIControlState.normal)
-//        tempoSlider.maximumValue = Float(metronome.maxTempo)
-//        tempoSlider.minimumValue = Float(metronome.minTempo)
-//        tempoSlider.value = Float(metronome.tempoBPM)
-
 //        metronome.prepare()
     }
     
@@ -158,11 +151,6 @@ class MetronomeViewController: UIViewController {
     @IBAction func decrementButtonPressed(_ sender: UIButton) {
         print("tempo--")
         self.metronome.decrementTempo()
-    }
-    
-    @IBAction func sliderValueChanged(_ sender: UISlider) {
-        print("changed slider")
-//        self.metronome.setTempo(Int(tempoSlider.value))
     }
     
     func handleTap(gestureRecognizer: TapDownGestureRecognizer) {
