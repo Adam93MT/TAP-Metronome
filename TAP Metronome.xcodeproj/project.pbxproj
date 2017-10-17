@@ -10,6 +10,7 @@
 		6636EFFF1F89CD8F0000D99A /* TapDownGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */; };
 		6695724D1C2C6024001BF1FF /* BeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6695724C1C2C6024001BF1FF /* BeatView.swift */; };
 		66A5AE5E1F95A4EB00E432F7 /* TempoSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5AE5D1F95A4EB00E432F7 /* TempoSliderViewController.swift */; };
+		66A5AE601F95AFA500E432F7 /* TempoVerticalSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */; };
 		66AB01241F8D6CE4000D5E38 /* GradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */; };
 		66B9FF2C1F929D80006EDC19 /* AVMetronome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9FF2B1F929D7F006EDC19 /* AVMetronome.swift */; };
 		66B9FF2E1F929DBC006EDC19 /* TWGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9FF2D1F929DBB006EDC19 /* TWGenerator.swift */; };
@@ -41,6 +42,7 @@
 		6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapDownGestureRecognizer.swift; sourceTree = "<group>"; };
 		6695724C1C2C6024001BF1FF /* BeatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatView.swift; sourceTree = "<group>"; };
 		66A5AE5D1F95A4EB00E432F7 /* TempoSliderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoSliderViewController.swift; sourceTree = "<group>"; };
+		66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoVerticalSlider.swift; sourceTree = "<group>"; };
 		66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLayer.swift; sourceTree = "<group>"; };
 		66B9FF2B1F929D7F006EDC19 /* AVMetronome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVMetronome.swift; sourceTree = "<group>"; };
 		66B9FF2D1F929DBB006EDC19 /* TWGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWGenerator.swift; sourceTree = "<group>"; };
@@ -80,6 +82,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		66A5AE611F95B13900E432F7 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				66E4D1F31D16532900811CCA /* BeatContainerView.swift */,
+				6695724C1C2C6024001BF1FF /* BeatView.swift */,
+				66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */,
+				6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */,
+				66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */,
+			);
+			name = Subviews;
+			sourceTree = "<group>";
+		};
+		66A5AE621F95B16700E432F7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				66A5AE5D1F95A4EB00E432F7 /* TempoSliderViewController.swift */,
+				B897AC7819E4AC8700820251 /* MetronomeViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		66A5AE631F95B17E00E432F7 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				66B9FF2B1F929D7F006EDC19 /* AVMetronome.swift */,
+				66B9FF2D1F929DBB006EDC19 /* TWGenerator.swift */,
+			);
+			path = Logic;
+			sourceTree = "<group>";
+		};
 		B897AC6819E4AC8700820251 = {
 			isa = PBXGroup;
 			children = (
@@ -102,14 +134,9 @@
 			isa = PBXGroup;
 			children = (
 				B897AC7619E4AC8700820251 /* AppDelegate.swift */,
-				66E4D1F31D16532900811CCA /* BeatContainerView.swift */,
-				6695724C1C2C6024001BF1FF /* BeatView.swift */,
-				66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */,
-				B897AC7819E4AC8700820251 /* MetronomeViewController.swift */,
-				66B9FF2B1F929D7F006EDC19 /* AVMetronome.swift */,
-				6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */,
-				66A5AE5D1F95A4EB00E432F7 /* TempoSliderViewController.swift */,
-				66B9FF2D1F929DBB006EDC19 /* TWGenerator.swift */,
+				66A5AE631F95B17E00E432F7 /* Logic */,
+				66A5AE621F95B16700E432F7 /* Controllers */,
+				66A5AE611F95B13900E432F7 /* Subviews */,
 				B897AC7A19E4AC8700820251 /* Main.storyboard */,
 				B897AC7D19E4AC8700820251 /* Images.xcassets */,
 				66E4D1F11D164A4300811CCA /* BeatCircleView.xib */,
@@ -258,6 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66A5AE601F95AFA500E432F7 /* TempoVerticalSlider.swift in Sources */,
 				66A5AE5E1F95A4EB00E432F7 /* TempoSliderViewController.swift in Sources */,
 				66B9FF2E1F929DBC006EDC19 /* TWGenerator.swift in Sources */,
 				66B9FF2C1F929D80006EDC19 /* AVMetronome.swift in Sources */,
