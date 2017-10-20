@@ -11,31 +11,34 @@ import UIKit
 class TempoSliderViewController: UIViewController {
     
     let delegate = UIApplication.shared.delegate as! AppDelegate
-    var metronome: AVMetronome!
-    var Label: UILabel!
+    var tempoLabel: UILabel!
+    var checkImage: UIImage!
+    var crossImage: UIImage!
     
+    var initialVal: Int!
     var sliderPosY: CGFloat!
     var sliderLength: CGFloat!
     var maxVal: Int!
     var minVal: Int!
-    var thumbWidth: Double!
-    var thumbHeight: Double!
-    let thumbBGImage = UIImage(named: "tempo_slider_thumb")
+    var thumbWidth: Double =  112
+    var thumbHeight = Double(Globals.dimensions.buttonHeight)
     
     @IBOutlet weak var tempoSlider: UISlider!
     @IBOutlet weak var closeButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // assign 'globals'
-        metronome = delegate.metronome
-        maxVal = metronome.maxTempo
-        minVal = metronome.minTempo
+        checkImage = UIImage(named: "check")
+        crossImage = UIImage(named: "cross")
+        initialVal = delegate.metronome.getTempo()
+        
+        maxVal = delegate.metronome.maxTempo
+        minVal = delegate.metronome.minTempo
         sliderPosY = tempoSlider.frame.midY
         sliderLength = tempoSlider.frame.height
-        thumbWidth = Double(thumbBGImage!.size.width)
-        thumbHeight = Double(thumbBGImage!.size.height)
+//        thumbWidth = Double(thumbBGImage!.size.width)
+//        thumbHeight = Double(thumbBGImage!.size.height)
         
         self.view.backgroundColor = UIColor.clear
         let blurEffect = UIBlurEffect(style: .dark)
@@ -45,15 +48,15 @@ class TempoSliderViewController: UIViewController {
         
         tempoSlider.maximumValue = Float(maxVal)
         tempoSlider.minimumValue = Float(minVal)
-        tempoSlider.value = Float(metronome.tempoBPM)
+        tempoSlider.value = Float(delegate.metronome.getTempo())
     
-        Label = UILabel(frame: CGRect(x: 0, y: 0, width: thumbWidth, height: thumbHeight))
+        tempoLabel = UILabel(frame: CGRect(x: 0, y: 0, width: thumbWidth, height: thumbHeight))
         self.initSliderLabel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // update the slider value every time it appears
-        tempoSlider.value = Float(metronome.tempoBPM)
+        tempoSlider.value = Float(delegate.metronome.getTempo())
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,9 +70,20 @@ class TempoSliderViewController: UIViewController {
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {
         print("slider: \(Int(tempoSlider.value))")
-        metronome.setTempo(Int(tempoSlider.value))
+        delegate.metronome.setTempo(Int(tempoSlider.value))
+        self.updateLabel(val: Float(delegate.metronome.getTempo()))
+    }
+    
+    @IBAction func pressedDecrement(_ sender: UIButton) {
+        delegate.metronome.decrementTempo()
         self.updateLabel(val: tempoSlider.value)
     }
+    
+    @IBAction func pressedIncrement(_ sender: UIButton) {
+        delegate.metronome.incrementTempo()
+        self.updateLabel(val: Float(delegate.metronome.getTempo()))
+    }
+    
     
     // MARK: - Navigation
 
@@ -83,21 +97,16 @@ class TempoSliderViewController: UIViewController {
     }
     
     func initSliderLabel() {
-        Label.frame.size = CGSize(width: 112, height: 44)
-        Label.center = self.view.center //CGPoint(x: labelX, y: labelY)
-        Label.textAlignment = .center
-        Label.text = String(delegate.metronome.getTempo())
-        Label.textColor = delegate.bgColor
-        Label.font = Label.font.withSize(28)
-        Label.backgroundColor = .white
-        Label.layer.masksToBounds = true
-        Label.layer.cornerRadius = min(Label.frame.height, Label.frame.width)/2
-        self.view.addSubview(Label)
-        
-//        let bgImageView = UIImageView(image: thumbBGImage)
-//        Label.addSubview(bgImageView)
-//        Label.sendSubview(toBack: bgImageView)
-//        Label.bringSubview(toFront: Label)
+        tempoLabel.frame.size = CGSize(width: 112, height: Globals.dimensions.buttonHeight)
+        tempoLabel.center = self.view.center //CGPoint(x: labelX, y: labelY)
+        tempoLabel.textAlignment = .center
+        tempoLabel.text = String(delegate.metronome.getTempo())
+        tempoLabel.textColor = Globals.colors.bgColor
+        tempoLabel.font = tempoLabel.font.withSize(28)
+        tempoLabel.backgroundColor = UIColor(rgb: 0xFAFAFA)
+        tempoLabel.layer.masksToBounds = true
+        tempoLabel.layer.cornerRadius = Globals.dimensions.buttonHeight/2
+        self.view.addSubview(tempoLabel)
         
         let val = tempoSlider.value
         self.updateLabel(val: val)
@@ -106,8 +115,17 @@ class TempoSliderViewController: UIViewController {
     func updateLabel(val: Float) {
         // the 0.925 and 1.75 is found experimentally. not sure why
         let labelY = Float(sliderPosY) + 0.925 * Float(sliderLength) * (1 - val/(Float(self.maxVal - self.minVal))) - 1.75 * Float(thumbHeight)
-        Label.center.y = CGFloat(labelY)
-        Label.text = String(delegate.metronome.getTempo())
-//        print("slider thumb y: \(tempoSlider.)")
+        tempoLabel.center.y = CGFloat(labelY)
+        tempoLabel.text = String(delegate.metronome.getTempo())
+        
+        self.changeCloseIcon()
+    }
+    
+    func changeCloseIcon() {
+        if (delegate.metronome.getTempo() != initialVal) {
+            closeButton.setImage(checkImage, for: .normal)
+        } else {
+            closeButton.setImage(crossImage, for: .normal)
+        }
     }
 }
