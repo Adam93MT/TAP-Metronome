@@ -189,7 +189,7 @@ class AVMetronome : NSObject {
                         if !self.didRegisterTap && self.beatNumber > 0 {
                             self.vc!.animateBeatCircle(self, beatIndex: (callbackBeat), beatDuration: (callbackInterval))
                         }
-                        if self.untappedBeats > self.beatsToHideUI {
+                        if (self.untappedBeats > self.beatsToHideUI && !tempoModalisVisible){
                             self.vc!.hideControls(self)
                         }
                         self.didRegisterTap = false
