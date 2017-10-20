@@ -11,11 +11,6 @@
 import Foundation
 import AVFoundation
 
-struct GlobalConstants {
-    static let kBipDurationSeconds: Double = 0.020
-    static let kTempoChangeResponsivenessSeconds: Double = 0.250
-}
-
 @objc protocol MetronomeDelegate: class {
     @objc optional func metronomeTicking(_ metronome: AVMetronome, bar: Int, beat: Int)
 }
@@ -54,7 +49,7 @@ class AVMetronome : NSObject {
     let beatsToHideUI: Int = 16
     
     // UI -----
-    weak var delegate: MetronomeViewController!
+    weak var vc: MetronomeViewController!
     
     // DEBUG vars ------
     var timebaseInfo = mach_timebase_info_data_t()
@@ -78,7 +73,7 @@ class AVMetronome : NSObject {
         let format = AVAudioFormat(standardFormatWithSampleRate: 44100.0, channels: 2)
         
         // How many audio frames?
-        let bipFrames: UInt32 = UInt32(GlobalConstants.kBipDurationSeconds * Double(format.sampleRate))
+        let bipFrames: UInt32 = UInt32(Globals.kBipDurationSeconds * Double(format.sampleRate))
         
         // Create the PCM buffers.
         soundBuffer.append(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: bipFrames))
@@ -182,7 +177,7 @@ class AVMetronome : NSObject {
             let callbackBeat = self.getBeatIndex()
             let callbackInterval = self.getInterval()
             
-            if (delegate?.animateBeatCircle != nil && delegate?.hideControls != nil) {
+            if (vc?.animateBeatCircle != nil && vc?.hideControls != nil) {
                 let nodeBeatTime: AVAudioTime = player.nodeTime(forPlayerTime: playerBeatTime)!
                 let output: AVAudioIONode = engine.outputNode
 
@@ -192,10 +187,10 @@ class AVMetronome : NSObject {
                 DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: dispatchTime) {
                     if (self.isOn) {
                         if !self.didRegisterTap && self.beatNumber > 0 {
-                            self.delegate!.animateBeatCircle(self, beatIndex: (callbackBeat), beatDuration: (callbackInterval))
+                            self.vc!.animateBeatCircle(self, beatIndex: (callbackBeat), beatDuration: (callbackInterval))
                         }
                         if self.untappedBeats > self.beatsToHideUI {
-                            self.delegate!.hideControls(self)
+                            self.vc!.hideControls(self)
                         }
                         self.didRegisterTap = false
                     }
@@ -319,19 +314,21 @@ class AVMetronome : NSObject {
         self.tempoBPM = tempo
         
         self.tempoInterval = 60.0 / Double(tempoBPM)
-        beatsToScheduleAhead = Int(Int32(GlobalConstants.kTempoChangeResponsivenessSeconds / self.tempoInterval))
+        beatsToScheduleAhead = Int(Int32(Globals.kTempoChangeResponsivenessSeconds / self.tempoInterval))
         if (beatsToScheduleAhead < 1) { beatsToScheduleAhead = 1 }
         self.tempoChangeUpdateUI()
     }
     
     func decrementTempo() {
         if (self.tempoBPM > self.minTempo) {
+            print("tempo--")
             self.setTempo(self.tempoBPM - 1)
         }
     }
     
     func incrementTempo() {
         if (self.tempoBPM < self.maxTempo) {
+            print("tempo++")
             self.setTempo(self.tempoBPM + 1)
         }
     }
@@ -341,9 +338,9 @@ class AVMetronome : NSObject {
     }
     
     func tempoChangeUpdateUI() {
-        if (delegate?.tempoButton) != nil {
+        if (vc?.tempoButton) != nil {
             DispatchQueue.main.async {
-                self.delegate.tempoButton.setTitle(String(self.tempoBPM), for: .normal)
+                self.vc.tempoButton.setTitle(String(self.tempoBPM), for: .normal)
             }
         }
     }

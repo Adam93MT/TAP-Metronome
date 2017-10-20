@@ -110,7 +110,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cST-cU-Civ" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="180" y="602" width="16" height="22"/>
+                                <rect key="frame" x="180" y="613" width="16" height="22"/>
                                 <state key="normal" image="cross"/>
                                 <connections>
                                     <action selector="closeTempoModal:" destination="9i7-qK-ccy" eventType="touchUpInside" id="AfJ-7M-ftc"/>
@@ -124,13 +124,33 @@
                                     <action selector="sliderValueChanged:" destination="9i7-qK-ccy" eventType="valueChanged" id="SAO-Ke-HHq"/>
                                 </connections>
                             </slider>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZp-zK-Pov" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="32" y="613" width="24" height="22"/>
+                                <state key="normal" image="decrement"/>
+                                <connections>
+                                    <action selector="decrementButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LR2-On-M9B"/>
+                                    <action selector="pressedDecrement:" destination="9i7-qK-ccy" eventType="touchUpInside" id="5nu-s0-u6q"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jaS-Bw-cwn" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="327" y="613" width="16" height="22"/>
+                                <state key="normal" image="increment"/>
+                                <connections>
+                                    <action selector="incrementButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AiY-FV-N8w"/>
+                                    <action selector="pressedIncrement:" destination="9i7-qK-ccy" eventType="touchUpInside" id="NhQ-Yn-y1T"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Ws2-DH-D3A" firstAttribute="width" secondItem="gI4-uK-P8r" secondAttribute="width" id="2NY-mh-MUy"/>
                             <constraint firstItem="Ws2-DH-D3A" firstAttribute="centerY" secondItem="gI4-uK-P8r" secondAttribute="centerY" id="45T-8a-e5c"/>
+                            <constraint firstItem="zZp-zK-Pov" firstAttribute="leading" secondItem="gI4-uK-P8r" secondAttribute="leading" constant="32" id="6FZ-XK-ZLR"/>
+                            <constraint firstAttribute="trailing" secondItem="jaS-Bw-cwn" secondAttribute="trailing" constant="32" id="ASS-Qh-yfL"/>
                             <constraint firstItem="4l9-JP-ljz" firstAttribute="top" secondItem="cST-cU-Civ" secondAttribute="bottom" constant="32" id="E2X-9U-mie"/>
                             <constraint firstItem="cST-cU-Civ" firstAttribute="centerX" secondItem="gI4-uK-P8r" secondAttribute="centerX" id="Mab-Mu-l9J"/>
+                            <constraint firstItem="zZp-zK-Pov" firstAttribute="centerY" secondItem="cST-cU-Civ" secondAttribute="centerY" id="htB-BH-EcZ"/>
+                            <constraint firstItem="jaS-Bw-cwn" firstAttribute="centerY" secondItem="cST-cU-Civ" secondAttribute="centerY" id="lX7-eS-OQ2"/>
                             <constraint firstItem="Ws2-DH-D3A" firstAttribute="centerX" secondItem="gI4-uK-P8r" secondAttribute="centerX" id="qTV-jg-TZw"/>
                         </constraints>
                     </view>
@@ -141,7 +161,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J9Y-Lx-I3n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="382" y="590"/>
+            <point key="canvasLocation" x="381.60000000000002" y="589.65517241379314"/>
         </scene>
     </scenes>
     <resources>

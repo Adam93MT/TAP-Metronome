@@ -39,13 +39,13 @@ class MetronomeViewController: UIViewController {
         // Lets us access the ViewController from metronome logic
 //        metronome.parentViewController = self
         metronome = delegate.metronome
-        metronome.delegate = self
+        metronome.vc = self
         
         self.viewWidth = view.frame.width
         self.viewHeight = view.frame.height
         
         // Setup BG Color
-        self.view.backgroundColor = delegate.bgColor
+        self.view.backgroundColor = Globals.colors.bgColor
         
         // Listen for device rotation
         NotificationCenter.default.addObserver(
@@ -123,10 +123,10 @@ class MetronomeViewController: UIViewController {
 //        }
 //        if (val! > metronome.maxTempo){
 //            val = metronome.maxTempo
-////            self.tempoTextField.text = String(metronome.maxTempo)
+//            self.tempoTextField.text = String(metronome.maxTempo)
 //        } else if (val! < metronome.minTempo){
 //            val = metronome.minTempo
-////            self.tempoTextField.text = String(metronome.minTempo)
+//            self.tempoTextField.text = String(metronome.minTempo)
 //        }
 //        print("text box value: \(String(describing: val))")
 //        self.metronome.setTempo(val!)
@@ -138,7 +138,6 @@ class MetronomeViewController: UIViewController {
     }
     
     @IBAction func decrementButtonPressed(_ sender: UIButton) {
-        print("tempo--")
         self.metronome.decrementTempo()
     }
     
@@ -265,7 +264,7 @@ class MetronomeViewController: UIViewController {
     
     func createGradientLayer() {
         // Set up the background colors
-        self.gradientLayer.setColors(startColor: delegate.bgColorLight, endColor: delegate.bgColorDark)
+        self.gradientLayer.setColors(startColor: Globals.colors.bgColorLight, endColor: Globals.colors.bgColorDark)
         self.gradientLayer.setLocations(start: 0.0, end: 0.5)
         self.gradientLayer.gl.frame = self.view.bounds
         self.view.layer.insertSublayer(self.gradientLayer.gl, at: 0)

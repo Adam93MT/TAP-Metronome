@@ -8,22 +8,45 @@
 
 import UIKit
 
+struct globalColors {
+    var bgColor: UIColor
+    var bgColorLight: UIColor
+    var bgColorDark: UIColor
+    var textColor: UIColor
+    var beatCircleStartColor: UIColor
+    
+    init() {
+        bgColor = UIColor.black
+        bgColorLight = UIColor(red: 29/255.0, green: 71/255.0, blue: 140/255.0, alpha: 1)
+        bgColorDark = UIColor(red: 19/255.0, green: 48/255.0, blue: 93/255.0, alpha: 1)
+        textColor = UIColor(rgb: 0xFAFAFA)
+        beatCircleStartColor = UIColor(rgb: 0xFFFFFF)
+    }
+}
+
+struct globalMeasures {
+    var buttonHeight: CGFloat
+    
+    init() {
+        buttonHeight = 48
+    }
+    
+}
+
+struct Globals {
+    static let kBipDurationSeconds: Double = 0.020
+    static let kTempoChangeResponsivenessSeconds: Double = 0.250
+    static let colors = globalColors()
+    static let dimensions = globalMeasures()
+}
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
     let metronome: AVMetronome = AVMetronome()
-    
-    // Colours
-    let bgColor = UIColor.black
-    var bgColorLight: UIColor = UIColor(rgb: 0x1A1A1A)
-    //UIColor(red: 29/255.0, green: 71/255.0, blue: 140/255.0, alpha: 0.5)
-    var bgColorDark: UIColor = UIColor(rgb: 0x030303)
-    //UIColor(red: 19/255.0, green: 48/255.0, blue: 93/255.0, alpha: 0.5)
-    var textColor = UIColor(rgb: 0xFAFAFA)
-    var beatCircleStartColor = UIColor(rgb: 0xFFFFFF)
-    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
