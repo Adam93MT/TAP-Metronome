@@ -57,6 +57,7 @@ class TempoSliderViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         // update the slider value every time it appears
         tempoSlider.value = Float(delegate.metronome.getTempo())
+        enteredTempoModal()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -88,6 +89,7 @@ class TempoSliderViewController: UIViewController {
     // MARK: - Navigation
 
      @IBAction func closeTempoModal(_ sender: UIButton) {
+        dismissedTempoModal()
         self.dismiss(animated: true, completion: nil)
      }
      // In a storyboard-based application, you will often want to do a little preparation before navigation
