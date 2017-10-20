@@ -82,16 +82,15 @@ class MetronomeViewController: UIViewController {
         
         
         // Set up Tempo Control Buttons, Slider and Text
-        self.addDoneButtonOnKeyboard()
+//        self.addDoneButtonOnKeyboard()
         tempoButton.setTitle(String(metronome.tempoBPM), for: .normal)
-        tempoButton.backgroundColor = UIColor.clear
         // add keyboard listeners to move UI up/down
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil
-        )
+//        NotificationCenter.default.addObserver(
+//            self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil
+//        )
+//        NotificationCenter.default.addObserver(
+//            self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil
+//        )
 
 //        metronome.prepare()
     }

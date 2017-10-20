@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -35,24 +35,27 @@
                                     <action selector="tapUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M4J-fW-xmM"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="huJ-0x-goJ">
-                                <rect key="frame" x="32" y="589" width="46" height="46"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="huJ-0x-goJ" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="46" y="601" width="16" height="22"/>
                                 <state key="normal" image="decrement"/>
                                 <connections>
                                     <action selector="decrementButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3ek-kW-Dp3"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KrZ-CO-g8Q">
-                                <rect key="frame" x="297" y="589" width="46" height="46"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KrZ-CO-g8Q" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="313" y="601" width="16" height="22"/>
                                 <state key="normal" image="increment"/>
                                 <connections>
                                     <action selector="incrementButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pLz-oE-SBb"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyi-v4-qiX">
-                                <rect key="frame" x="138" y="589" width="98" height="46"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyi-v4-qiX" customClass="UIControlButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="139" y="589" width="96" height="46"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="96" id="Dc6-28-5lJ"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <state key="normal" title="120" backgroundImage="tempo button">
+                                <state key="normal" title="120">
                                     <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -63,6 +66,8 @@
                         <color key="backgroundColor" red="0.047058823529411764" green="0.047058823529411764" blue="0.047058823529411764" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="lyi-v4-qiX" firstAttribute="height" secondItem="huJ-0x-goJ" secondAttribute="height" id="05b-Rq-Zd7"/>
+                            <constraint firstItem="KrZ-CO-g8Q" firstAttribute="height" secondItem="lyi-v4-qiX" secondAttribute="height" id="1iM-fF-gzI"/>
                             <constraint firstAttribute="centerX" secondItem="y8r-1J-ZFl" secondAttribute="centerX" id="6fM-Xn-aF0"/>
                             <constraint firstItem="y8r-1J-ZFl" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="9WH-lv-5nf"/>
                             <constraint firstItem="KrZ-CO-g8Q" firstAttribute="centerY" secondItem="lyi-v4-qiX" secondAttribute="centerY" id="Dsg-bD-E4z"/>
@@ -104,8 +109,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cST-cU-Civ">
-                                <rect key="frame" x="164" y="589" width="46" height="46"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cST-cU-Civ" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="180" y="602" width="16" height="22"/>
                                 <state key="normal" image="cross"/>
                                 <connections>
                                     <action selector="closeTempoModal:" destination="9i7-qK-ccy" eventType="touchUpInside" id="AfJ-7M-ftc"/>
@@ -114,6 +119,7 @@
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ws2-DH-D3A" customClass="TempoVerticalSlider" customModule="TAP_Metronome_Swift" customModuleProvider="target">
                                 <rect key="frame" x="-2" y="318.5" width="379" height="31"/>
+                                <color key="thumbTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="sliderValueChanged:" destination="9i7-qK-ccy" eventType="valueChanged" id="SAO-Ke-HHq"/>
                                 </connections>
@@ -139,9 +145,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="cross" width="46" height="46"/>
-        <image name="decrement" width="46" height="46"/>
-        <image name="increment" width="46" height="46"/>
-        <image name="tempo button" width="98" height="46"/>
+        <image name="cross" width="12" height="12"/>
+        <image name="decrement" width="16" height="2"/>
+        <image name="increment" width="16" height="16"/>
     </resources>
 </document>
