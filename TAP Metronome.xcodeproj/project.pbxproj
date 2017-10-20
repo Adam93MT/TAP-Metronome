@@ -20,6 +20,8 @@
 		66E4D1F41D16532900811CCA /* BeatContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E4D1F31D16532900811CCA /* BeatContainerView.swift */; };
 		66E98B8A1C2919C00097E58E /* downBeatClick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66E98B881C2919C00097E58E /* downBeatClick.mp3 */; };
 		66E98B8B1C2919C00097E58E /* metronomeClick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66E98B891C2919C00097E58E /* metronomeClick.mp3 */; };
+		66EAD1331F992B0A00D7CEE7 /* UICircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EAD1321F992B0A00D7CEE7 /* UICircleButton.swift */; };
+		66EAD1351F99372700D7CEE7 /* UIControlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EAD1341F99372700D7CEE7 /* UIControlButton.swift */; };
 		B897AC7719E4AC8700820251 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B897AC7619E4AC8700820251 /* AppDelegate.swift */; };
 		B897AC7919E4AC8700820251 /* MetronomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B897AC7819E4AC8700820251 /* MetronomeViewController.swift */; };
 		B897AC7C19E4AC8700820251 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B897AC7A19E4AC8700820251 /* Main.storyboard */; };
@@ -52,6 +54,8 @@
 		66E4D1F31D16532900811CCA /* BeatContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatContainerView.swift; sourceTree = "<group>"; };
 		66E98B881C2919C00097E58E /* downBeatClick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = downBeatClick.mp3; sourceTree = "<group>"; };
 		66E98B891C2919C00097E58E /* metronomeClick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = metronomeClick.mp3; sourceTree = "<group>"; };
+		66EAD1321F992B0A00D7CEE7 /* UICircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICircleButton.swift; sourceTree = "<group>"; };
+		66EAD1341F99372700D7CEE7 /* UIControlButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControlButton.swift; sourceTree = "<group>"; };
 		B897AC7119E4AC8700820251 /* TAP Metronome-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TAP Metronome-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B897AC7519E4AC8700820251 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B897AC7619E4AC8700820251 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +94,8 @@
 				66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */,
 				6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */,
 				66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */,
+				66EAD1341F99372700D7CEE7 /* UIControlButton.swift */,
+				66EAD1321F992B0A00D7CEE7 /* UICircleButton.swift */,
 			);
 			name = Subviews;
 			sourceTree = "<group>";
@@ -286,7 +292,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				66A5AE601F95AFA500E432F7 /* TempoVerticalSlider.swift in Sources */,
+				66EAD1331F992B0A00D7CEE7 /* UICircleButton.swift in Sources */,
 				66A5AE5E1F95A4EB00E432F7 /* TempoSliderViewController.swift in Sources */,
+				66EAD1351F99372700D7CEE7 /* UIControlButton.swift in Sources */,
 				66B9FF2E1F929DBC006EDC19 /* TWGenerator.swift in Sources */,
 				66B9FF2C1F929D80006EDC19 /* AVMetronome.swift in Sources */,
 				66E4D1F41D16532900811CCA /* BeatContainerView.swift in Sources */,

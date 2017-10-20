@@ -28,10 +28,18 @@ class TempoVerticalSlider: UISlider {
         self.thumbTintColor = .clear//delegate.bgColorDark.withAlphaComponent(0.8)
         self.backgroundColor = .clear
         self.minimumTrackTintColor = .white
-        self.maximumTrackTintColor = UIColor.white.withAlphaComponent(0.1)
+        self.maximumTrackTintColor = UIColor.white.withAlphaComponent(0.2)
         self.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2 )
     }
 
+    override func thumbRect(forBounds bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
+        var newThumbRect = super.thumbRect(forBounds: bounds, trackRect: rect, value: value)
+//        newThumbRect.origin.x = 0
+//        newThumbRect.origin.y = 22
+        newThumbRect.size.width = 44
+        newThumbRect.size.height = 44
+        return newThumbRect.offsetBy(dx: 0, dy: -5)
+    }
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

@@ -20,7 +20,7 @@ class TempoSliderViewController: UIViewController {
     var minVal: Int!
     var thumbWidth: Double!
     var thumbHeight: Double!
-    let thumbBGImage = UIImage(named: "tempo_slider_thumb_pressed")
+    let thumbBGImage = UIImage(named: "tempo_slider_thumb")
     
     @IBOutlet weak var tempoSlider: UISlider!
     @IBOutlet weak var closeButton: UIButton!
@@ -52,13 +52,11 @@ class TempoSliderViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        closeButton.center.y += 64
         // update the slider value every time it appears
         tempoSlider.value = Float(metronome.tempoBPM)
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        closeButton.center.y -= 64
         
     }
 
@@ -85,23 +83,31 @@ class TempoSliderViewController: UIViewController {
     }
     
     func initSliderLabel() {
-        Label.center = self.view.center//CGPoint(x: labelX, y: labelY)
+        Label.frame.size = CGSize(width: 112, height: 44)
+        Label.center = self.view.center //CGPoint(x: labelX, y: labelY)
         Label.textAlignment = .center
         Label.text = String(delegate.metronome.getTempo())
-        Label.textColor = delegate.textColor
-        Label.font = Label.font.withSize(32)
+        Label.textColor = delegate.bgColor
+        Label.font = Label.font.withSize(28)
+        Label.backgroundColor = .white
+        Label.layer.masksToBounds = true
+        Label.layer.cornerRadius = min(Label.frame.height, Label.frame.width)/2
         self.view.addSubview(Label)
         
-        let bgImageView = UIImageView(image: thumbBGImage)
-        Label.addSubview(bgImageView)
+//        let bgImageView = UIImageView(image: thumbBGImage)
+//        Label.addSubview(bgImageView)
+//        Label.sendSubview(toBack: bgImageView)
+//        Label.bringSubview(toFront: Label)
         
         let val = tempoSlider.value
         self.updateLabel(val: val)
     }
     
     func updateLabel(val: Float) {
-        let labelY = Float(sliderPosY) + Float(sliderLength) * (1 - val/(Float(self.maxVal - self.minVal))) - 1.5*Float(thumbHeight)
+        // the 0.925 and 1.75 is found experimentally. not sure why
+        let labelY = Float(sliderPosY) + 0.925 * Float(sliderLength) * (1 - val/(Float(self.maxVal - self.minVal))) - 1.75 * Float(thumbHeight)
         Label.center.y = CGFloat(labelY)
         Label.text = String(delegate.metronome.getTempo())
+//        print("slider thumb y: \(tempoSlider.)")
     }
 }
