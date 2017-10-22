@@ -158,9 +158,6 @@ class BeatContainerView: UIView {
             }
         }
         
-        print(self.currentOrientation)
-        print(self.originalOrientation)
-        
         // setup the animation
         thisBeat.isHidden = false
         let beatAnimation = { () -> Void in
