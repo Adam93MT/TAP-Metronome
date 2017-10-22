@@ -34,10 +34,14 @@ class MetronomeViewController: UIViewController {
     let textLabelBottomSpace: CGFloat = 24
     var controlsAreHidden: Bool = false
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Lets us access the ViewController from metronome logic
-//        metronome.parentViewController = self
         metronome = delegate.metronome
         metronome.vc = self
         
@@ -191,6 +195,7 @@ class MetronomeViewController: UIViewController {
     }
     
     func hideControls(_ metronome: AVMetronome) {
+        self.controlsAreHidden = true
         DispatchQueue.main.async(execute: {() -> Void in
             UIView.animate(withDuration: 4, delay: 0, options: [.curveEaseIn, .allowUserInteraction], animations: {
                 self.tempoButton.alpha = 0
@@ -198,20 +203,26 @@ class MetronomeViewController: UIViewController {
                 self.decrementButton.alpha = 0
 //                self.tempoSlider.alpha = 0
                 self.tapButton.alpha = 0.1
+                self.setNeedsStatusBarAppearanceUpdate()
             })
-            self.controlsAreHidden = true
         })
     }
     
     func showControls() {
+        self.controlsAreHidden = false
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseOut, .allowUserInteraction], animations: {
             self.tempoButton.alpha = 1
             self.incrementButton.alpha = 1
             self.decrementButton.alpha = 1
 //            self.tempoSlider.alpha = 1
             self.tapButton.alpha = 0.75
+            self.setNeedsStatusBarAppearanceUpdate()
         })
-        self.controlsAreHidden = false
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        // hide status bar
+        return self.controlsAreHidden
     }
     
     func addDoneButtonOnKeyboard() {
