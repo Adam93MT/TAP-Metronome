@@ -10,6 +10,7 @@ import UIKit
 
 struct globalColors {
     var bgColor: UIColor
+    var bgTheme: String!
     var bgColorLight: UIColor
     var bgColorDark: UIColor
     var textColor: UIColor
@@ -17,10 +18,33 @@ struct globalColors {
     
     init() {
         bgColor = UIColor.black
-        bgColorLight = UIColor(red: 29/255.0, green: 71/255.0, blue: 140/255.0, alpha: 1)
-        bgColorDark = UIColor(red: 19/255.0, green: 48/255.0, blue: 93/255.0, alpha: 1)
+        bgTheme = "purple"
         textColor = UIColor(rgb: 0xFAFAFA)
         beatCircleStartColor = UIColor(rgb: 0xFFFFFF)
+        switch bgTheme {
+            case "red":
+                bgColorLight = UIColor(rgb: 0xF5515F)
+                bgColorDark = UIColor(rgb: 0x9F041B)
+            case "orange":
+                bgColorLight = UIColor(rgb: 0xFAD961)
+                bgColorDark = UIColor(rgb: 0xF76B1C)
+            case "yellow":
+                bgColorLight = UIColor(rgb: 0xF5FA61)
+                bgColorDark = UIColor(rgb: 0xC7AC16)
+            case "green":
+                bgColorLight = UIColor(rgb: 0xB4EC51)
+                bgColorDark = UIColor(rgb: 0x429321)
+            case "blue":
+                bgColorLight = UIColor(rgb: 0x1D478C)
+                bgColorDark = UIColor(rgb: 0x13305D)
+            case "purple":
+                bgColorLight = UIColor(rgb: 0x7A51F5)
+                bgColorDark = UIColor(rgb: 0x20039E)
+            default:
+                bgColorLight = UIColor(rgb: 0x1A1A1A) // black
+                bgColorDark = UIColor(rgb: 0x030303)
+        }
+        
     }
 }
 
