@@ -76,18 +76,31 @@ class AVMetronome : NSObject {
         // Create a standard audio format deinterleaved float.
         let format = AVAudioFormat(standardFormatWithSampleRate: 44100.0, channels: 2)
         
-        // How many audio frames?
-        let bipFrames: UInt32 = UInt32(Globals.kBipDurationSeconds * Double(format.sampleRate))
+//        // How many audio frames?
+//        let bipFrames: UInt32 = UInt32(Globals.kBipDurationSeconds * Double(format.sampleRate))
         
+        // Set beep frequencies
+        let freq1 = 440.0
+        let freq2 = 261.6
+        let freq3 = 220.0
+        // how many periods of the frequency can fit into the alloted time?
+        let periods1 = Int(Globals.kBipDurationSeconds * freq1)
+        let periods2 = Int(Globals.kBipDurationSeconds * freq2)
+        let periods3 = Int(Globals.kBipDurationSeconds * freq3)
+        // How many frames will that make?
+        let bipFrames1 = UInt32(Double(periods1) * 1/freq1 * Double(format.sampleRate))
+        let bipFrames2 = UInt32(Double(periods2) * 1/freq2 * Double(format.sampleRate))
+        let bipFrames3 = UInt32(Double(periods3) * 1/freq3 * Double(format.sampleRate))
+
         // Create the PCM buffers.
-        soundBuffer.append(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: bipFrames)) //0
-        soundBuffer.append(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: bipFrames)) //1
-        soundBuffer.append(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: bipFrames)) //2
+        soundBuffer.append(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: bipFrames1)) //0
+        soundBuffer.append(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: bipFrames2)) //1
+        soundBuffer.append(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: bipFrames3)) //2
         
         // Fill in the number of valid sample frames in the buffers (required).
-        soundBuffer[0]?.frameLength = bipFrames
-        soundBuffer[1]?.frameLength = bipFrames
-        soundBuffer[2]?.frameLength = bipFrames
+        soundBuffer[0]?.frameLength = bipFrames1
+        soundBuffer[1]?.frameLength = bipFrames2
+        soundBuffer[2]?.frameLength = bipFrames3
         
         // Generate the metronme bips, first buffer will be A440 and the second buffer Middle C.
         let wg1 = TriangleWaveGenerator(sampleRate: Float(format.sampleRate))                     // A 440
@@ -172,17 +185,18 @@ class AVMetronome : NSObject {
                     if (self.timeSignature == 6 && self.getBeatInTimeSignature() == 3) { self.bufferNumber = 2 }
                     
                     // Error logging 
-//                    self.current_time = mach_absolute_time()
-//                    let actual_ms = Float(self.absToNanos(self.current_time - self.last_fire_time)) / Float(NSEC_PER_MSEC)
-//                    let expect_ms = Float(secondsPerBeat * 1000)
-//                    self.last_fire_time = mach_absolute_time()
-//                    // print("actual time: \(actual_ms) msec")
-//                    // print("expected time \(expect_ms) msec")
-//                    self.error_ms = actual_ms - expect_ms
-//                    self.max_error = max(self.max_error, abs(self.error_ms))
-//                    // print("Error: \(self.error_ms) msec")
-//                    self.total_error += abs(self.error_ms)
-//                    self.total_beats += 1
+                    self.current_time = mach_absolute_time()
+                    let actual_ms = Float(self.absToNanos(self.current_time - self.last_fire_time)) / Float(NSEC_PER_MSEC)
+                    let expect_ms = Float(secondsPerBeat * 1000)
+                    self.last_fire_time = mach_absolute_time()
+                    self.error_ms = actual_ms - expect_ms
+                    self.max_error = max(self.max_error, abs(self.error_ms))
+                    self.total_error += abs(self.error_ms)
+                    self.total_beats += 1
+                    
+                    // print("actual time: \(actual_ms) msec")
+                    // print("expected time \(expect_ms) msec")
+                     print("Timing Error: \(self.error_ms) msec")
                     
                     self.incrementBeat()
                     self.scheduleBeats()
@@ -209,19 +223,17 @@ class AVMetronome : NSObject {
             
             if (vc?.animateBeatCircle != nil && vc?.hideControls != nil) {
                 let nodeBeatTime: AVAudioTime = player.nodeTime(forPlayerTime: playerBeatTime)!
-                let output: AVAudioIONode = engine.outputNode
-
-                let latencyHostTicks: UInt64 = AVAudioTime.hostTime(forSeconds: output.presentationLatency)
-                let dispatchTime = DispatchTime(uptimeNanoseconds: nodeBeatTime.hostTime + latencyHostTicks)
+//                let output: AVAudioIONode = engine.outputNode
+//                let latencyHostTicks: UInt64 = AVAudioTime.hostTime(forSeconds: output.presentationLatency)
+                let dispatchTime = DispatchTime(uptimeNanoseconds: nodeBeatTime.hostTime ) //+ latencyHostTicks)
                 
                 DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: dispatchTime) {
                     if (self.isOn) {
                         
                         // Animate the next beat circle if applicable
                         if !(self.didRegisterTap) && self.beatNumber > 0 {
-                            print("Will animate...")
                             self.vc!.animateBeatCircle(self, beatIndex: (callbackBeat), beatDuration: (callbackInterval))
-                        } else { print("Won't animate.") }
+                        } else {  }
                         
                         // Hide the controls after enough beats have passed
                         if (self.untappedBeats > self.beatsToHideUI && !tempoModalisVisible && !onSettingsPage){
@@ -293,7 +305,10 @@ class AVMetronome : NSObject {
         
         self.avg_error = self.total_error/Float(self.total_beats)
         print("Avg. Error: \(self.avg_error) msec")
-        print("Max Error: \(self.max_error)")
+//        print("Max Error: \(self.max_error)")
+        
+        let avg_animation_delay = (self.vc.containerView.total_error/Float(self.total_beats))
+        print("\nAvg. Animation Delay: \(avg_animation_delay)")
     }
     
     func playNow() {
@@ -376,7 +391,7 @@ class AVMetronome : NSObject {
     }
     
     func incrementBeat() {
-        print("beat++")
+        // print("beat++")
         self.beatNumber += 1
     }
     

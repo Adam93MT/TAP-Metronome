@@ -20,7 +20,7 @@ struct globalMeasures {
 }
 
 struct Globals {
-    static let kBipDurationSeconds: Double = 0.020
+    static let kBipDurationSeconds: Double = 0.04
     static let kTempoChangeResponsivenessSeconds: Double = 0.250
     static var colors = globalColors(Defaults.string(forKey: "bgTheme"))
     static var dimensions = globalMeasures()

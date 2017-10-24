@@ -12,6 +12,8 @@ class BeatContainerView: UIView {
     
     var view:UIView!
     
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    
     // The array of all circles
     var BeatViewsArray = [BeatView]()
     var allBeatsInitialized: Bool = false
@@ -36,20 +38,11 @@ class BeatContainerView: UIView {
     
     // DEBUG vars ------
     var timebaseInfo = mach_timebase_info_data_t()
-    var last_fire_time: UInt64 = 0
-    var expected_fire_time: UInt64 = 0
-    var current_time: UInt64 = 0
-    
-    var total_beats = 0
-    var error: UInt64 = 0
-    var error_ms: Float = 0
-    var max_error: Float = 0
     var total_error: Float = 0
     var avg_error: Float = 0
     // ------------
     
     override func draw(_ rect: CGRect) {
-        print("Called DrawRect")
         self.viewCentreX = rect.width/2
         self.viewCentreY = rect.height/2
         self.defaultLocationX = viewCentreX - CGFloat(self.startDiameter/2)
@@ -61,7 +54,6 @@ class BeatContainerView: UIView {
     }
     
     override init (frame : CGRect) {
-        print("init BeatContainerView")
         super.init(frame : frame)
         setup()
     }
@@ -78,11 +70,11 @@ class BeatContainerView: UIView {
 
     func initAllBeatCircles(_ timeSignature: Int) {
         if allBeatsInitialized == false {
-            print("Initializing All Circles")
+            print("Initializing All Circles...")
+            self.total_error = 0
             let hypotenuse = CGFloat(sqrt(Double(self.screenWidth * self.screenWidth + self.screenHeight * self.screenHeight)))
             
             self.startDiameter = min(self.screenWidth, self.screenHeight) * 0.5
-//            self.endScale = 0.1
             
             self.endScale = hypotenuse/self.startDiameter * 1.5
             
@@ -125,22 +117,13 @@ class BeatContainerView: UIView {
         let thisBeat = self.BeatViewsArray[beatIndex]
         
         // Error logging
-        self.current_time = mach_absolute_time()
-        let actual_ms = Float(self.absToNanos(self.current_time - self.last_fire_time)) / Float(NSEC_PER_MSEC)
-        let expect_ms = Float(beatDuration * 1000)
-        self.last_fire_time = mach_absolute_time()
-//        print("actual time: \(actual_ms) msec")
-//        print("expected time \(expect_ms) msec")
-        self.error_ms = actual_ms - expect_ms
-        self.max_error = max(self.max_error, abs(self.error_ms))
-        print("Animation error: \(self.error_ms) msec")
-        self.total_error += abs(self.error_ms)
-        self.total_beats += 1
-        
+        let delay = mach_absolute_time() - delegate.metronome.current_time
+        let delay_ms = Float(delay) / Float(NSEC_PER_MSEC)
+        print("Animation Delay \(delay_ms) ms")
+        if delay_ms < 1000 { self.total_error += delay_ms }
         
        //  handle startPoint finger press
         if (startPoint != nil) {
-//            print("Tap Location: \(String(describing: startPoint))")
             thisBeat.frame.origin.x = startPoint!.x - thisBeat.frame.width/2
             thisBeat.frame.origin.y = startPoint!.y - thisBeat.frame.height/2
         }
