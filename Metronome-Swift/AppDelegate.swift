@@ -27,6 +27,7 @@ struct Globals {
 }
 
 var tempoModalisVisible: Bool = false
+var onSettingsPage: Bool = false
 
 
 @UIApplicationMain
@@ -37,11 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let metronome: AVMetronome = AVMetronome()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        // Make sure defaults are set
-        if Defaults.integer(forKey: "timeSignature") <= 1 {
-            Defaults.set(4, forKey: "timeSignature")
-        }
         
         // Navbar colors
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)

@@ -143,64 +143,126 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Colour" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GBW-fx-p83">
-                                <rect key="frame" x="142" y="304" width="90" height="34"/>
+                                <rect key="frame" x="142" y="310" width="90" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <color key="textColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3gv-uz-FB6" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="80" y="354.5" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTQ-dj-CCx" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="103" y="425" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="selectRed:" destination="PgZ-xe-vib" eventType="touchUpInside" id="QgR-wh-EPq"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n0a-Ad-STu" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="142" y="355" width="46" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="selectOrange:" destination="PgZ-xe-vib" eventType="touchUpInside" id="Z9a-PO-71Y"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5j-vI-4H3" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="204" y="355" width="46" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="selectYellow:" destination="PgZ-xe-vib" eventType="touchUpInside" id="cOg-I0-m2e"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w5v-ho-d7T" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="266" y="355" width="46" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="selectGreen:" destination="PgZ-xe-vib" eventType="touchUpInside" id="RtF-SO-nj5"/>
+                                    <action selector="selectBlue:" destination="PgZ-xe-vib" eventType="touchUpInside" id="J7M-dK-CMu"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYl-cm-0CC" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="165" y="403" width="46" height="30"/>
+                                <rect key="frame" x="165" y="425" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="selectPurple:" destination="PgZ-xe-vib" eventType="touchUpInside" id="mlA-aU-7jw"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gpB-nD-3cn" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="227" y="403" width="46" height="30"/>
+                                <rect key="frame" x="227" y="425" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="selectBlack:" destination="PgZ-xe-vib" eventType="touchUpInside" id="vpU-8C-ruk"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTQ-dj-CCx" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="103" y="403" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3gv-uz-FB6" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="72" y="360" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="selectBlue:" destination="PgZ-xe-vib" eventType="touchUpInside" id="J7M-dK-CMu"/>
+                                    <action selector="selectRed:" destination="PgZ-xe-vib" eventType="touchUpInside" id="QgR-wh-EPq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n0a-Ad-STu" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="134" y="361" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="selectOrange:" destination="PgZ-xe-vib" eventType="touchUpInside" id="Z9a-PO-71Y"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5j-vI-4H3" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="196" y="361" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="selectYellow:" destination="PgZ-xe-vib" eventType="touchUpInside" id="cOg-I0-m2e"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w5v-ho-d7T" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="258" y="361" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="selectGreen:" destination="PgZ-xe-vib" eventType="touchUpInside" id="RtF-SO-nj5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oz7-tn-rFv" customClass="BeatNumberButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="95" y="116" width="80" height="68"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="LRY-WH-1LG"/>
+                                    <constraint firstAttribute="height" constant="68" id="uYL-mq-mAQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="42"/>
+                                <state key="normal" title="2">
+                                    <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectTwoBeats:" destination="PgZ-xe-vib" eventType="touchUpInside" id="vJr-kU-9wE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fg-he-cHq" customClass="BeatNumberButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="199" y="117" width="80" height="68"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="68" id="0Ly-tA-Hka"/>
+                                    <constraint firstAttribute="width" constant="80" id="ZA6-W8-Zrf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="42"/>
+                                <state key="normal" title="3">
+                                    <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectThreeBeats:" destination="PgZ-xe-vib" eventType="touchUpInside" id="ArB-oR-uef"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tsQ-oQ-bTJ" customClass="BeatNumberButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="95" y="210" width="80" height="68"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="68" id="ECS-hG-8Da"/>
+                                    <constraint firstAttribute="width" constant="80" id="UPn-8P-OOM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="42"/>
+                                <state key="normal" title="4">
+                                    <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectFourBeats:" destination="PgZ-xe-vib" eventType="touchUpInside" id="O9Y-ZS-55C"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aHx-ua-1pc" customClass="BeatNumberButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="199" y="209" width="80" height="68"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="D70-LI-gFS"/>
+                                    <constraint firstAttribute="height" constant="68" id="Z9l-W7-vw0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="42"/>
+                                <state key="normal" title="6">
+                                    <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectSixBeats:" destination="PgZ-xe-vib" eventType="touchUpInside" id="Bpb-2j-dgX"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.26098805144384779" blue="0.54550781250000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="w5v-ho-d7T" firstAttribute="leading" secondItem="gpB-nD-3cn" secondAttribute="trailing" constant="-14" id="2ru-eT-PmR"/>
+                            <constraint firstItem="aHx-ua-1pc" firstAttribute="top" secondItem="9fg-he-cHq" secondAttribute="bottom" constant="24" id="4fS-q7-8cc"/>
+                            <constraint firstItem="9fg-he-cHq" firstAttribute="leading" secondItem="Oz7-tn-rFv" secondAttribute="trailing" constant="24" id="9lb-ag-uJv"/>
                             <constraint firstItem="3gv-uz-FB6" firstAttribute="centerY" secondItem="n0a-Ad-STu" secondAttribute="centerY" id="BfK-tz-NSS"/>
                             <constraint firstItem="aYl-cm-0CC" firstAttribute="centerX" secondItem="dDn-N8-zP2" secondAttribute="centerX" id="CD6-kv-11x"/>
                             <constraint firstItem="gpB-nD-3cn" firstAttribute="leading" secondItem="aYl-cm-0CC" secondAttribute="trailing" constant="16" id="EBp-3X-TrA"/>
@@ -210,11 +272,17 @@
                             <constraint firstItem="H5j-vI-4H3" firstAttribute="centerY" secondItem="n0a-Ad-STu" secondAttribute="centerY" id="QID-1G-ScZ"/>
                             <constraint firstItem="n0a-Ad-STu" firstAttribute="leading" secondItem="3gv-uz-FB6" secondAttribute="trailing" constant="16" id="Rq9-YE-gvW"/>
                             <constraint firstItem="vUT-CV-fML" firstAttribute="top" secondItem="Rqz-Nl-CRb" secondAttribute="bottom" constant="16" id="Ruo-lU-gT9"/>
-                            <constraint firstItem="GBW-fx-p83" firstAttribute="top" secondItem="vUT-CV-fML" secondAttribute="bottom" constant="196" id="TT4-9U-3dc"/>
+                            <constraint firstItem="Oz7-tn-rFv" firstAttribute="top" secondItem="vUT-CV-fML" secondAttribute="bottom" constant="16" id="TaF-m9-Hwv"/>
+                            <constraint firstItem="9fg-he-cHq" firstAttribute="centerY" secondItem="Oz7-tn-rFv" secondAttribute="centerY" id="VES-4c-S1x"/>
+                            <constraint firstItem="GBW-fx-p83" firstAttribute="top" secondItem="tsQ-oQ-bTJ" secondAttribute="bottom" constant="32" id="WEV-oC-mro"/>
+                            <constraint firstItem="aHx-ua-1pc" firstAttribute="leading" secondItem="tsQ-oQ-bTJ" secondAttribute="trailing" constant="24" id="Wd4-Vg-TKA"/>
                             <constraint firstItem="3gv-uz-FB6" firstAttribute="top" secondItem="GBW-fx-p83" secondAttribute="bottom" constant="16" id="YKF-of-4hZ"/>
                             <constraint firstItem="MTQ-dj-CCx" firstAttribute="centerY" secondItem="aYl-cm-0CC" secondAttribute="centerY" id="aaA-03-nMt"/>
+                            <constraint firstItem="tsQ-oQ-bTJ" firstAttribute="centerY" secondItem="aHx-ua-1pc" secondAttribute="centerY" id="em9-3e-BhV"/>
+                            <constraint firstItem="Oz7-tn-rFv" firstAttribute="leading" secondItem="dDn-N8-zP2" secondAttribute="leading" constant="95" id="jIv-6h-PsZ"/>
                             <constraint firstItem="H5j-vI-4H3" firstAttribute="leading" secondItem="n0a-Ad-STu" secondAttribute="trailing" constant="16" id="nyF-CL-Bup"/>
                             <constraint firstItem="vUT-CV-fML" firstAttribute="centerX" secondItem="dDn-N8-zP2" secondAttribute="centerX" id="pim-Of-tXH"/>
+                            <constraint firstItem="aHx-ua-1pc" firstAttribute="centerX" secondItem="9fg-he-cHq" secondAttribute="centerX" id="tko-XO-pWM"/>
                             <constraint firstItem="GBW-fx-p83" firstAttribute="centerX" secondItem="dDn-N8-zP2" secondAttribute="centerX" id="vfT-Hu-iQ8"/>
                             <constraint firstItem="aYl-cm-0CC" firstAttribute="top" secondItem="n0a-Ad-STu" secondAttribute="bottom" constant="18" id="z5f-9C-0nV"/>
                             <constraint firstItem="w5v-ho-d7T" firstAttribute="leading" secondItem="H5j-vI-4H3" secondAttribute="trailing" constant="16" id="zg0-lL-P6z"/>
@@ -225,10 +293,14 @@
                         <outlet property="ColorsLabel" destination="GBW-fx-p83" id="eIz-Nm-IgW"/>
                         <outlet property="blackButton" destination="gpB-nD-3cn" id="YVS-Ea-jzt"/>
                         <outlet property="blueButton" destination="MTQ-dj-CCx" id="u6Q-IH-KKR"/>
+                        <outlet property="fourBeats" destination="tsQ-oQ-bTJ" id="k4j-Mp-3kG"/>
                         <outlet property="greenButton" destination="w5v-ho-d7T" id="Acp-Nz-9PI"/>
                         <outlet property="orangeButton" destination="n0a-Ad-STu" id="zhX-Ko-Uug"/>
                         <outlet property="purpleButton" destination="aYl-cm-0CC" id="LgR-uT-pIg"/>
                         <outlet property="redButton" destination="3gv-uz-FB6" id="D9g-f3-JFr"/>
+                        <outlet property="sixBeats" destination="aHx-ua-1pc" id="tIm-RV-sNi"/>
+                        <outlet property="threeBeats" destination="9fg-he-cHq" id="YyW-Il-as3"/>
+                        <outlet property="twoBeats" destination="Oz7-tn-rFv" id="Bah-N1-Dh7"/>
                         <outlet property="yellowButton" destination="H5j-vI-4H3" id="Rti-iO-vGI"/>
                     </connections>
                 </viewController>

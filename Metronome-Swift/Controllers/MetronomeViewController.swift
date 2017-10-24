@@ -100,10 +100,14 @@ class MetronomeViewController: UIViewController {
 //        metronome.prepare()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Make Gradient
         self.createGradientLayer()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         // Get original orientation
         self.currentOrientation = UIDevice.current.orientation.isPortrait ? "portrait" : "landscape"
