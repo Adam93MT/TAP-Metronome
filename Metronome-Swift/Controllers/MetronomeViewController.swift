@@ -18,8 +18,9 @@ class MetronomeViewController: UIViewController {
     @IBOutlet weak var decrementButton: UIButton!
     @IBOutlet weak var incrementButton: UIButton!
     @IBOutlet weak var tempoButton: UIButton!
+    @IBOutlet weak var settingsButton: UIBarButtonItem!
     
-//    let metronome = AVMetronome()
+    //    let metronome = AVMetronome()
     let delegate = UIApplication.shared.delegate as! AppDelegate
     var metronome: AVMetronome!
     var containerView: BeatContainerView!
@@ -118,24 +119,6 @@ class MetronomeViewController: UIViewController {
         if metronome.isOn { metronome.stop() }
     }
     
-    @IBAction func editedTextField(_ sender: UITextField) {
-//        var val: Int!
-//        if let v: Int = Int(self.tempoTextField.text!) {
-//            val = v
-//        } else {
-//            val = Int(self.metronome.tempoBPM)
-//        }
-//        if (val! > metronome.maxTempo){
-//            val = metronome.maxTempo
-//            self.tempoTextField.text = String(metronome.maxTempo)
-//        } else if (val! < metronome.minTempo){
-//            val = metronome.minTempo
-//            self.tempoTextField.text = String(metronome.minTempo)
-//        }
-//        print("text box value: \(String(describing: val))")
-//        self.metronome.setTempo(val!)
-    }
-    
     @IBAction func incrementButtonPressed(_ sender: UIButton) {
         print("tempo++")
         self.metronome.incrementTempo()
@@ -145,15 +128,18 @@ class MetronomeViewController: UIViewController {
         self.metronome.decrementTempo()
     }
     
+    @IBAction func openMenu(sender: AnyObject) {
+        performSegue(withIdentifier: "openSettings", sender: nil)
+    }
+    
     func handleTap(gestureRecognizer: TapDownGestureRecognizer) {
-        
         if metronome.isOn {
             metronome.logTap()
             killControlAnimations()
         }
         else {
             metronome.last_fire_time = mach_absolute_time()
-//            metronome.playBeat() // for machMetronome
+            // metronome.playBeat() // for machMetronome
             metronome.start()
         }
         
@@ -163,35 +149,10 @@ class MetronomeViewController: UIViewController {
         
         let tapLocation = gestureRecognizer.location(in: self.view)
         let tapIdx = metronome.getBeatIndex() + metronome.getTimeSignature()
-//        self.metronome.incrementBeat()
+        // self.metronome.incrementBeat()
         self.containerView.animateBeatCircle(
             beatIndex: tapIdx, beatDuration: metronome.getInterval(), startPoint: tapLocation
         )
-    }
-    
-    func keyboardWillShow(notification: NSNotification) {
-        print("keyboard will show: \(self.view.frame.origin.y)")
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                print("keyboard height: \(keyboardSize.height)")
-                self.view.frame.origin.y -= keyboardSize.height
-            }
-        }
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        print("keyboard will hide: \(self.view.frame.origin.y)")
-        if let _ = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y != 0 {
-                self.view.frame.origin.y = 0.0//+= keyboardSize.height
-            }
-        }
-    }
-    
-    func animateBeatCircle(_ metronome: AVMetronome, beatIndex: Int, beatDuration: Double) {
-        DispatchQueue.main.async(execute: {() -> Void in
-            self.containerView.animateBeatCircle(beatIndex: beatIndex, beatDuration: beatDuration)
-        })
     }
     
     func hideControls(_ metronome: AVMetronome) {
@@ -201,7 +162,7 @@ class MetronomeViewController: UIViewController {
                 self.tempoButton.alpha = 0
                 self.incrementButton.alpha = 0
                 self.decrementButton.alpha = 0
-//                self.tempoSlider.alpha = 0
+                self.settingsButton.isEnabled = false
                 self.tapButton.alpha = 0.1
                 self.setNeedsStatusBarAppearanceUpdate()
             })
@@ -214,35 +175,20 @@ class MetronomeViewController: UIViewController {
             self.tempoButton.alpha = 1
             self.incrementButton.alpha = 1
             self.decrementButton.alpha = 1
-//            self.tempoSlider.alpha = 1
+            self.settingsButton.isEnabled = true
             self.tapButton.alpha = 0.75
             self.setNeedsStatusBarAppearanceUpdate()
         })
     }
     
     override var prefersStatusBarHidden: Bool {
-        // hide status bar
         return self.controlsAreHidden
     }
     
-    func addDoneButtonOnKeyboard() {
-        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
-        doneToolbar.barStyle = UIBarStyle.black
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(self.doneButtonAction))
-        
-        var items = [UIBarButtonItem]()
-        items.append(flexSpace)
-        items.append(done)
-        
-        doneToolbar.items = items
-        doneToolbar.sizeToFit()
-        
-//        self.tempoTextField.inputAccessoryView = doneToolbar
-    }
-    
-    func doneButtonAction() {
-//        self.tempoTextField.resignFirstResponder()
+    func animateBeatCircle(_ metronome: AVMetronome, beatIndex: Int, beatDuration: Double) {
+        DispatchQueue.main.async(execute: {() -> Void in
+            self.containerView.animateBeatCircle(beatIndex: beatIndex, beatDuration: beatDuration)
+        })
     }
     
     func resetAllBeatCircles(){
@@ -255,7 +201,6 @@ class MetronomeViewController: UIViewController {
         self.tempoButton.layer.removeAllAnimations()
         self.incrementButton.layer.removeAllAnimations()
         self.decrementButton.layer.removeAllAnimations()
-//        self.tempoSlider.layer.removeAllAnimations()
         self.tapButton.layer.removeAllAnimations()
         self.view.layer.removeAllAnimations()
         self.view.layoutIfNeeded()
@@ -281,5 +226,45 @@ class MetronomeViewController: UIViewController {
         self.view.layer.insertSublayer(self.gradientLayer.gl, at: 0)
     }
     
+    
+    // MARK: Keyboard
+    func keyboardWillShow(notification: NSNotification) {
+        print("keyboard will show: \(self.view.frame.origin.y)")
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                print("keyboard height: \(keyboardSize.height)")
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        print("keyboard will hide: \(self.view.frame.origin.y)")
+        if let _ = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0 {
+                self.view.frame.origin.y = 0.0//+= keyboardSize.height
+            }
+        }
+    }
+    
+    func addDoneButtonOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.black
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(self.doneButtonAction))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        // self.tempoTextField.inputAccessoryView = doneToolbar
+    }
+    
+    func doneButtonAction() {
+        // self.tempoTextField.resignFirstResponder()
+    }
     
 }
