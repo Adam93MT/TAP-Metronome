@@ -27,8 +27,12 @@ class AVMetronome : NSObject {
     
     var syncQueue: DispatchQueue? = nil
     
+    
+    // Flags
     var isOn: Bool = false
+    var isFirstBeat: Bool = false
     var playerStarted: Bool = false
+    var didRegisterTap: Bool = false
     
     // Tempo control -----
     let minTempo: Int = 50
@@ -42,7 +46,6 @@ class AVMetronome : NSObject {
     var beatsScheduled: Int = 0
     
     // Beat Logging
-    var didRegisterTap: Bool = false
     var loggedDiffs = [Double]()
     var lastTapTime = mach_absolute_time()
     var untappedBeats: Int = 0
@@ -133,7 +136,7 @@ class AVMetronome : NSObject {
     // Getters
     
     func getAbsoluteBeat() -> Int { return self.beatNumber }
-    func getBeatInTimeSignature() -> Int { return (self.beatNumber + 1) % self.timeSignature}
+    func getBeatInTimeSignature() -> Int { return self.beatNumber % self.timeSignature + 1}
     func getBeatIndex() -> Int { return self.beatNumber % self.timeSignature }
     func getTempo() -> Int { return self.tempoBPM }
     func getInterval() -> Double { return self.tempoInterval }
@@ -145,7 +148,6 @@ class AVMetronome : NSObject {
         if (!isOn) { return }
         
         while (beatsScheduled < beatsToScheduleAhead) {
-            print("\nNext Beat \(self.getAbsoluteBeat()) - at \(self.tempoBPM) bpm")
             
             // Schedule the beat.
             let secondsPerBeat = self.getInterval()
@@ -156,39 +158,47 @@ class AVMetronome : NSObject {
             
             player.scheduleBuffer(soundBuffer[self.bufferNumber]!, at: playerBeatTime, options: AVAudioPlayerNodeBufferOptions(rawValue: 0), completionHandler: {
                 self.syncQueue!.sync() {
+                    print("\nPlay beat \(self.getBeatInTimeSignature()) at time \(beatSampleTime)")
+//                    print("\(self.tempoBPM) bpm.")
+//                    print("Total: \(self.getAbsoluteBeat())")
+                    
+                    
                     self.beatsScheduled -= 1
-                    self.bufferNumber = min(self.getBeatInTimeSignature()%self.timeSignature, 1) // for beat 0, play buffer[0], else play buffer[1]
-                    if (self.timeSignature == 6 && self.getBeatInTimeSignature() == 3) {
-                        self.bufferNumber = 2
-                    }
-                    self.scheduleBeats()
+                    
+                    // self.incrementBeat()
+                    
+                    // for beat 0, play buffer[0], else play buffer[1]
+                    self.bufferNumber = min(self.getBeatInTimeSignature()%self.timeSignature, 1)
+                    if (self.timeSignature == 6 && self.getBeatInTimeSignature() == 3) { self.bufferNumber = 2 }
                     
                     // Error logging 
-                    self.current_time = mach_absolute_time()
-                    let actual_ms = Float(self.absToNanos(self.current_time - self.last_fire_time)) / Float(NSEC_PER_MSEC)
-                    let expect_ms = Float(secondsPerBeat * 1000)
-                    self.last_fire_time = mach_absolute_time()
-//                    print("actual time: \(actual_ms) msec")
-//                    print("expected time \(expect_ms) msec")
-                    self.error_ms = actual_ms - expect_ms
-                    self.max_error = max(self.max_error, abs(self.error_ms))
-                    print("Error: \(self.error_ms) msec")
-                    self.total_error += abs(self.error_ms)
-                    self.total_beats += 1
+//                    self.current_time = mach_absolute_time()
+//                    let actual_ms = Float(self.absToNanos(self.current_time - self.last_fire_time)) / Float(NSEC_PER_MSEC)
+//                    let expect_ms = Float(secondsPerBeat * 1000)
+//                    self.last_fire_time = mach_absolute_time()
+//                    // print("actual time: \(actual_ms) msec")
+//                    // print("expected time \(expect_ms) msec")
+//                    self.error_ms = actual_ms - expect_ms
+//                    self.max_error = max(self.max_error, abs(self.error_ms))
+//                    // print("Error: \(self.error_ms) msec")
+//                    self.total_error += abs(self.error_ms)
+//                    self.total_beats += 1
+                    
+                    self.incrementBeat()
+                    self.scheduleBeats()
                 }
             })
             
             beatsScheduled += 1
             
-            // keep track of the number of beats without interaction
-            if !tempoModalisVisible && !onSettingsPage {
-                untappedBeats += 1
-            } else {untappedBeats = 0}
-            
             if (!playerStarted) {
+                
+                /*
                 // We defer the starting of the player so that the first beat will play precisely
                 // at player time 0. Having scheduled the first beat, we need the player to be running
                 // in order for nodeTimeForPlayerTime to return a non-nil value.
+                 */
+                
                 player.play()
                 playerStarted = true
             }
@@ -206,21 +216,30 @@ class AVMetronome : NSObject {
                 
                 DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: dispatchTime) {
                     if (self.isOn) {
-                        if !self.didRegisterTap && self.beatNumber > 0 {
+                        
+                        // Animate the next beat circle if applicable
+                        if !(self.didRegisterTap) && self.beatNumber > 0 {
+                            print("Will animate...")
                             self.vc!.animateBeatCircle(self, beatIndex: (callbackBeat), beatDuration: (callbackInterval))
-                        }
+                        } else { print("Won't animate.") }
+                        
+                        // Hide the controls after enough beats have passed
                         if (self.untappedBeats > self.beatsToHideUI && !tempoModalisVisible && !onSettingsPage){
                             self.vc!.hideControls(self)
                         }
+                        
                         self.didRegisterTap = false
+                        self.isFirstBeat = false
                     }
                 }
             }
             
-            self.incrementBeat()
-            if !self.didRegisterTap {
-                scheduleNextBeatTime(samplesFromLastBeat: samplesPerBeat)
-            }
+            // keep track of the number of beats without interaction
+            if !tempoModalisVisible && !onSettingsPage {
+                untappedBeats += 1
+            } else {untappedBeats = 0}
+            
+            scheduleNextBeatTime(samplesFromLastBeat: samplesPerBeat)
         }
     }
     
@@ -238,8 +257,11 @@ class AVMetronome : NSObject {
         // Start the engine without playing anything yet.
         do {
             try engine.start()
+            print("\nSTARTING")
             
             isOn = true
+            isFirstBeat = true
+            
             nextBeatSampleTime = 0
             beatNumber = 0
             bufferNumber = 0
@@ -259,13 +281,15 @@ class AVMetronome : NSObject {
     func stop() {
         print("Stopping")
         isOn = false;
+        playerStarted = false
         
         player.stop()
         player.reset()
-        
         engine.stop()
         
-        playerStarted = false
+        nextBeatSampleTime = 0
+        beatNumber = 0
+        bufferNumber = 0
         
         self.avg_error = self.total_error/Float(self.total_beats)
         print("Avg. Error: \(self.avg_error) msec")
@@ -281,11 +305,8 @@ class AVMetronome : NSObject {
         let tapTime = mach_absolute_time()
         self.untappedBeats = 0
         self.didRegisterTap = true
-        self.incrementBeat()
         
         let lastDiff = Double(self.absToNanos(tapTime - lastTapTime)) / Double(NSEC_PER_SEC)
-        
-//        print("Immediate Tempo: \(self.getTempoGivenTime(lastDiff))")
         
         // Double tap means stop
         if (lastDiff < self.getTimeGivenTempo(self.maxTempo)) {
@@ -355,6 +376,7 @@ class AVMetronome : NSObject {
     }
     
     func incrementBeat() {
+        print("beat++")
         self.beatNumber += 1
     }
     
