@@ -10,8 +10,8 @@ import UIKit
 
 class UIControlButton: UIButton {
     
-    let normalColor = UIColor.white.withAlphaComponent(0.15)
-    let highlightColor = UIColor.white.withAlphaComponent(0.8)
+    var normalColor = UIColor.white.withAlphaComponent(0.15)
+    var highlightColor = UIColor.white.withAlphaComponent(0.8)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,11 +24,13 @@ class UIControlButton: UIButton {
     }
     
     func setup() {
-        self.backgroundColor = normalColor
+        self.backgroundColor = self.normalColor
         self.layer.cornerRadius = min(self.frame.width, self.frame.height)/2.0
-        
-//        self.addTarget(target: self, action: #selector(self.buttonHighlight), forControlEvent: UITouch)
-//        self.addTarget(target: self, action: #selector(self.buttonNormal), forControlEvent: UIControlEventTouchUpInside)
+    }
+    
+    func setDefaultColor(defaultColor: UIColor) {
+        self.normalColor = defaultColor
+        self.setup()
     }
     
     override open var isHighlighted: Bool {

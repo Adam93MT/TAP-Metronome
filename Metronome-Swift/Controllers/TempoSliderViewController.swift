@@ -69,6 +69,10 @@ class TempoSliderViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     @IBAction func sliderValueChanged(_ sender: UISlider) {
         print("slider: \(Int(tempoSlider.value))")
         delegate.metronome.setTempo(Int(tempoSlider.value))

@@ -8,45 +8,7 @@
 
 import UIKit
 
-struct globalColors {
-    var bgColor: UIColor
-    var bgTheme: String!
-    var bgColorLight: UIColor
-    var bgColorDark: UIColor
-    var textColor: UIColor
-    var beatCircleStartColor: UIColor
-    
-    init(_ themeColor: String? = nil) {
-        bgColor = UIColor.black
-        bgTheme = (themeColor != nil) ? themeColor : ""
-        textColor = UIColor(rgb: 0xFAFAFA)
-        beatCircleStartColor = UIColor(rgb: 0xFFFFFF)
-        switch bgTheme {
-            case "red":
-                bgColorLight = UIColor(rgb: 0xF5515F)
-                bgColorDark = UIColor(rgb: 0x9F041B)
-            case "orange":
-                bgColorLight = UIColor(rgb: 0xFF875C)
-                bgColorDark = UIColor(rgb: 0xF2480A)
-            case "yellow":
-                bgColorLight = UIColor(rgb: 0xFAD961)
-                bgColorDark = UIColor(rgb: 0xF76B1C)
-            case "green":
-                bgColorLight = UIColor(rgb: 0xB4EC51)
-                bgColorDark = UIColor(rgb: 0x429321)
-            case "blue":
-                bgColorLight = UIColor(rgb: 0x1D478C)
-                bgColorDark = UIColor(rgb: 0x13305D)
-            case "purple":
-                bgColorLight = UIColor(rgb: 0x7A51F5)
-                bgColorDark = UIColor(rgb: 0x20039E)
-            default:
-                bgColorLight = UIColor(rgb: 0x1B1B1B) // default to black
-                bgColorDark = UIColor(rgb: 0x040404)
-        }
-        
-    }
-}
+let Defaults: UserDefaults = UserDefaults.standard
 
 struct globalMeasures {
     var buttonHeight: CGFloat
@@ -60,8 +22,8 @@ struct globalMeasures {
 struct Globals {
     static let kBipDurationSeconds: Double = 0.020
     static let kTempoChangeResponsivenessSeconds: Double = 0.250
-    static let colors = globalColors()
-    static let dimensions = globalMeasures()
+    static var colors = globalColors(Defaults.string(forKey: "bgTheme"))
+    static var dimensions = globalMeasures()
 }
 
 var tempoModalisVisible: Bool = false
@@ -75,7 +37,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let metronome: AVMetronome = AVMetronome()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // Make sure defaults are set
+        if Defaults.integer(forKey: "timeSignature") <= 1 {
+            Defaults.set(4, forKey: "timeSignature")
+        }
+        
+        // Navbar colors
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().backgroundColor = .clear
+        UINavigationBar.appearance().isTranslucent = true
+        UINavigationBar.appearance().tintColor = Globals.colors.textColor
         return true
     }
 
@@ -108,23 +81,5 @@ func dismissedTempoModal() {
 
 func enteredTempoModal() {
     tempoModalisVisible = true
-}
-
-extension UIColor {
-    convenience init(red: Int, green: Int, blue: Int) {
-        assert(red >= 0 && red <= 255, "Invalid red component")
-        assert(green >= 0 && green <= 255, "Invalid green component")
-        assert(blue >= 0 && blue <= 255, "Invalid blue component")
-        
-        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
-    }
-    
-    convenience init(rgb: Int) {
-        self.init(
-            red: (rgb >> 16) & 0xFF,
-            green: (rgb >> 8) & 0xFF,
-            blue: rgb & 0xFF
-        )
-    }
 }
 

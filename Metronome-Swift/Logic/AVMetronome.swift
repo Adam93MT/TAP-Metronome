@@ -33,7 +33,7 @@ class AVMetronome : NSObject {
     // Tempo control -----
     let minTempo: Int = 50
     let maxTempo: Int = 220
-    var timeSignature: Int = 4 // default is 4:4
+    var timeSignature: Int =  Defaults.integer(forKey: "timeSignature")
     var tempoBPM: Int = 0
     var tempoInterval: Double = 0
     var beatNumber: Int = 0
@@ -67,6 +67,8 @@ class AVMetronome : NSObject {
     
     override init() {
         super.init()
+        
+        print("Time Signature: \(self.timeSignature)")
         // Use two triangle waves which are generate for the metronome bips.
         
         // Create a standard audio format deinterleaved float.
