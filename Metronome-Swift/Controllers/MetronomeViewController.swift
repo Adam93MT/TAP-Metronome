@@ -87,17 +87,9 @@ class MetronomeViewController: UIViewController {
         
         
         // Set up Tempo Control Buttons, Slider and Text
-//        self.addDoneButtonOnKeyboard()
         tempoButton.setTitle(String(metronome.tempoBPM), for: .normal)
-        // add keyboard listeners to move UI up/down
-//        NotificationCenter.default.addObserver(
-//            self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil
-//        )
-//        NotificationCenter.default.addObserver(
-//            self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil
-//        )
 
-//        metronome.prepare()
+        // metronome.prepare()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,7 +99,7 @@ class MetronomeViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        super.viewDidAppear(animated)
         
         // Get original orientation
         self.currentOrientation = UIDevice.current.orientation.isPortrait ? "portrait" : "landscape"
@@ -117,6 +109,10 @@ class MetronomeViewController: UIViewController {
         print("Initial orientation \(self.currentOrientation)")
         self.originalOrientation = self.currentOrientation
         self.containerView.originalOrientation = self.originalOrientation
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return self.controlsAreHidden
     }
     
     @IBAction func swipeButton(_ sender: UIButton) {
@@ -139,7 +135,7 @@ class MetronomeViewController: UIViewController {
     func handleTap(gestureRecognizer: TapDownGestureRecognizer) {
         if metronome.isOn {
             metronome.logTap()
-            killControlAnimations()
+            self.killControlAnimations()
         }
         else {
             metronome.last_fire_time = mach_absolute_time()
@@ -162,31 +158,30 @@ class MetronomeViewController: UIViewController {
     func hideControls(_ metronome: AVMetronome) {
         self.controlsAreHidden = true
         DispatchQueue.main.async(execute: {() -> Void in
-            UIView.animate(withDuration: 4, delay: 0, options: [.curveEaseIn, .allowUserInteraction], animations: {
+            UIView.animate(withDuration: 2, delay: 0, options: [.curveEaseIn, .allowUserInteraction], animations: {
                 self.tempoButton.alpha = 0
                 self.incrementButton.alpha = 0
                 self.decrementButton.alpha = 0
                 self.settingsButton.isEnabled = false
                 self.tapButton.alpha = 0.1
                 self.setNeedsStatusBarAppearanceUpdate()
+            }, completion: {
+                finished in self.settingsButton.image = UIImage(named: "placeholder")
             })
         })
     }
     
     func showControls() {
         self.controlsAreHidden = false
-        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseOut, .allowUserInteraction], animations: {
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseOut, .allowUserInteraction], animations: {
             self.tempoButton.alpha = 1
             self.incrementButton.alpha = 1
             self.decrementButton.alpha = 1
             self.settingsButton.isEnabled = true
+            self.settingsButton.image = UIImage(named: "settings")
             self.tapButton.alpha = 0.75
             self.setNeedsStatusBarAppearanceUpdate()
         })
-    }
-    
-    override var prefersStatusBarHidden: Bool {
-        return self.controlsAreHidden
     }
     
     func animateBeatCircle(_ metronome: AVMetronome, beatIndex: Int, beatDuration: Double) {
@@ -232,6 +227,7 @@ class MetronomeViewController: UIViewController {
     
     
     // MARK: Keyboard
+    /*
     func keyboardWillShow(notification: NSNotification) {
         print("keyboard will show: \(self.view.frame.origin.y)")
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -270,5 +266,6 @@ class MetronomeViewController: UIViewController {
     func doneButtonAction() {
         // self.tempoTextField.resignFirstResponder()
     }
+     */
     
 }

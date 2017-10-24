@@ -91,6 +91,7 @@ class BeatContainerView: UIView {
             // Regular beats access idx 0->TS-1
             // Tapped Beats access idx TS->2TS-1
             */
+            
             let maxTS = 8
             for beat in 0...maxTS*2-1 {
                 let newBeatView = BeatView(

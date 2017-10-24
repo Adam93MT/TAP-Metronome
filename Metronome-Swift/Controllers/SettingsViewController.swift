@@ -124,22 +124,18 @@ class SettingsViewController: UIViewController {
     
     // Press Beat Buttons
     @IBAction func selectTwoBeats(_ sender: BeatNumberButton) {
-        UserDefaults.standard.set(2, forKey: "timeSignature")
         delegate.metronome.setTimesignature(2)
         updateUITime(sender)
     }
     @IBAction func selectThreeBeats(_ sender: BeatNumberButton) {
-        UserDefaults.standard.set(3, forKey: "timeSignature")
         delegate.metronome.setTimesignature(3)
         updateUITime(sender)
     }
     @IBAction func selectFourBeats(_ sender: BeatNumberButton) {
-        UserDefaults.standard.set(4, forKey: "timeSignature")
         delegate.metronome.setTimesignature(4)
         updateUITime(sender)
     }
     @IBAction func selectSixBeats(_ sender: BeatNumberButton) {
-        UserDefaults.standard.set(6, forKey: "timeSignature")
         delegate.metronome.setTimesignature(6)
         updateUITime(sender)
     }
