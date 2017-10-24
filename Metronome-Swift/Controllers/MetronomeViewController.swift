@@ -133,26 +133,24 @@ class MetronomeViewController: UIViewController {
     }
     
     func handleTap(gestureRecognizer: TapDownGestureRecognizer) {
+        metronome.didRegisterTap = true
+        
+        if self.controlsAreHidden { self.showControls() }
+        
+        let tapLocation = gestureRecognizer.location(in: self.view)
+        let tapIdx = metronome.getBeatIndex() + metronome.getTimeSignature()
+        
+        self.containerView.animateBeatCircle(
+            beatIndex: tapIdx, beatDuration: metronome.getInterval(), startPoint: tapLocation
+        )
+        
         if metronome.isOn {
             metronome.logTap()
             self.killControlAnimations()
         }
         else {
-            metronome.last_fire_time = mach_absolute_time()
-            // metronome.playBeat() // for machMetronome
             metronome.start()
         }
-        
-        if self.controlsAreHidden {
-            self.showControls()
-        }
-        
-        let tapLocation = gestureRecognizer.location(in: self.view)
-        let tapIdx = metronome.getBeatIndex() + metronome.getTimeSignature()
-        // self.metronome.incrementBeat()
-        self.containerView.animateBeatCircle(
-            beatIndex: tapIdx, beatDuration: metronome.getInterval(), startPoint: tapLocation
-        )
     }
     
     func hideControls(_ metronome: AVMetronome) {
