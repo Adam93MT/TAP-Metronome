@@ -84,18 +84,22 @@ class AVMetronome : NSObject {
         let bipFrames: UInt32 = UInt32(Globals.kBipDurationSeconds * Double(format.sampleRate))
         
         // Create the PCM buffers.
-        soundBuffer.append(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: bipFrames))
-        soundBuffer.append(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: bipFrames))
+        soundBuffer.append(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: bipFrames)) //0
+        soundBuffer.append(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: bipFrames)) //1
+        soundBuffer.append(AVAudioPCMBuffer(pcmFormat: format, frameCapacity: bipFrames)) //2
         
         // Fill in the number of valid sample frames in the buffers (required).
         soundBuffer[0]?.frameLength = bipFrames
         soundBuffer[1]?.frameLength = bipFrames
+        soundBuffer[2]?.frameLength = bipFrames
         
         // Generate the metronme bips, first buffer will be A440 and the second buffer Middle C.
         let wg1 = TriangleWaveGenerator(sampleRate: Float(format.sampleRate))                     // A 440
         let wg2 = TriangleWaveGenerator(sampleRate: Float(format.sampleRate), frequency: 261.6)   // Middle C
+        let wg3 = TriangleWaveGenerator(sampleRate: Float(format.sampleRate), frequency: 220.0)   // A3
         wg1.render(soundBuffer[0]!)
         wg2.render(soundBuffer[1]!)
+        wg3.render(soundBuffer[2]!)
         
         // Connect player -> output, with the format of the buffers we're playing.
         let output: AVAudioOutputNode = engine.outputNode
@@ -117,6 +121,7 @@ class AVMetronome : NSObject {
         engine.detach(player)
         soundBuffer[0] = nil
         soundBuffer[1] = nil
+        soundBuffer[2] = nil
     }
     
     private func absToNanos(_ abs: UInt64) -> UInt64 {
@@ -149,10 +154,13 @@ class AVMetronome : NSObject {
             let playerBeatTime: AVAudioTime = AVAudioTime(sampleTime: AVAudioFramePosition(beatSampleTime), atRate: bufferSampleRate)
             // This time is relative to the player's start time.
             
-            player.scheduleBuffer(soundBuffer[0]!, at: playerBeatTime, options: AVAudioPlayerNodeBufferOptions(rawValue: 0), completionHandler: {
+            player.scheduleBuffer(soundBuffer[self.bufferNumber]!, at: playerBeatTime, options: AVAudioPlayerNodeBufferOptions(rawValue: 0), completionHandler: {
                 self.syncQueue!.sync() {
                     self.beatsScheduled -= 1
-                    self.bufferNumber ^= 1
+                    self.bufferNumber = min(self.getBeatInTimeSignature()%self.timeSignature, 1) // for beat 0, play buffer[0], else play buffer[1]
+                    if (self.timeSignature == 6 && self.getBeatInTimeSignature() == 3) {
+                        self.bufferNumber = 2
+                    }
                     self.scheduleBeats()
                     
                     // Error logging 
