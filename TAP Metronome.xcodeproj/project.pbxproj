@@ -17,6 +17,7 @@
 		66B9FF2E1F929DBC006EDC19 /* TWGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9FF2D1F929DBB006EDC19 /* TWGenerator.swift */; };
 		66CA3F601F9E9E8F00670273 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CA3F5F1F9E9E8F00670273 /* SettingsViewController.swift */; };
 		66CA3F621F9E9F9300670273 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CA3F611F9E9F9300670273 /* Colors.swift */; };
+		66CA3F641F9EC17000670273 /* BeatNumberButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CA3F631F9EC17000670273 /* BeatNumberButton.swift */; };
 		66CA84151F8682F7001E3485 /* beatClick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 66CA84141F868112001E3485 /* beatClick.wav */; };
 		66CA84161F8682F9001E3485 /* beatClick.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 66CA84131F8680A1001E3485 /* beatClick.aiff */; };
 		66E4D1F21D164A4300811CCA /* BeatCircleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E4D1F11D164A4300811CCA /* BeatCircleView.xib */; };
@@ -54,6 +55,7 @@
 		66B9FF2D1F929DBB006EDC19 /* TWGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWGenerator.swift; sourceTree = "<group>"; };
 		66CA3F5F1F9E9E8F00670273 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		66CA3F611F9E9F9300670273 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		66CA3F631F9EC17000670273 /* BeatNumberButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatNumberButton.swift; sourceTree = "<group>"; };
 		66CA84131F8680A1001E3485 /* beatClick.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = beatClick.aiff; sourceTree = "<group>"; };
 		66CA84141F868112001E3485 /* beatClick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = beatClick.wav; path = resources/beatClick.wav; sourceTree = SOURCE_ROOT; };
 		66E4D1F11D164A4300811CCA /* BeatCircleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BeatCircleView.xib; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */,
 				6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */,
 				66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */,
+				66CA3F631F9EC17000670273 /* BeatNumberButton.swift */,
 				66EAD1341F99372700D7CEE7 /* UIControlButton.swift */,
 				66EAD1321F992B0A00D7CEE7 /* UICircleButton.swift */,
 			);
@@ -310,6 +313,7 @@
 			files = (
 				66A5AE601F95AFA500E432F7 /* TempoVerticalSlider.swift in Sources */,
 				66CA3F621F9E9F9300670273 /* Colors.swift in Sources */,
+				66CA3F641F9EC17000670273 /* BeatNumberButton.swift in Sources */,
 				66EAD1331F992B0A00D7CEE7 /* UICircleButton.swift in Sources */,
 				66A5AE5E1F95A4EB00E432F7 /* TempoSliderViewController.swift in Sources */,
 				66EAD1351F99372700D7CEE7 /* UIControlButton.swift in Sources */,

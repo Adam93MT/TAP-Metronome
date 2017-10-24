@@ -43,19 +43,29 @@ class globalColors {
         
         // check if the default theme is legit
         var defaultTheme = UserDefaults.standard.string(forKey: "theme")
-        defaultTheme = (self.colorOptions[defaultTheme!] != nil) ? defaultTheme : "black"
+        let checkTheme = colorOptions.contains { (key, value) -> Bool in
+            key == defaultTheme
+        }
+        defaultTheme = checkTheme ? defaultTheme : "black"
+        print(defaultTheme)
         
         // set the theme to the set color, fallback to the default
         bgTheme = (themeColor != nil) ? themeColor : defaultTheme
+        UserDefaults.standard.set(defaultTheme, forKey: "theme")
         bgColorLight = (self.colorOptions[bgTheme]?.bgColorLight)!
         bgColorDark = (self.colorOptions[bgTheme]?.bgColorDark)!
     }
     
-    func setTheme(_ newThemeColor: String) {
+    func setTheme(_ newTheme: String) {
         // if the new theme is legit, set it, otherwise fall back on the default
-        bgTheme = (self.colorOptions[newThemeColor] != nil) ? newThemeColor : UserDefaults.standard.string(forKey: "theme")
+        
+        let checkTheme = colorOptions.contains { (key, value) -> Bool in
+            key == newTheme
+        }
+        bgTheme = checkTheme ? newTheme : UserDefaults.standard.string(forKey: "theme")
+        
         // set new default
-        UserDefaults.standard.set(newThemeColor, forKey: "theme")
+        UserDefaults.standard.set(newTheme, forKey: "theme")
         bgColorLight = (self.colorOptions[bgTheme]?.bgColorLight)!
         bgColorDark = (self.colorOptions[bgTheme]?.bgColorDark)!
     }

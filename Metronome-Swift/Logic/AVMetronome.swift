@@ -68,6 +68,12 @@ class AVMetronome : NSObject {
     override init() {
         super.init()
         
+        if UserDefaults.standard.integer(forKey: "timeSignature") >= 1 {
+            self.setTimesignature(UserDefaults.standard.integer(forKey: "timeSignature"))
+        }
+        else { self.setTimesignature(4) }
+        
+        
         print("Time Signature: \(self.timeSignature)")
         // Use two triangle waves which are generate for the metronome bips.
         
@@ -165,7 +171,11 @@ class AVMetronome : NSObject {
             })
             
             beatsScheduled += 1
-            untappedBeats += 1
+            
+            // keep track of the number of beats without interaction
+            if !tempoModalisVisible && !onSettingsPage {
+                untappedBeats += 1
+            } else {untappedBeats = 0}
             
             if (!playerStarted) {
                 // We defer the starting of the player so that the first beat will play precisely
@@ -191,7 +201,7 @@ class AVMetronome : NSObject {
                         if !self.didRegisterTap && self.beatNumber > 0 {
                             self.vc!.animateBeatCircle(self, beatIndex: (callbackBeat), beatDuration: (callbackInterval))
                         }
-                        if (self.untappedBeats > self.beatsToHideUI && !tempoModalisVisible){
+                        if (self.untappedBeats > self.beatsToHideUI && !tempoModalisVisible && !onSettingsPage){
                             self.vc!.hideControls(self)
                         }
                         self.didRegisterTap = false
@@ -345,6 +355,14 @@ class AVMetronome : NSObject {
                 self.vc.tempoButton.setTitle(String(self.tempoBPM), for: .normal)
             }
         }
+    }
+    
+    func setTimesignature(_ newTS: Int) {
+        // TODO:
+        // We need to reinit the beat circles if we increase the time signature 
+        
+        print("new timeSignature \(newTS)")
+        self.timeSignature = newTS
     }
     
 }
