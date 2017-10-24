@@ -33,7 +33,7 @@ class AVMetronome : NSObject {
     // Tempo control -----
     let minTempo: Int = 50
     let maxTempo: Int = 220
-    var timeSignature: Int =  Defaults.integer(forKey: "timeSignature")
+    var timeSignature: Int =  0 //Defaults.integer(forKey: "timeSignature")
     var tempoBPM: Int = 0
     var tempoInterval: Double = 0
     var beatNumber: Int = 0
@@ -68,13 +68,6 @@ class AVMetronome : NSObject {
     override init() {
         super.init()
         
-        if UserDefaults.standard.integer(forKey: "timeSignature") >= 1 {
-            self.setTimesignature(UserDefaults.standard.integer(forKey: "timeSignature"))
-        }
-        else { self.setTimesignature(4) }
-        
-        
-        print("Time Signature: \(self.timeSignature)")
         // Use two triangle waves which are generate for the metronome bips.
         
         // Create a standard audio format deinterleaved float.
@@ -112,7 +105,14 @@ class AVMetronome : NSObject {
         // Create a serial dispatch queue for synchronizing callbacks.
         syncQueue = DispatchQueue(label: "Metronome")
         
-        self.setTempo(120)
+        if (UserDefaults.standard.integer(forKey: "tempo") >= 1) {
+            self.setTempo(UserDefaults.standard.integer(forKey: "tempo"))
+        } else { self.setTempo(120) }
+        
+        if (UserDefaults.standard.integer(forKey: "timeSignature") >= 1) {
+            self.setTimesignature(UserDefaults.standard.integer(forKey: "timeSignature"))
+        }
+        else { self.setTimesignature(4) }
     }
     
     deinit {
@@ -332,11 +332,12 @@ class AVMetronome : NSObject {
     
     func setTempo(_ tempo: Int) {
         self.tempoBPM = tempo
-        
+        print("Set Tempo to \(tempo)")
         self.tempoInterval = 60.0 / Double(tempoBPM)
         beatsToScheduleAhead = Int(Int32(Globals.kTempoChangeResponsivenessSeconds / self.tempoInterval))
         if (beatsToScheduleAhead < 1) { beatsToScheduleAhead = 1 }
         self.tempoChangeUpdateUI()
+        UserDefaults.standard.set(tempo, forKey: "tempo")
     }
     
     func decrementTempo() {
@@ -367,10 +368,10 @@ class AVMetronome : NSObject {
     
     func setTimesignature(_ newTS: Int) {
         // TODO:
-        // We need to reinit the beat circles if we increase the time signature 
-        
-        print("new timeSignature \(newTS)")
+        // We need to reinit the beat circles if we increase the time signature
+        print("Set timeSignature to \(newTS)")
         self.timeSignature = newTS
+        UserDefaults.standard.set(newTS, forKey: "timeSignature")
     }
     
 }
