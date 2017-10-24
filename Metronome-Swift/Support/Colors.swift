@@ -47,7 +47,7 @@ class globalColors {
             key == defaultTheme
         }
         defaultTheme = checkTheme ? defaultTheme : "black"
-        print(defaultTheme)
+        print("Theme: \(defaultTheme!)")
         
         // set the theme to the set color, fallback to the default
         bgTheme = (themeColor != nil) ? themeColor : defaultTheme
