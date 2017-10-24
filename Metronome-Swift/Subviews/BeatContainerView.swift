@@ -50,13 +50,6 @@ class BeatContainerView: UIView {
     
     override func draw(_ rect: CGRect) {
         print("Called DrawRect")
-//        self.startDiameter = 10.0
-//        let h2 = Double(view.frame.height) * Double(view.frame.height)
-//        let w2 = Double(view.frame.width) * Double(view.frame.width)
-//        let endDiameter = CGFloat(sqrt(h2 + w2))
-//        self.endScale = CGFloat(endDiameter/self.startDiameter) * 1.2
-//        self.startDiameter = CGFloat(endDiameter/self.startDiameter) * 1.2
-        
         self.viewCentreX = rect.width/2
         self.viewCentreY = rect.height/2
         self.defaultLocationX = viewCentreX - CGFloat(self.startDiameter/2)
@@ -65,7 +58,6 @@ class BeatContainerView: UIView {
         self.startShape = UIBezierPath(ovalIn: CGRect(x: defaultLocationX, y: defaultLocationY, width: self.startDiameter, height: self.startDiameter)).cgPath
         self.beatCircleLayer = CAShapeLayer()
         setup()
-//        addBehavior()
     }
     
     override init (frame : CGRect) {
@@ -94,9 +86,13 @@ class BeatContainerView: UIView {
             
             self.endScale = hypotenuse/self.startDiameter * 1.5
             
-            // Create two BeatView for each beat in the Time Signature
-            // plus one for timer and one for taps
-            for beat in 0...timeSignature*2-1 {
+            /*
+            // Make an array of twice as long as we'll need (and then some)
+            // Regular beats access idx 0->TS-1
+            // Tapped Beats access idx TS->2TS-1
+            */
+            let maxTS = 8
+            for beat in 0...maxTS*2-1 {
                 let newBeatView = BeatView(
                     frame: CGRect(x: 0.0, y: 0.0, width: startDiameter, height: startDiameter)
                 )
@@ -167,9 +163,6 @@ class BeatContainerView: UIView {
         }
         
         // Do the animation
-//        let a = 1.0
-//        let b = 1.5
-//        let animationDuration = (beatDuration)*(beatDuration)/b + a
         let animationDuration = beatDuration * 2.0
         UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseOut], animations: beatAnimation,
            completion:  { finished in
