@@ -10,6 +10,7 @@
 		660BB2341FA1038A00A47778 /* TouchableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BB2331FA1038A00A47778 /* TouchableLabel.swift */; };
 		6636EFFF1F89CD8F0000D99A /* TapDownGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */; };
 		664E8AA61F9E86CC00E29C1D /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664E8AA51F9E86CC00E29C1D /* UserDefaultsManager.swift */; };
+		66675BB21FA121910043D6E5 /* ColorPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66675BB11FA121910043D6E5 /* ColorPickerButton.swift */; };
 		6695724D1C2C6024001BF1FF /* BeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6695724C1C2C6024001BF1FF /* BeatView.swift */; };
 		66A5AE5E1F95A4EB00E432F7 /* TempoSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5AE5D1F95A4EB00E432F7 /* TempoSliderViewController.swift */; };
 		66A5AE601F95AFA500E432F7 /* TempoVerticalSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */; };
@@ -49,6 +50,7 @@
 		660BB2331FA1038A00A47778 /* TouchableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchableLabel.swift; sourceTree = "<group>"; };
 		6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapDownGestureRecognizer.swift; sourceTree = "<group>"; };
 		664E8AA51F9E86CC00E29C1D /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		66675BB11FA121910043D6E5 /* ColorPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorPickerButton.swift; path = "Metronome-Swift/Subviews/Controls/ColorPickerButton.swift"; sourceTree = SOURCE_ROOT; };
 		6695724C1C2C6024001BF1FF /* BeatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatView.swift; sourceTree = "<group>"; };
 		66A5AE5D1F95A4EB00E432F7 /* TempoSliderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoSliderViewController.swift; sourceTree = "<group>"; };
 		66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoVerticalSlider.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				66CA3F631F9EC17000670273 /* BeatNumberButton.swift */,
+				66675BB11FA121910043D6E5 /* ColorPickerButton.swift */,
 				66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */,
 				66EAD1341F99372700D7CEE7 /* UIControlButton.swift */,
 				66EAD1321F992B0A00D7CEE7 /* UICircleButton.swift */,
@@ -331,6 +334,7 @@
 				66B9FF2E1F929DBC006EDC19 /* TWGenerator.swift in Sources */,
 				66B9FF2C1F929D80006EDC19 /* AVMetronome.swift in Sources */,
 				66E4D1F41D16532900811CCA /* BeatContainerView.swift in Sources */,
+				66675BB21FA121910043D6E5 /* ColorPickerButton.swift in Sources */,
 				66AB01241F8D6CE4000D5E38 /* GradientLayer.swift in Sources */,
 				B897AC7919E4AC8700820251 /* MetronomeViewController.swift in Sources */,
 				66CA3F601F9E9E8F00670273 /* SettingsViewController.swift in Sources */,
