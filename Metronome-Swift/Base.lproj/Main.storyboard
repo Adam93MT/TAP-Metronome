@@ -113,6 +113,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="NavBar" destination="0G8-e5-L1y" id="lF2-wk-Fhf"/>
                         <outlet property="decrementButton" destination="huJ-0x-goJ" id="JyC-gp-OA9"/>
                         <outlet property="incrementButton" destination="KrZ-CO-g8Q" id="R7T-F4-o3n"/>
                         <outlet property="settingsButton" destination="9wm-QS-XZx" id="hHF-WN-q6L"/>
