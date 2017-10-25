@@ -18,7 +18,9 @@ class MetronomeViewController: UIViewController {
     @IBOutlet weak var decrementButton: UIButton!
     @IBOutlet weak var incrementButton: UIButton!
     @IBOutlet weak var tempoButton: UIButton!
+    @IBOutlet weak var NavBar: UINavigationItem!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
+    let emptyButton: UIBarButtonItem = UIBarButtonItem()
     
     //    let metronome = AVMetronome()
     let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -41,7 +43,7 @@ class MetronomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.emptyButton.image = UIImage(named: "placeholder")
         // Lets us access the ViewController from metronome logic
         metronome = delegate.metronome
         metronome.vc = self
@@ -163,8 +165,6 @@ class MetronomeViewController: UIViewController {
                 self.settingsButton.isEnabled = false
                 self.tapButton.alpha = 0.1
                 self.setNeedsStatusBarAppearanceUpdate()
-            }, completion: {
-                finished in self.settingsButton.image = UIImage(named: "placeholder")
             })
         })
     }
@@ -176,7 +176,6 @@ class MetronomeViewController: UIViewController {
             self.incrementButton.alpha = 1
             self.decrementButton.alpha = 1
             self.settingsButton.isEnabled = true
-            self.settingsButton.image = UIImage(named: "settings")
             self.tapButton.alpha = 0.75
             self.setNeedsStatusBarAppearanceUpdate()
         })
