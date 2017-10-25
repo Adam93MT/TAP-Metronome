@@ -62,9 +62,9 @@ class TempoVerticalSlider: UISlider {
         // text & color
         tempoThumb.textAlignment = .center
         tempoThumb.text = String(delegate.metronome.getTempo())
-        tempoThumb.textColor = Globals.colors.bgColor
+        tempoThumb.textColor = Globals.colors.bgColorDark
         tempoThumb.font = tempoThumb.font.withSize(28)
-        tempoThumb.setColors(Globals.colors.textColor, highlightColor: Globals.colors.textColor.withAlphaComponent(0.9))
+        tempoThumb.setColors(Globals.colors.textColor, highlightColor: Globals.colors.textColor.withAlphaComponent(0.85))
         tempoThumb.layer.masksToBounds = true
         tempoThumb.layer.cornerRadius = Globals.dimensions.buttonHeight/2
         self.addSubview(tempoThumb)
@@ -88,10 +88,12 @@ class TempoVerticalSlider: UISlider {
     func touchSlider(sender:UIGestureRecognizer) {
         if sender.state == .began {
             tempoThumb.isHighlighted = true
-        } else if sender.state == .ended || sender.state == .possible{
+            tempoThumb.addShadow()
+        } else if sender.state == .ended || sender.state == .possible {
             tempoThumb.isHighlighted = false
         }
     }
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

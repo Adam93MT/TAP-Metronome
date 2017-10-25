@@ -20,9 +20,9 @@ class globalColors {
         var bgColorLight: UIColor!
         var bgColorDark: UIColor!
         
-        init(_ color1: UIColor, _ color2: UIColor) {
-            bgColorLight = color1
-            bgColorDark = color2
+        init(_ light: UIColor, _ dark: UIColor) {
+            bgColorLight = light
+            bgColorDark = dark
         }
     }
     
