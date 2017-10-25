@@ -9,6 +9,15 @@
 import UIKit
 
 class BeatNumberButton: UIButton {
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    
+    let borderWidth:CGFloat = 2
+    let borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
+    var defaultColor = Globals.colors.bgColorLight.withAlphaComponent(0.5)
+    var pickedColor = Globals.colors.bgColorDark.withAlphaComponent(0.5)
+    
+    var value: Int = 0
+    var siblings = [BeatNumberButton]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,32 +30,42 @@ class BeatNumberButton: UIButton {
     }
     
     func setup() {
-        self.backgroundColor = Globals.colors.bgColorLight.withAlphaComponent(0.5)
-        
-        self.addConstraint(NSLayoutConstraint(
-            item: self,
-            attribute: .width,
-            relatedBy: .equal,
-            toItem: nil,
-            attribute: .notAnAttribute,
-            multiplier: 1,
-            constant: 80))
-        self.addConstraint(NSLayoutConstraint(
-            item: self,
-            attribute: .height,
-            relatedBy: .equal,
-            toItem: nil,
-            attribute: .notAnAttribute,
-            multiplier: 1,
-            constant: 68))
-        
+        self.backgroundColor = defaultColor
         self.titleLabel?.font = self.titleLabel?.font.withSize(42)
-        self.layer.cornerRadius = 4
+        if self.value == delegate.metronome.getTimeSignature() {
+            self.isPicked = true
+        }
+        self.addTarget(self, action: #selector(self.touchButton), for: .touchUpInside)
+        
     }
 
-    func setColor(_ newColor: UIColor) {
-        self.backgroundColor = newColor.withAlphaComponent(0.5)
+    func setValue(val: Int) {
+        self.value = val
+        if val == delegate.metronome.getTimeSignature() {
+            self.isPicked = true
+        }
     }
+    func setColors() {
+        defaultColor = Globals.colors.bgColorLight.withAlphaComponent(0.5)
+        pickedColor = Globals.colors.bgColorDark.withAlphaComponent(0.5)
+        self.backgroundColor = isPicked ? pickedColor : defaultColor
+    }
+    
+    var isPicked: Bool = false {
+        didSet {
+            self.backgroundColor = isPicked ? pickedColor : defaultColor
+            self.layer.borderColor = isPicked ? borderColor : UIColor.clear.cgColor
+            self.layer.borderWidth = isPicked ? borderWidth : 0
+        }
+    }
+    
+    func touchButton() {
+        self.isPicked = true
+        delegate.metronome.setTimesignature(self.value)
+    }
+    
+    
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

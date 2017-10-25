@@ -99,8 +99,8 @@
 		660BB2351FA106FD00A47778 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */,
 				66CA3F631F9EC17000670273 /* BeatNumberButton.swift */,
+				66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */,
 				66EAD1341F99372700D7CEE7 /* UIControlButton.swift */,
 				66EAD1321F992B0A00D7CEE7 /* UICircleButton.swift */,
 				660BB2331FA1038A00A47778 /* TouchableLabel.swift */,

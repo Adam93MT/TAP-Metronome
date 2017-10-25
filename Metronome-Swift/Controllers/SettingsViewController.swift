@@ -47,23 +47,14 @@ class SettingsViewController: UIViewController {
         // Beats Buttons
         TimeButtonsArray = [twoBeats, threeBeats, fourBeats, sixBeats]
         
-        switch delegate.metronome.getTimeSignature() {
-        case 2:
-            twoBeats.layer.borderWidth = borderWidth
-            twoBeats.layer.borderColor = borderColor
-        case 3:
-            threeBeats.layer.borderWidth = borderWidth
-            threeBeats.layer.borderColor = borderColor
-        case 4:
-            fourBeats.layer.borderWidth = borderWidth
-            fourBeats.layer.borderColor = borderColor
-        case 6:
-            sixBeats.layer.borderWidth = borderWidth
-            sixBeats.layer.borderColor = borderColor
-        default:
-            twoBeats.layer.borderWidth = borderWidth
-            twoBeats.layer.borderColor = borderColor
-        }
+//        for btn in TimeButtonsArray {
+//            btn.siblings = TimeButtonsArray
+//        }
+        
+        twoBeats.setValue(val: 2)
+        threeBeats.setValue(val: 3)
+        fourBeats.setValue(val: 4)
+        sixBeats.setValue(val: 6)
         
         // Color Buttons
         ColorButtonsArray = [redButton, orangeButton, yellowButton, greenButton, blueButton, purpleButton, blackButton]
@@ -122,23 +113,13 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // Press Beat Buttons
-    @IBAction func selectTwoBeats(_ sender: BeatNumberButton) {
-        delegate.metronome.setTimesignature(2)
-        updateUITime(sender)
+    @IBAction func pressedTimeButton(_ sender: BeatNumberButton) {
+        for button in TimeButtonsArray {
+            button.isPicked = false
+        }
+        sender.isPicked = true
     }
-    @IBAction func selectThreeBeats(_ sender: BeatNumberButton) {
-        delegate.metronome.setTimesignature(3)
-        updateUITime(sender)
-    }
-    @IBAction func selectFourBeats(_ sender: BeatNumberButton) {
-        delegate.metronome.setTimesignature(4)
-        updateUITime(sender)
-    }
-    @IBAction func selectSixBeats(_ sender: BeatNumberButton) {
-        delegate.metronome.setTimesignature(6)
-        updateUITime(sender)
-    }
+    
     
     // Press Color Buttons
     @IBAction func selectRed(_ sender: Any) {
@@ -193,17 +174,8 @@ class SettingsViewController: UIViewController {
             button.layer.borderColor = UIColor.clear.cgColor
         }
         for button in TimeButtonsArray {
-            button.setColor(Globals.colors.bgColorLight)
+            button.setColors()
         }
-    }
-    
-    func updateUITime(_ thisButton: BeatNumberButton) {
-        for button in TimeButtonsArray {
-            button.layer.borderWidth = 0
-            button.layer.borderColor = UIColor.clear.cgColor
-        }
-        thisButton.layer.borderWidth = borderWidth
-        thisButton.layer.borderColor = borderColor
     }
     
     
