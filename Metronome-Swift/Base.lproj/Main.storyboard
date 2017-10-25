@@ -144,53 +144,53 @@
                                 <color key="textColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTQ-dj-CCx" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTQ-dj-CCx" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
                                 <rect key="frame" x="105" y="591" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="selectBlue:" destination="PgZ-xe-vib" eventType="touchUpInside" id="J7M-dK-CMu"/>
+                                    <action selector="pressedColorButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="fuS-PI-QVb"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYl-cm-0CC" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYl-cm-0CC" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
                                 <rect key="frame" x="165" y="591" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="selectPurple:" destination="PgZ-xe-vib" eventType="touchUpInside" id="mlA-aU-7jw"/>
+                                    <action selector="pressedColorButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="cas-m6-4jQ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gpB-nD-3cn" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gpB-nD-3cn" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
                                 <rect key="frame" x="225" y="591" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="selectBlack:" destination="PgZ-xe-vib" eventType="touchUpInside" id="vpU-8C-ruk"/>
+                                    <action selector="pressedColorButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="xcF-ap-UCF"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3gv-uz-FB6" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3gv-uz-FB6" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
                                 <rect key="frame" x="74" y="529" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="selectRed:" destination="PgZ-xe-vib" eventType="touchUpInside" id="QgR-wh-EPq"/>
+                                    <action selector="pressedColorButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="S0J-2d-f28"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n0a-Ad-STu" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n0a-Ad-STu" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
                                 <rect key="frame" x="134" y="529" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="selectOrange:" destination="PgZ-xe-vib" eventType="touchUpInside" id="Z9a-PO-71Y"/>
+                                    <action selector="pressedColorButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="08M-XY-U8a"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5j-vI-4H3" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5j-vI-4H3" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
                                 <rect key="frame" x="194" y="529" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="selectYellow:" destination="PgZ-xe-vib" eventType="touchUpInside" id="cOg-I0-m2e"/>
+                                    <action selector="pressedColorButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="hCm-Sc-xLS"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w5v-ho-d7T" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w5v-ho-d7T" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
                                 <rect key="frame" x="254" y="529" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="selectGreen:" destination="PgZ-xe-vib" eventType="touchUpInside" id="RtF-SO-nj5"/>
+                                    <action selector="pressedColorButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="vom-oj-aC4"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oz7-tn-rFv" customClass="BeatNumberButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">

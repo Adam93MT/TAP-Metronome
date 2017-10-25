@@ -19,16 +19,16 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var fourBeats: BeatNumberButton!
     @IBOutlet weak var sixBeats: BeatNumberButton!
     
-    @IBOutlet weak var redButton: UICircleButton!
-    @IBOutlet weak var orangeButton: UICircleButton!
-    @IBOutlet weak var yellowButton: UICircleButton!
-    @IBOutlet weak var greenButton: UICircleButton!
-    @IBOutlet weak var blueButton: UICircleButton!
-    @IBOutlet weak var purpleButton: UICircleButton!
-    @IBOutlet weak var blackButton: UICircleButton!
+    @IBOutlet weak var redButton: ColorPickerButton!
+    @IBOutlet weak var orangeButton: ColorPickerButton!
+    @IBOutlet weak var yellowButton: ColorPickerButton!
+    @IBOutlet weak var greenButton: ColorPickerButton!
+    @IBOutlet weak var blueButton: ColorPickerButton!
+    @IBOutlet weak var purpleButton: ColorPickerButton!
+    @IBOutlet weak var blackButton: ColorPickerButton!
     
     var TimeButtonsArray = [BeatNumberButton]()
-    var ColorButtonsArray = [UICircleButton]()
+    var ColorButtonsArray = [ColorPickerButton]()
     let borderWidth:CGFloat = 2
     let borderColor = UIColor.white.cgColor
     let gradientLayer = GradientView()
@@ -47,10 +47,6 @@ class SettingsViewController: UIViewController {
         // Beats Buttons
         TimeButtonsArray = [twoBeats, threeBeats, fourBeats, sixBeats]
         
-//        for btn in TimeButtonsArray {
-//            btn.siblings = TimeButtonsArray
-//        }
-        
         twoBeats.setValue(val: 2)
         threeBeats.setValue(val: 3)
         fourBeats.setValue(val: 4)
@@ -59,38 +55,13 @@ class SettingsViewController: UIViewController {
         // Color Buttons
         ColorButtonsArray = [redButton, orangeButton, yellowButton, greenButton, blueButton, purpleButton, blackButton]
         
-        // set buton colors
-        redButton.setDefaultColor(defaultColor: (Globals.colors.colorOptions["red"]?.bgColorLight)!)
-        orangeButton.setDefaultColor(defaultColor: (Globals.colors.colorOptions["orange"]?.bgColorLight)!)
-        yellowButton.setDefaultColor(defaultColor: (Globals.colors.colorOptions["yellow"]?.bgColorLight)!)
-        greenButton.setDefaultColor(defaultColor: (Globals.colors.colorOptions["green"]?.bgColorLight)!)
-        blueButton.setDefaultColor(defaultColor: (Globals.colors.colorOptions["blue"]?.bgColorLight)!)
-        purpleButton.setDefaultColor(defaultColor: (Globals.colors.colorOptions["purple"]?.bgColorLight)!)
-        blackButton.setDefaultColor(defaultColor: (Globals.colors.colorOptions["black"]?.bgColorLight)!)
-        
-        switch Globals.colors.bgTheme {
-            case "red":
-                redButton.layer.borderWidth = borderWidth
-                redButton.layer.borderColor = borderColor
-            case "orange":
-                orangeButton.layer.borderWidth = borderWidth
-                orangeButton.layer.borderColor = borderColor
-            case "yellow":
-                yellowButton.layer.borderWidth = borderWidth
-                yellowButton.layer.borderColor = borderColor
-            case "green":
-                greenButton.layer.borderWidth = borderWidth
-                greenButton.layer.borderColor = borderColor
-            case "blue":
-                blueButton.layer.borderWidth = borderWidth
-                blueButton.layer.borderColor = borderColor
-            case "purple":
-                purpleButton.layer.borderWidth = borderWidth
-                purpleButton.layer.borderColor = borderColor
-            default:
-                blackButton.layer.borderWidth = borderWidth
-                blackButton.layer.borderColor = borderColor
-        }
+        redButton.setColorStringValue("red")
+        orangeButton.setColorStringValue("orange")
+        yellowButton.setColorStringValue("yellow")
+        greenButton.setColorStringValue("green")
+        blueButton.setColorStringValue("blue")
+        purpleButton.setColorStringValue("purple")
+        blackButton.setColorStringValue("black")
         
     }
     
@@ -120,64 +91,23 @@ class SettingsViewController: UIViewController {
         sender.isPicked = true
     }
     
-    
     // Press Color Buttons
-    @IBAction func selectRed(_ sender: Any) {
-        Globals.colors.setTheme("red")
-        self.updateUIColor()
-        redButton.layer.borderWidth = borderWidth
-        redButton.layer.borderColor = borderColor
-    }
-    @IBAction func selectOrange(_ sender: Any) {
-        Globals.colors.setTheme("orange")
-        self.updateUIColor()
-        orangeButton.layer.borderWidth = borderWidth
-        orangeButton.layer.borderColor = borderColor
-    }
-    @IBAction func selectYellow(_ sender: Any) {
-        Globals.colors.setTheme("yellow")
-        self.updateUIColor()
-        yellowButton.layer.borderWidth = borderWidth
-        yellowButton.layer.borderColor = borderColor
-    }
-    @IBAction func selectGreen(_ sender: Any) {
-        Globals.colors.setTheme("green")
-        self.updateUIColor()
-        greenButton.layer.borderWidth = borderWidth
-        greenButton.layer.borderColor = borderColor
-    }
-    @IBAction func selectBlue(_ sender: Any) {
-        Globals.colors.setTheme("blue")
-        self.updateUIColor()
-        blueButton.layer.borderWidth = borderWidth
-        blueButton.layer.borderColor = borderColor
-    }
-    @IBAction func selectPurple(_ sender: Any) {
-        Globals.colors.setTheme("purple")
-        self.updateUIColor()
-        purpleButton.layer.borderWidth = borderWidth
-        purpleButton.layer.borderColor = borderColor
-    }
-    @IBAction func selectBlack(_ sender: Any) {
-        Globals.colors.setTheme("black")
-        self.updateUIColor()
-        blackButton.layer.borderWidth = borderWidth
-        blackButton.layer.borderColor = borderColor
+    @IBAction func pressedColorButton(_ sender: ColorPickerButton) {
+        for cbtn in ColorButtonsArray {
+            if cbtn != sender {cbtn.isPicked = false}
+        }
+        sender.isPicked = true
+        updateUIColor()
     }
     
     func updateUIColor() {
         self.view.backgroundColor = Globals.colors.bgColorLight
         self.gradientLayer.gl.removeFromSuperlayer()
         self.createGradientLayer()
-        for button in ColorButtonsArray {
-            button.layer.borderWidth = 0
-            button.layer.borderColor = UIColor.clear.cgColor
-        }
         for button in TimeButtonsArray {
             button.setColors()
         }
     }
-    
     
     func createGradientLayer() {
         // Set up the background colors

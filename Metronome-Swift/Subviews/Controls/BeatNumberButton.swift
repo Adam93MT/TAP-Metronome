@@ -35,7 +35,7 @@ class BeatNumberButton: UIButton {
         if self.value == delegate.metronome.getTimeSignature() {
             self.isPicked = true
         }
-        self.addTarget(self, action: #selector(self.touchButton), for: .touchUpInside)
+//        self.addTarget(self, action: #selector(self.touchButton), for: .touchUpInside)
         
     }
 
@@ -56,14 +56,9 @@ class BeatNumberButton: UIButton {
             self.backgroundColor = isPicked ? pickedColor : defaultColor
             self.layer.borderColor = isPicked ? borderColor : UIColor.clear.cgColor
             self.layer.borderWidth = isPicked ? borderWidth : 0
+            if isPicked { delegate.metronome.setTimesignature(self.value) } 
         }
     }
-    
-    func touchButton() {
-        self.isPicked = true
-        delegate.metronome.setTimesignature(self.value)
-    }
-    
     
     
     /*

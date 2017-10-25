@@ -63,6 +63,8 @@ class globalColors {
             key == newTheme
         }
         bgTheme = checkTheme ? newTheme : UserDefaults.standard.string(forKey: "theme")
+
+        print("setting theme \(bgTheme!)")
         
         // set new default
         UserDefaults.standard.set(newTheme, forKey: "theme")
