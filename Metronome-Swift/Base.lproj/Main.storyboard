@@ -370,7 +370,7 @@
                     </view>
                     <connections>
                         <outlet property="closeButton" destination="cST-cU-Civ" id="6D6-zW-RBP"/>
-                        <outlet property="tempoSlider" destination="Ws2-DH-D3A" id="44f-rW-Dd0"/>
+                        <outlet property="tempoSlider" destination="Ws2-DH-D3A" id="nIj-eE-d4k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J9Y-Lx-I3n" userLabel="First Responder" sceneMemberID="firstResponder"/>
