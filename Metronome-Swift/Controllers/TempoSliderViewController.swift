@@ -78,7 +78,6 @@ class TempoSliderViewController: UIViewController {
     }
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {
-        print("slider: \(Int(tempoSlider.value))")
         delegate.metronome.setTempo(Int(tempoSlider.value))
         self.tempoSlider.updateLabel()
     }
