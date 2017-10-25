@@ -217,7 +217,7 @@ class MetronomeViewController: UIViewController {
     func createGradientLayer() {
         // Set up the background colors
         self.gradientLayer.setColors(startColor: Globals.colors.bgColorLight, endColor: Globals.colors.bgColorDark)
-        self.gradientLayer.setLocations(start: 0.0, end: 0.5)
+//        self.gradientLayer.setLocations(start: 0.0, end: 0.5)
         self.gradientLayer.gl.frame = self.view.bounds
         self.view.layer.insertSublayer(self.gradientLayer.gl, at: 0)
     }
