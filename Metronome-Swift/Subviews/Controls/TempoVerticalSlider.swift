@@ -11,7 +11,7 @@ import UIKit
 class TempoVerticalSlider: UISlider {
     
     let delegate = UIApplication.shared.delegate as! AppDelegate
-    var tempoLabel: UILabel!
+    var tempoThumb: TouchableLabel!
     let thumbWidth: Double =  112
     let thumbHeight = Double(Globals.dimensions.buttonHeight)
     
@@ -37,34 +37,37 @@ class TempoVerticalSlider: UISlider {
         // Setup the label
         initSliderLabel()
         
+        // detect touches on thumb
+        self.addTarget(self, action: #selector(self.touchSlider), for: .touchDown)
+        self.addTarget(self, action: #selector(self.touchSlider), for: .touchUpInside)
+
+        
         // Finally, we rotate the whole thing by 90deg
         self.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2 )
     }
 
     override func thumbRect(forBounds bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
         var newThumbRect = super.thumbRect(forBounds: bounds, trackRect: rect, value: value)
-//        newThumbRect.origin.x = 0
-//        newThumbRect.origin.y = 22
         newThumbRect.size.width = 44
         newThumbRect.size.height = 44
         return newThumbRect.offsetBy(dx: 0, dy: -5)
     }
     
     func initSliderLabel() {
-        tempoLabel = UILabel(frame: CGRect(x: 0, y: 0, width: thumbWidth, height: thumbHeight))
-        tempoLabel.frame.size = CGSize(width: 112, height: Globals.dimensions.buttonHeight)
-        tempoLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2 )
-        tempoLabel.layer.zPosition = 1
+        tempoThumb = TouchableLabel(frame: CGRect(x: 0, y: 0, width: thumbWidth, height: thumbHeight))
+        tempoThumb.frame.size = CGSize(width: 112, height: Globals.dimensions.buttonHeight)
+        tempoThumb.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2 )
+        tempoThumb.layer.zPosition = 1
         
         // text & color
-        tempoLabel.textAlignment = .center
-        tempoLabel.text = String(delegate.metronome.getTempo())
-        tempoLabel.textColor = Globals.colors.bgColor
-        tempoLabel.font = tempoLabel.font.withSize(28)
-        tempoLabel.backgroundColor = UIColor(rgb: 0xFAFAFA)
-        tempoLabel.layer.masksToBounds = true
-        tempoLabel.layer.cornerRadius = Globals.dimensions.buttonHeight/2
-        self.addSubview(tempoLabel)
+        tempoThumb.textAlignment = .center
+        tempoThumb.text = String(delegate.metronome.getTempo())
+        tempoThumb.textColor = Globals.colors.bgColor
+        tempoThumb.font = tempoThumb.font.withSize(28)
+        tempoThumb.setColors(Globals.colors.textColor, highlightColor: Globals.colors.textColor.withAlphaComponent(0.9))
+        tempoThumb.layer.masksToBounds = true
+        tempoThumb.layer.cornerRadius = Globals.dimensions.buttonHeight/2
+        self.addSubview(tempoThumb)
     }
     
     func updateLabel() {
@@ -76,12 +79,19 @@ class TempoVerticalSlider: UISlider {
         let thumbY: CGFloat = self.thumbRect(
             forBounds: self.bounds, trackRect: self.trackRect(forBounds: self.bounds), value: self.value
         ).midY
-        tempoLabel.center.x = CGFloat(thumbX)
-        tempoLabel.center.y = CGFloat(thumbY)
+        tempoThumb.center.x = CGFloat(thumbX)
+        tempoThumb.center.y = CGFloat(thumbY)
         
-        tempoLabel.text = String(delegate.metronome.getTempo())
+        tempoThumb.text = String(delegate.metronome.getTempo())
     }
     
+    func touchSlider(sender:UIGestureRecognizer) {
+        if sender.state == .began {
+            tempoThumb.isHighlighted = true
+        } else if sender.state == .ended || sender.state == .possible{
+            tempoThumb.isHighlighted = false
+        }
+    }
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
