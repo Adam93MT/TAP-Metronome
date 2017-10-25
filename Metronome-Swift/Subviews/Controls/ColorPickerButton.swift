@@ -12,7 +12,8 @@ class ColorPickerButton: UICircleButton {
 
     var colorString = ""
     let borderWidth:CGFloat = 2
-    let borderColor = UIColor.white.cgColor
+    let defaultBorderColor = UIColor.white.withAlphaComponent(0.5).cgColor
+    let highlightBorderColor = UIColor.white.cgColor
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,6 +23,12 @@ class ColorPickerButton: UICircleButton {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setup()
+    }
+    
+    override func setup() {
+        super.setup()
+        self.layer.borderColor = defaultBorderColor
+        self.layer.borderWidth = 1
     }
     
     func setColorStringValue(_ color: String) {
@@ -34,8 +41,8 @@ class ColorPickerButton: UICircleButton {
     
     var isPicked: Bool = false {
         didSet {
-            self.layer.borderColor = isPicked ? borderColor : UIColor.clear.cgColor
-            self.layer.borderWidth = isPicked ? borderWidth : 0
+            self.layer.borderColor = isPicked ? highlightBorderColor : defaultBorderColor
+            self.layer.borderWidth = isPicked ? borderWidth : 1
             if isPicked { Globals.colors.setTheme(self.colorString) }
         }
     }

@@ -27,13 +27,13 @@ class globalColors {
     }
     
     let colorOptions: [String: themeColor] = [
-        "red": themeColor(UIColor(rgb: 0xF5515F), UIColor(rgb: 0x9F041B)),
-        "orange": themeColor(UIColor(rgb: 0xFF875C), UIColor(rgb: 0xF2480A)),
-        "yellow": themeColor(UIColor(rgb: 0xFAD961), UIColor(rgb: 0xF76B1C)),
-        "green": themeColor(UIColor(rgb: 0xB4EC51), UIColor(rgb: 0x429321)),
+        "red": themeColor(UIColor(rgb: 0xC23642), UIColor(rgb: 0x660211)),
+        "orange": themeColor(UIColor(rgb: 0xF56531), UIColor(rgb: 0xA33007)),
+        "yellow": themeColor(UIColor(rgb: 0xDBCD09), UIColor(rgb: 0xA37407)),
+        "green": themeColor(UIColor(rgb: 0x95C443), UIColor(rgb: 0x285C14)),
         "blue": themeColor(UIColor(rgb: 0x1D478C), UIColor(rgb: 0x13305D)),
-        "purple": themeColor(UIColor(rgb: 0x7A51F5), UIColor(rgb: 0x20039E)),
-        "black": themeColor(UIColor(rgb: 0x1B1B1B), UIColor(rgb: 0x040404))
+        "purple": themeColor(UIColor(rgb: 0x6543CC), UIColor(rgb: 0x12025C)),
+        "black": themeColor(UIColor(rgb: 0x292929), UIColor(rgb: 0x0A0A0A))
     ]
     
     init(_ themeColor: String? = nil) {

@@ -12,7 +12,7 @@ class BeatNumberButton: UIButton {
     let delegate = UIApplication.shared.delegate as! AppDelegate
     
     let borderWidth:CGFloat = 2
-    let borderColor = UIColor.white.withAlphaComponent(0.5).cgColor
+    let borderColor = UIColor.white.cgColor
     var defaultColor = Globals.colors.bgColorLight.withAlphaComponent(0.5)
     var pickedColor = Globals.colors.bgColorDark.withAlphaComponent(0.5)
     
