@@ -231,7 +231,7 @@ class AVMetronome : NSObject {
                     if (self.isOn) {
                         
                         // Animate the next beat circle if applicable
-                        if !(self.didRegisterTap) && self.beatNumber > 0 {
+                        if !(self.didRegisterTap) {
                             self.vc!.animateBeatCircle(self, beatIndex: (callbackBeat), beatDuration: (callbackInterval))
                         } else {  }
                         
@@ -294,6 +294,7 @@ class AVMetronome : NSObject {
         print("Stopping")
         isOn = false;
         playerStarted = false
+        didRegisterTap = false
         
         player.stop()
         player.reset()
@@ -316,6 +317,8 @@ class AVMetronome : NSObject {
     }
     
     func logTap() {
+        if (self.beatNumber <= 0) { return }
+        
         print("\nLogging Tap")
         let tapTime = mach_absolute_time()
         self.untappedBeats = 0

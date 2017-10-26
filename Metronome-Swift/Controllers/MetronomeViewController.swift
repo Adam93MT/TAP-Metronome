@@ -159,13 +159,10 @@ class MetronomeViewController: UIViewController {
     }
     
     func handleTap(gestureRecognizer: TapDownGestureRecognizer) {
-        metronome.didRegisterTap = true
-        
         if self.controlsAreHidden { self.showControls() }
         
         let tapLocation = gestureRecognizer.location(in: self.view)
         let tapIdx = metronome.getBeatIndex() + metronome.getTimeSignature()
-        
         self.containerView.animateBeatCircle(
             beatIndex: tapIdx, beatDuration: metronome.getInterval(), startPoint: tapLocation
         )
@@ -175,6 +172,7 @@ class MetronomeViewController: UIViewController {
             self.killControlAnimations()
         }
         else {
+            metronome.didRegisterTap = true
             self.startMetronome()
         }
     }
