@@ -326,6 +326,9 @@ class AVMetronome : NSObject {
         // Double tap means stop
         if (lastDiff < self.getTimeGivenTempo(self.maxTempo)) {
             self.stop()
+            
+            // Will want to broadcast this later
+            vc.stopMetronome()
             self.loggedDiffs.removeAll()
         }
         // if the tap interval is in tempo range
