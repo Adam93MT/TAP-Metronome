@@ -22,7 +22,11 @@ class UICircleButton: UIControlButton {
     
     override func setup() {
         super.setup()
+        
         let circleSize:CGFloat = Globals.dimensions.buttonHeight
+        
+        self.bounds = CGRect(x:0, y:0, width: circleSize, height: circleSize)
+        
         self.addConstraint(NSLayoutConstraint(  item: self,
                                                 attribute: .width,
                                                 relatedBy: .equal,
@@ -39,6 +43,7 @@ class UICircleButton: UIControlButton {
                                                 multiplier: 1,
                                                 constant: 0)
                                             )
+        
         self.layer.cornerRadius = circleSize/2
     
     }
