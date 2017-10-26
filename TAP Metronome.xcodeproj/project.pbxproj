@@ -51,6 +51,7 @@
 		6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapDownGestureRecognizer.swift; sourceTree = "<group>"; };
 		664E8AA51F9E86CC00E29C1D /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		66675BB11FA121910043D6E5 /* ColorPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorPickerButton.swift; path = "Metronome-Swift/Subviews/Controls/ColorPickerButton.swift"; sourceTree = SOURCE_ROOT; };
+		666E14F31FA25F8E00879B4A /* USABILITY_TEST_RESULTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = USABILITY_TEST_RESULTS.md; sourceTree = "<group>"; };
 		6695724C1C2C6024001BF1FF /* BeatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatView.swift; sourceTree = "<group>"; };
 		66A5AE5D1F95A4EB00E432F7 /* TempoSliderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoSliderViewController.swift; sourceTree = "<group>"; };
 		66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoVerticalSlider.swift; sourceTree = "<group>"; };
@@ -204,6 +205,7 @@
 			children = (
 				B897AC8C19E4AC8700820251 /* Metronome_SwiftTests.swift */,
 				B897AC8A19E4AC8700820251 /* Supporting Files */,
+				666E14F31FA25F8E00879B4A /* USABILITY_TEST_RESULTS.md */,
 			);
 			name = "TAPMetronome Test";
 			path = "Metronome-SwiftTests";

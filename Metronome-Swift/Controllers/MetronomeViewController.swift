@@ -18,6 +18,8 @@ class MetronomeViewController: UIViewController {
     @IBOutlet weak var decrementButton: UIButton!
     @IBOutlet weak var incrementButton: UIButton!
     @IBOutlet weak var tempoButton: UIButton!
+    @IBOutlet weak var PlayPauseButton: UIButton!
+    
     @IBOutlet weak var NavBar: UINavigationItem!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     let emptyButton: UIBarButtonItem = UIBarButtonItem()
@@ -97,12 +99,12 @@ class MetronomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Make Gradient
+        self.showControls()
         self.createGradientLayer()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         // Get original orientation
         self.currentOrientation = UIDevice.current.orientation.isPortrait ? "portrait" : "landscape"
         if UIDevice.current.orientation.isFlat {
@@ -130,8 +132,30 @@ class MetronomeViewController: UIViewController {
         self.metronome.decrementTempo()
     }
     
+    @IBAction func togglePlayPause(_ sender: UIButton) {
+        self.showControls()
+        
+        if delegate.metronome.isOn {
+            self.stopMetronome()
+        } else {
+            self.startMetronome()
+        }
+        
+    }
     @IBAction func openMenu(sender: AnyObject) {
         performSegue(withIdentifier: "openSettings", sender: nil)
+    }
+    
+    func startMetronome() {
+        delegate.metronome.start()
+        PlayPauseButton.setImage(UIImage(named: "pause"), for: .normal)
+        PlayPauseButton.setImage(UIImage(named: "pause_highlight"), for: .highlighted)
+    }
+    
+    func stopMetronome() {
+        delegate.metronome.stop()
+        PlayPauseButton.setImage(UIImage(named: "play"), for: .normal)
+        PlayPauseButton.setImage(UIImage(named: "play_highlight"), for: .highlighted)
     }
     
     func handleTap(gestureRecognizer: TapDownGestureRecognizer) {
@@ -151,7 +175,7 @@ class MetronomeViewController: UIViewController {
             self.killControlAnimations()
         }
         else {
-            metronome.start()
+            self.startMetronome()
         }
     }
     
@@ -162,7 +186,8 @@ class MetronomeViewController: UIViewController {
                 self.tempoButton.alpha = 0
                 self.incrementButton.alpha = 0
                 self.decrementButton.alpha = 0
-                self.settingsButton.isEnabled = false
+                self.PlayPauseButton.alpha = 0
+//                self.settingsButton.isEnabled = false
                 self.tapButton.alpha = 0.1
                 self.setNeedsStatusBarAppearanceUpdate()
             })
@@ -175,7 +200,8 @@ class MetronomeViewController: UIViewController {
             self.tempoButton.alpha = 1
             self.incrementButton.alpha = 1
             self.decrementButton.alpha = 1
-            self.settingsButton.isEnabled = true
+            self.PlayPauseButton.alpha = 1
+//            self.settingsButton.isEnabled = true
             self.tapButton.alpha = 0.75
             self.setNeedsStatusBarAppearanceUpdate()
         })
