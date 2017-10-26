@@ -84,10 +84,12 @@ class TempoSliderViewController: UIViewController {
     
     @IBAction func pressedDecrement(_ sender: UIButton) {
         delegate.metronome.decrementTempo()
+        self.tempoSlider.updateLabel()
     }
     
     @IBAction func pressedIncrement(_ sender: UIButton) {
         delegate.metronome.incrementTempo()
+        self.tempoSlider.updateLabel()
     }
     
     
