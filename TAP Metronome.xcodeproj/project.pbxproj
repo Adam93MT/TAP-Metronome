@@ -22,6 +22,7 @@
 		66CA3F621F9E9F9300670273 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CA3F611F9E9F9300670273 /* Colors.swift */; };
 		66CA84151F8682F7001E3485 /* beatClick.wav in Resources */ = {isa = PBXBuildFile; fileRef = 66CA84141F868112001E3485 /* beatClick.wav */; };
 		66CA84161F8682F9001E3485 /* beatClick.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 66CA84131F8680A1001E3485 /* beatClick.aiff */; };
+		66D26EB21FA2F27B00CC1C02 /* SpacerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D26EB11FA2F27B00CC1C02 /* SpacerView.swift */; };
 		66E4D1F21D164A4300811CCA /* BeatCircleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E4D1F11D164A4300811CCA /* BeatCircleView.xib */; };
 		66E4D1F41D16532900811CCA /* BeatContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E4D1F31D16532900811CCA /* BeatContainerView.swift */; };
 		66E98B8A1C2919C00097E58E /* downBeatClick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 66E98B881C2919C00097E58E /* downBeatClick.mp3 */; };
@@ -63,6 +64,7 @@
 		66CA3F611F9E9F9300670273 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		66CA84131F8680A1001E3485 /* beatClick.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = beatClick.aiff; sourceTree = "<group>"; };
 		66CA84141F868112001E3485 /* beatClick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = beatClick.wav; path = resources/beatClick.wav; sourceTree = SOURCE_ROOT; };
+		66D26EB11FA2F27B00CC1C02 /* SpacerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerView.swift; sourceTree = "<group>"; };
 		66E4D1F11D164A4300811CCA /* BeatCircleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BeatCircleView.xib; sourceTree = "<group>"; };
 		66E4D1F31D16532900811CCA /* BeatContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatContainerView.swift; sourceTree = "<group>"; };
 		66E98B881C2919C00097E58E /* downBeatClick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = downBeatClick.mp3; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				6695724C1C2C6024001BF1FF /* BeatView.swift */,
 				66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */,
 				6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */,
+				66D26EB11FA2F27B00CC1C02 /* SpacerView.swift */,
 				666E14F61FA2A9A100879B4A /* Containers */,
 				660BB2351FA106FD00A47778 /* Controls */,
 			);
@@ -343,6 +346,7 @@
 				66EAD1351F99372700D7CEE7 /* UIControlButton.swift in Sources */,
 				66B9FF2E1F929DBC006EDC19 /* TWGenerator.swift in Sources */,
 				66B9FF2C1F929D80006EDC19 /* AVMetronome.swift in Sources */,
+				66D26EB21FA2F27B00CC1C02 /* SpacerView.swift in Sources */,
 				66E4D1F41D16532900811CCA /* BeatContainerView.swift in Sources */,
 				66675BB21FA121910043D6E5 /* ColorPickerButton.swift in Sources */,
 				66AB01241F8D6CE4000D5E38 /* GradientLayer.swift in Sources */,

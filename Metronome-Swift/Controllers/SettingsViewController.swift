@@ -30,7 +30,8 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var purpleButton: ColorPickerButton!
     @IBOutlet weak var blackButton: ColorPickerButton!
     
-//    var TimeButtonsArray = [BeatNumberButton]()
+    @IBOutlet weak var plusButton: UICircleButton!
+    //    var TimeButtonsArray = [BeatNumberButton]()
     var ColorButtonsArray = [ColorPickerButton]()
     let borderWidth:CGFloat = 2
     let borderColor = UIColor.white.cgColor
@@ -122,6 +123,11 @@ class SettingsViewController: UIViewController {
         self.view.layer.insertSublayer(self.gradientLayer.gl, at: 0)
     }
 
+    @IBAction func pressAddButton(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Coming Soon!", message: "Soon you'll be able to add your own custom colours.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 
