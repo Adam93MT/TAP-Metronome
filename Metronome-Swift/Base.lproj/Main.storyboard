@@ -7,7 +7,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -149,68 +148,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Groups" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vUT-CV-fML">
-                                <rect key="frame" x="0.0" y="80" width="375" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <color key="textColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oz7-tn-rFv" customClass="BeatNumberButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="130" width="187.5" height="68"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="68" id="uYL-mq-mAQ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="42"/>
-                                <state key="normal" title="2">
-                                    <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="pressedTimeButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="nqs-Od-fGo"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fg-he-cHq" customClass="BeatNumberButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="188" y="130" width="187" height="68"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="68" id="0Ly-tA-Hka"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="42"/>
-                                <state key="normal" title="3">
-                                    <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="pressedTimeButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="BMm-X7-daP"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tsQ-oQ-bTJ" customClass="BeatNumberButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="0.5" y="198" width="187.5" height="68"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="68" id="ECS-hG-8Da"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="42"/>
-                                <state key="normal" title="4">
-                                    <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="pressedTimeButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="SLY-9o-MSZ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aHx-ua-1pc" customClass="BeatNumberButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="188" y="198" width="187" height="68"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="68" id="Z9l-W7-vw0"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="42"/>
-                                <state key="normal" title="6">
-                                    <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="pressedTimeButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="xSD-fi-o7D"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTQ-dj-CCx" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
                                 <rect key="frame" x="106" y="410" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -266,57 +203,121 @@
                                 <color key="textColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="GROUPS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6wx-2x-NF8">
+                                <rect key="frame" x="16" y="80" width="65.5" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="th3-re-hjt" customClass="BeatGroupButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="106" y="123" width="64" height="63"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <state key="normal" title="3">
+                                    <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="pressedGroupButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="7Ad-yc-fKf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Drc-Ug-f4P" customClass="BeatGroupButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="205" y="122" width="64" height="64"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <state key="normal" title="4">
+                                    <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="pressedGroupButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="Dwg-ms-mfn"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBp-yE-T2g" customClass="BeatGroupButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="295" y="122" width="64" height="64"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <state key="normal" title="6">
+                                    <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="pressedGroupButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="oKZ-U9-O0B"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Gs-OI-l3I" customClass="BeatGroupButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="16" y="122" width="64" height="64"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <state key="normal" title="2">
+                                    <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="pressedGroupButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="kBf-W2-ZkF"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="spacer1" translatesAutoresizingMaskIntoConstraints="NO" id="NSd-NK-CLB">
+                                <rect key="frame" x="91" y="122" width="7" height="64"/>
+                            </view>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="spacer2" translatesAutoresizingMaskIntoConstraints="NO" id="d0l-We-2zM">
+                                <rect key="frame" x="178" y="120" width="13" height="68"/>
+                            </view>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="spacer3" translatesAutoresizingMaskIntoConstraints="NO" id="fyS-ga-Wyf">
+                                <rect key="frame" x="277" y="120" width="5" height="68"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.26098805144384779" blue="0.54550781250000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Oz7-tn-rFv" firstAttribute="width" secondItem="dDn-N8-zP2" secondAttribute="width" multiplier="0.5" id="1wc-wd-zcb"/>
                             <constraint firstItem="w5v-ho-d7T" firstAttribute="leading" secondItem="gpB-nD-3cn" secondAttribute="trailing" constant="-14" id="2ru-eT-PmR"/>
-                            <constraint firstItem="tsQ-oQ-bTJ" firstAttribute="top" secondItem="Oz7-tn-rFv" secondAttribute="bottom" id="3cy-xz-XM7"/>
-                            <constraint firstItem="tsQ-oQ-bTJ" firstAttribute="width" secondItem="Oz7-tn-rFv" secondAttribute="width" id="7tb-JF-rvw"/>
+                            <constraint firstItem="Drc-Ug-f4P" firstAttribute="centerY" secondItem="th3-re-hjt" secondAttribute="centerY" id="3Ke-Oh-oFj"/>
+                            <constraint firstItem="NSd-NK-CLB" firstAttribute="width" secondItem="d0l-We-2zM" secondAttribute="width" id="4OK-Li-UTg"/>
+                            <constraint firstItem="GBW-fx-p83" firstAttribute="top" secondItem="3Gs-OI-l3I" secondAttribute="bottom" constant="24" id="6C0-GF-Ku9"/>
+                            <constraint firstItem="fyS-ga-Wyf" firstAttribute="leading" secondItem="Drc-Ug-f4P" secondAttribute="trailing" id="8IX-q7-hck"/>
+                            <constraint firstItem="bBp-yE-T2g" firstAttribute="centerY" secondItem="3Gs-OI-l3I" secondAttribute="centerY" id="99L-Na-FsH"/>
                             <constraint firstItem="3gv-uz-FB6" firstAttribute="centerY" secondItem="n0a-Ad-STu" secondAttribute="centerY" id="BfK-tz-NSS"/>
+                            <constraint firstItem="th3-re-hjt" firstAttribute="leading" secondItem="NSd-NK-CLB" secondAttribute="trailing" id="Bho-nf-rHa"/>
                             <constraint firstItem="aYl-cm-0CC" firstAttribute="centerX" secondItem="dDn-N8-zP2" secondAttribute="centerX" id="CD6-kv-11x"/>
                             <constraint firstItem="gpB-nD-3cn" firstAttribute="leading" secondItem="aYl-cm-0CC" secondAttribute="trailing" constant="16" id="EBp-3X-TrA"/>
                             <constraint firstItem="w5v-ho-d7T" firstAttribute="centerY" secondItem="H5j-vI-4H3" secondAttribute="centerY" id="EF4-pg-Z0Q"/>
+                            <constraint firstItem="d0l-We-2zM" firstAttribute="width" secondItem="fyS-ga-Wyf" secondAttribute="width" id="FR9-ey-zR4"/>
+                            <constraint firstItem="d0l-We-2zM" firstAttribute="leading" secondItem="th3-re-hjt" secondAttribute="trailing" id="Gwk-p2-Tf3"/>
                             <constraint firstItem="aYl-cm-0CC" firstAttribute="leading" secondItem="MTQ-dj-CCx" secondAttribute="trailing" constant="16" id="HYU-go-hdq"/>
-                            <constraint firstItem="9fg-he-cHq" firstAttribute="width" secondItem="Oz7-tn-rFv" secondAttribute="width" id="IXZ-8V-xWt"/>
-                            <constraint firstItem="Oz7-tn-rFv" firstAttribute="leading" secondItem="vUT-CV-fML" secondAttribute="leading" id="Ibp-Kb-qsP"/>
+                            <constraint firstItem="d0l-We-2zM" firstAttribute="height" secondItem="fyS-ga-Wyf" secondAttribute="height" id="IKk-0Y-0vS"/>
                             <constraint firstItem="gpB-nD-3cn" firstAttribute="centerY" secondItem="aYl-cm-0CC" secondAttribute="centerY" id="PPp-ti-MZN"/>
                             <constraint firstItem="H5j-vI-4H3" firstAttribute="centerY" secondItem="n0a-Ad-STu" secondAttribute="centerY" id="QID-1G-ScZ"/>
+                            <constraint firstItem="Drc-Ug-f4P" firstAttribute="leading" secondItem="d0l-We-2zM" secondAttribute="trailing" id="Qnd-qr-Wq4"/>
+                            <constraint firstItem="NSd-NK-CLB" firstAttribute="leading" secondItem="3Gs-OI-l3I" secondAttribute="trailing" id="RBC-MA-SwJ"/>
+                            <constraint firstItem="Drc-Ug-f4P" firstAttribute="centerY" secondItem="3Gs-OI-l3I" secondAttribute="centerY" id="RGk-bF-W8n"/>
                             <constraint firstItem="n0a-Ad-STu" firstAttribute="leading" secondItem="3gv-uz-FB6" secondAttribute="trailing" constant="16" id="Rq9-YE-gvW"/>
-                            <constraint firstItem="vUT-CV-fML" firstAttribute="top" secondItem="Rqz-Nl-CRb" secondAttribute="bottom" constant="16" id="Ruo-lU-gT9"/>
-                            <constraint firstItem="Oz7-tn-rFv" firstAttribute="top" secondItem="vUT-CV-fML" secondAttribute="bottom" constant="16" id="TaF-m9-Hwv"/>
-                            <constraint firstItem="9fg-he-cHq" firstAttribute="centerY" secondItem="Oz7-tn-rFv" secondAttribute="centerY" id="VES-4c-S1x"/>
+                            <constraint firstItem="NSd-NK-CLB" firstAttribute="height" secondItem="d0l-We-2zM" secondAttribute="height" id="T98-2X-sKt"/>
+                            <constraint firstItem="th3-re-hjt" firstAttribute="centerY" secondItem="3Gs-OI-l3I" secondAttribute="centerY" id="WEq-v5-lGe"/>
+                            <constraint firstItem="bBp-yE-T2g" firstAttribute="leading" secondItem="fyS-ga-Wyf" secondAttribute="trailing" id="XcO-qG-qsl"/>
+                            <constraint firstItem="6wx-2x-NF8" firstAttribute="leading" secondItem="dDn-N8-zP2" secondAttribute="leading" constant="16" id="ZFU-Je-vAE"/>
                             <constraint firstItem="3gv-uz-FB6" firstAttribute="top" secondItem="GBW-fx-p83" secondAttribute="bottom" constant="16" id="Zgv-Xu-Ibv"/>
-                            <constraint firstItem="tsQ-oQ-bTJ" firstAttribute="centerX" secondItem="Oz7-tn-rFv" secondAttribute="centerX" id="Zyu-Gj-93e"/>
-                            <constraint firstItem="aHx-ua-1pc" firstAttribute="width" secondItem="9fg-he-cHq" secondAttribute="width" id="aAF-gI-AGF"/>
                             <constraint firstItem="MTQ-dj-CCx" firstAttribute="centerY" secondItem="aYl-cm-0CC" secondAttribute="centerY" id="aaA-03-nMt"/>
-                            <constraint firstItem="tsQ-oQ-bTJ" firstAttribute="centerY" secondItem="aHx-ua-1pc" secondAttribute="centerY" id="em9-3e-BhV"/>
-                            <constraint firstItem="Oz7-tn-rFv" firstAttribute="leading" secondItem="dDn-N8-zP2" secondAttribute="leading" id="i5f-Gb-XHO"/>
-                            <constraint firstItem="Oz7-tn-rFv" firstAttribute="leading" secondItem="vUT-CV-fML" secondAttribute="leading" id="ntd-7F-TZu"/>
+                            <constraint firstItem="3Gs-OI-l3I" firstAttribute="leading" secondItem="dDn-N8-zP2" secondAttribute="leading" constant="16" id="cRb-N8-SCp"/>
+                            <constraint firstItem="NSd-NK-CLB" firstAttribute="height" secondItem="3Gs-OI-l3I" secondAttribute="height" id="hyX-1h-wfr"/>
+                            <constraint firstItem="3Gs-OI-l3I" firstAttribute="top" secondItem="6wx-2x-NF8" secondAttribute="bottom" constant="16" id="kRl-df-cdD"/>
+                            <constraint firstAttribute="trailing" secondItem="bBp-yE-T2g" secondAttribute="trailing" constant="16" id="mnG-PC-Ru1"/>
                             <constraint firstItem="H5j-vI-4H3" firstAttribute="leading" secondItem="n0a-Ad-STu" secondAttribute="trailing" constant="16" id="nyF-CL-Bup"/>
-                            <constraint firstItem="vUT-CV-fML" firstAttribute="centerX" secondItem="dDn-N8-zP2" secondAttribute="centerX" id="pim-Of-tXH"/>
-                            <constraint firstItem="aHx-ua-1pc" firstAttribute="centerX" secondItem="9fg-he-cHq" secondAttribute="centerX" id="tko-XO-pWM"/>
-                            <constraint firstItem="GBW-fx-p83" firstAttribute="top" secondItem="tsQ-oQ-bTJ" secondAttribute="bottom" constant="32" id="uUC-iz-4nt"/>
+                            <constraint firstItem="6wx-2x-NF8" firstAttribute="top" secondItem="Rqz-Nl-CRb" secondAttribute="bottom" constant="16" id="qRE-fF-0jj"/>
+                            <constraint firstItem="bBp-yE-T2g" firstAttribute="centerY" secondItem="Drc-Ug-f4P" secondAttribute="centerY" id="r3P-fV-x7Z"/>
+                            <constraint firstItem="th3-re-hjt" firstAttribute="centerY" secondItem="3Gs-OI-l3I" secondAttribute="centerY" id="sYq-jR-oaZ"/>
                             <constraint firstItem="GBW-fx-p83" firstAttribute="centerX" secondItem="dDn-N8-zP2" secondAttribute="centerX" id="vfT-Hu-iQ8"/>
-                            <constraint firstAttribute="trailing" secondItem="9fg-he-cHq" secondAttribute="trailing" id="x5b-Fs-h1X"/>
-                            <constraint firstItem="9fg-he-cHq" firstAttribute="trailing" secondItem="vUT-CV-fML" secondAttribute="trailing" id="ySK-xx-c4v"/>
                             <constraint firstItem="aYl-cm-0CC" firstAttribute="top" secondItem="n0a-Ad-STu" secondAttribute="bottom" constant="16" id="z5f-9C-0nV"/>
                             <constraint firstItem="w5v-ho-d7T" firstAttribute="leading" secondItem="H5j-vI-4H3" secondAttribute="trailing" constant="16" id="zg0-lL-P6z"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="BeatsLabel" destination="vUT-CV-fML" id="8cn-dH-s7j"/>
                         <outlet property="ColorsLabel" destination="GBW-fx-p83" id="eIz-Nm-IgW"/>
+                        <outlet property="GroupsLabel" destination="6wx-2x-NF8" id="P99-rW-s3M"/>
                         <outlet property="blackButton" destination="gpB-nD-3cn" id="YVS-Ea-jzt"/>
                         <outlet property="blueButton" destination="MTQ-dj-CCx" id="u6Q-IH-KKR"/>
-                        <outlet property="fourBeats" destination="tsQ-oQ-bTJ" id="k4j-Mp-3kG"/>
+                        <outlet property="fourBeats" destination="Drc-Ug-f4P" id="NZ0-aZ-iD0"/>
                         <outlet property="greenButton" destination="w5v-ho-d7T" id="Acp-Nz-9PI"/>
                         <outlet property="orangeButton" destination="n0a-Ad-STu" id="zhX-Ko-Uug"/>
                         <outlet property="purpleButton" destination="aYl-cm-0CC" id="LgR-uT-pIg"/>
                         <outlet property="redButton" destination="3gv-uz-FB6" id="D9g-f3-JFr"/>
-                        <outlet property="sixBeats" destination="aHx-ua-1pc" id="tIm-RV-sNi"/>
-                        <outlet property="threeBeats" destination="9fg-he-cHq" id="YyW-Il-as3"/>
-                        <outlet property="twoBeats" destination="Oz7-tn-rFv" id="Bah-N1-Dh7"/>
+                        <outlet property="sixBeats" destination="bBp-yE-T2g" id="gYp-mY-MJW"/>
+                        <outlet property="threeBeats" destination="th3-re-hjt" id="FbV-83-kYQ"/>
+                        <outlet property="twoBeats" destination="3Gs-OI-l3I" id="OGW-xa-wGv"/>
                         <outlet property="yellowButton" destination="H5j-vI-4H3" id="Rti-iO-vGI"/>
                     </connections>
                 </viewController>
