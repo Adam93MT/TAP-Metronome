@@ -10,14 +10,17 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     let delegate = UIApplication.shared.delegate as! AppDelegate
+
     
-    @IBOutlet weak var BeatsLabel: UILabel!
+    @IBOutlet weak var GroupsLabel: UILabel!
+    
+    @IBOutlet weak var twoBeats: BeatGroupButton!
+    @IBOutlet weak var threeBeats: BeatGroupButton!
+    @IBOutlet weak var fourBeats: BeatGroupButton!
+    @IBOutlet weak var sixBeats: BeatGroupButton!
+    var BeatGroupButtonsArray = [BeatGroupButton]()
+    
     @IBOutlet weak var ColorsLabel: UILabel!
-    
-    @IBOutlet weak var twoBeats: BeatNumberButton!
-    @IBOutlet weak var threeBeats: BeatNumberButton!
-    @IBOutlet weak var fourBeats: BeatNumberButton!
-    @IBOutlet weak var sixBeats: BeatNumberButton!
     
     @IBOutlet weak var redButton: ColorPickerButton!
     @IBOutlet weak var orangeButton: ColorPickerButton!
@@ -27,7 +30,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var purpleButton: ColorPickerButton!
     @IBOutlet weak var blackButton: ColorPickerButton!
     
-    var TimeButtonsArray = [BeatNumberButton]()
+//    var TimeButtonsArray = [BeatNumberButton]()
     var ColorButtonsArray = [ColorPickerButton]()
     let borderWidth:CGFloat = 2
     let borderColor = UIColor.white.cgColor
@@ -45,8 +48,8 @@ class SettingsViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         // Beats Buttons
-        TimeButtonsArray = [twoBeats, threeBeats, fourBeats, sixBeats]
-        
+        BeatGroupButtonsArray = [twoBeats, threeBeats, fourBeats, sixBeats]
+
         twoBeats.setValue(val: 2)
         threeBeats.setValue(val: 3)
         fourBeats.setValue(val: 4)
@@ -87,8 +90,8 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func pressedTimeButton(_ sender: BeatNumberButton) {
-        for button in TimeButtonsArray {
+    @IBAction func pressedGroupButton(_ sender: BeatGroupButton) {
+        for button in BeatGroupButtonsArray {
             button.isPicked = false
         }
         sender.isPicked = true
@@ -107,7 +110,7 @@ class SettingsViewController: UIViewController {
         self.view.backgroundColor = Globals.colors.bgColorLight
         self.gradientLayer.gl.removeFromSuperlayer()
         self.createGradientLayer()
-        for button in TimeButtonsArray {
+        for button in BeatGroupButtonsArray {
             button.setColors()
         }
     }

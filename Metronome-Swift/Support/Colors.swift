@@ -31,7 +31,7 @@ class globalColors {
         "orange": themeColor(UIColor(rgb: 0xF56531), UIColor(rgb: 0xA33007)),
         "yellow": themeColor(UIColor(rgb: 0xDBCD09), UIColor(rgb: 0xA37407)),
         "green": themeColor(UIColor(rgb: 0x95C443), UIColor(rgb: 0x285C14)),
-        "blue": themeColor(UIColor(rgb: 0x1D478C), UIColor(rgb: 0x13305D)),
+        "blue": themeColor(UIColor(rgb: 0x267AC5), UIColor(rgb: 0x13305D)),
         "purple": themeColor(UIColor(rgb: 0x6543CC), UIColor(rgb: 0x12025C)),
         "black": themeColor(UIColor(rgb: 0x292929), UIColor(rgb: 0x0A0A0A))
     ]
