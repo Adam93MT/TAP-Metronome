@@ -114,7 +114,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="0G8-e5-L1y">
-                        <barButtonItem key="rightBarButtonItem" title="settingsButton" image="settings" width="36" style="plain" id="9wm-QS-XZx">
+                        <barButtonItem key="rightBarButtonItem" image="settings" width="36" style="plain" id="9wm-QS-XZx">
                             <color key="tintColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="openMenuWithSender:" destination="BYZ-38-t0r" id="Hpm-4o-Xeh"/>
