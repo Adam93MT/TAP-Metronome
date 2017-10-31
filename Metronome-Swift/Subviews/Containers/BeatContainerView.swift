@@ -16,6 +16,7 @@ class BeatContainerView: UIView {
     
     // The array of all circles
     var BeatViewsArray = [BeatView]()
+    var TapBeatViewsArray = [BeatView]()
     var allBeatsInitialized: Bool = false
     
     let startColor = UIColor.white
@@ -72,29 +73,34 @@ class BeatContainerView: UIView {
         if allBeatsInitialized == false {
             print("Initializing All Circles...")
             self.total_error = 0
+            
             let hypotenuse = CGFloat(sqrt(Double(self.screenWidth * self.screenWidth + self.screenHeight * self.screenHeight)))
             
             self.startDiameter = min(self.screenWidth, self.screenHeight) * 0.5
             
             self.endScale = hypotenuse/self.startDiameter * 1.5
             
-            /*
-            // Make an array of twice as long as we'll need (and then some)
-            // Regular beats access idx 0->TS-1
-            // Tapped Beats access idx TS->2TS-1
-            */
-            
-            let maxTS = 8
-            for beat in 0...maxTS*2-1 {
-                let newBeatView = BeatView(
+            let maxTS = delegate.metronome.possibleTimeSignatures.max()!
+            for b in 0...maxTS-1 {
+                let newBeat = BeatView(
                     frame: CGRect(x: 0.0, y: 0.0, width: startDiameter, height: startDiameter)
                 )
-                newBeatView.center = self.center
-                newBeatView.layer.cornerRadius = CGFloat(startDiameter/2.0)
-                newBeatView.backgroundColor = startColor//UIColor.redColor()
-                newBeatView.isHidden = true
-                BeatViewsArray.append(newBeatView)
-                self.addSubview(BeatViewsArray[beat])
+                newBeat.center = self.center
+                newBeat.layer.cornerRadius = CGFloat(startDiameter/2.0)
+                newBeat.backgroundColor = startColor
+                newBeat.isHidden = true
+                BeatViewsArray.append(newBeat)
+                self.addSubview(BeatViewsArray[b])
+                
+                let newBeatTap = BeatView(
+                    frame: CGRect(x: 0.0, y: 0.0, width: startDiameter, height: startDiameter)
+                )
+                newBeatTap.center = self.center
+                newBeatTap.layer.cornerRadius = CGFloat(startDiameter/2.0)
+                newBeatTap.backgroundColor = startColor
+                newBeatTap.isHidden = true
+                TapBeatViewsArray.append(newBeatTap)
+                self.addSubview(TapBeatViewsArray[b])
         }
             
         self.beatCircleLayer = CAShapeLayer()
@@ -106,28 +112,24 @@ class BeatContainerView: UIView {
     
     func removeAllBeatCircles() {
         for b in 0...BeatViewsArray.count-1 {
-            print(BeatViewsArray.count)
             beatCircleReset(b)
             BeatViewsArray[b].removeFromSuperview()
-            BeatViewsArray.remove(at: b)
+            TapBeatViewsArray[b].removeFromSuperview()
+//            BeatViewsArray.remove(at: b)
         }
     }
     
     func animateBeatCircle(beatIndex: Int, beatDuration: Double, startPoint: CGPoint? = nil) {
-        let thisBeat = self.BeatViewsArray[beatIndex]
+        var thisBeat: BeatView!
         
-        // Error logging
-        let delay = mach_absolute_time() - delegate.metronome.current_time
-        let delay_ms = Float(delay) / Float(NSEC_PER_MSEC)
-        print("Animation Delay \(delay_ms) ms")
-        if delay_ms < 1000 { self.total_error += delay_ms }
-        
-       //  handle startPoint finger press
+        // Beat was triggered by a tap if startPoint != nil
         if (startPoint != nil) {
+            thisBeat = self.TapBeatViewsArray[beatIndex]
             thisBeat.frame.origin.x = startPoint!.x - thisBeat.frame.width/2
             thisBeat.frame.origin.y = startPoint!.y - thisBeat.frame.height/2
         }
         else {
+            thisBeat = self.BeatViewsArray[beatIndex]
             if self.currentOrientation == self.originalOrientation{
                 thisBeat.frame.origin.x = self.defaultLocationX
                 thisBeat.frame.origin.y = self.defaultLocationY
@@ -152,15 +154,24 @@ class BeatContainerView: UIView {
            completion:  { finished in
                 self.beatCircleReset(beatIndex) // reset circle once the animation is finished
         })
+        
+        // --- Error logging ---
+        let delay = mach_absolute_time() - delegate.metronome.current_time
+        let delay_ms = Float(delay) / Float(NSEC_PER_MSEC)
+        print("Animation Delay \(delay_ms) ms")
+        if delay_ms < 1000 { self.total_error += delay_ms }
     }
     
     func beatCircleReset(_ beatIndex:Int) {
         let thisBeat = self.BeatViewsArray[beatIndex]
+        let thisBeatTap = self.TapBeatViewsArray[beatIndex]
         let resetScaleTransform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-//        print("... Resetting circle index \(beatIndex)")
         thisBeat.transform = resetScaleTransform
+        thisBeatTap.transform = resetScaleTransform
         thisBeat.alpha = 1
+        thisBeatTap.alpha = 1
         thisBeat.isHidden = true
+        thisBeatTap.isHidden = true
     }
     
     func setup() {

@@ -37,6 +37,7 @@ class AVMetronome : NSObject {
     // Tempo control -----
     let minTempo: Int = 50
     let maxTempo: Int = 220
+    let possibleTimeSignatures = [2,3,4,6]
     var timeSignature: Int =  0 //Defaults.integer(forKey: "timeSignature")
     var tempoBPM: Int = 0
     var tempoInterval: Double = 0
@@ -172,9 +173,6 @@ class AVMetronome : NSObject {
             player.scheduleBuffer(soundBuffer[self.bufferNumber]!, at: playerBeatTime, options: AVAudioPlayerNodeBufferOptions(rawValue: 0), completionHandler: {
                 self.syncQueue!.sync() {
                     print("\nPlay beat \(self.getBeatInTimeSignature()) at time \(beatSampleTime)")
-//                    print("\(self.tempoBPM) bpm.")
-//                    print("Total: \(self.getAbsoluteBeat())")
-                    
                     
                     self.beatsScheduled -= 1
                     
@@ -218,9 +216,11 @@ class AVMetronome : NSObject {
             }
             
             // Schedule the delegate callback
-            let callbackBeat = self.getBeatIndex()
+//            let callbackBeat = self.getBeatIndex()
+            let callbackBeat = self.getAbsoluteBeat() % self.possibleTimeSignatures.max()!
             let callbackInterval = self.getInterval()
             
+            // Here's where we do all the UI animating
             if (vc?.animateBeatCircle != nil && vc?.hideControls != nil) {
                 let nodeBeatTime: AVAudioTime = player.nodeTime(forPlayerTime: playerBeatTime)!
 //                let output: AVAudioIONode = engine.outputNode
@@ -231,7 +231,7 @@ class AVMetronome : NSObject {
                     if (self.isOn) {
                         
                         // Animate the next beat circle if applicable
-                        if !(self.didRegisterTap) {
+                        if (self.beatNumber > 0 && !self.didRegisterTap) {
                             self.vc!.animateBeatCircle(self, beatIndex: (callbackBeat), beatDuration: (callbackInterval))
                         } else {  }
                         
@@ -397,7 +397,7 @@ class AVMetronome : NSObject {
     }
     
     func incrementBeat() {
-        // print("beat++")
+//         print("beat++")
         self.beatNumber += 1
     }
     

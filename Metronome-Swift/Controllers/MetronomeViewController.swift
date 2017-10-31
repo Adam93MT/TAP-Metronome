@@ -162,7 +162,7 @@ class MetronomeViewController: UIViewController {
         if self.controlsAreHidden { self.showControls() }
         
         let tapLocation = gestureRecognizer.location(in: self.view)
-        let tapIdx = metronome.getBeatIndex() + metronome.getTimeSignature()
+        let tapIdx = metronome.getAbsoluteBeat() % metronome.possibleTimeSignatures.max()!
         self.containerView.animateBeatCircle(
             beatIndex: tapIdx, beatDuration: metronome.getInterval(), startPoint: tapLocation
         )
