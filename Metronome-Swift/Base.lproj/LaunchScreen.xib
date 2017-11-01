@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,21 +15,21 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="TAP" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWe-rV-qAy">
-                    <rect key="frame" x="194" y="209" width="93" height="63"/>
-                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="32"/>
-                    <color key="textColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="7bq-YA-9tj">
+                    <rect key="frame" x="218" y="218" width="44" height="44"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="dWe-rV-qAy" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="LLT-rh-j4f"/>
-                <constraint firstItem="dWe-rV-qAy" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Yv7-N7-3QI"/>
+                <constraint firstItem="7bq-YA-9tj" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="SkS-ry-gek"/>
+                <constraint firstItem="7bq-YA-9tj" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="WwK-eV-4DR"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="548" y="455"/>
         </view>
     </objects>
+    <resources>
+        <image name="play" width="36" height="36"/>
+    </resources>
 </document>
