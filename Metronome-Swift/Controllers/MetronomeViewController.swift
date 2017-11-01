@@ -78,7 +78,7 @@ class MetronomeViewController: UIViewController {
         tapButton.contentEdgeInsets = UIEdgeInsetsMake(
             viewHeight/2, viewWidth/2, viewHeight/2, viewWidth/2
         )
-        tapButton.setTitle("TAP", for: .normal)
+//        tapButton.setTitle("TAP", for: .normal)
         tapButton.alpha = 0.75
         
         // Set up gesture recognizer
@@ -172,7 +172,6 @@ class MetronomeViewController: UIViewController {
             self.killControlAnimations()
         }
         else {
-            metronome.didRegisterTap = true
             self.startMetronome()
         }
     }
