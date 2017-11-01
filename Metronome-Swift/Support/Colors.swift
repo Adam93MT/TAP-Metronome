@@ -20,20 +20,32 @@ class globalColors {
         var bgColorLight: UIColor!
         var bgColorDark: UIColor!
         
-        init(_ light: UIColor, _ dark: UIColor) {
+        init(hue: CGFloat) {
+            bgColorLight = UIColor(hue: hue/360, saturation: 72.0/100, brightness: 77.0/100, alpha: 1)
+            bgColorDark = UIColor(hue: hue/360, saturation: 72.0/100, brightness: 40.0/100, alpha: 1)
+        }
+        
+        init (light: UIColor, dark: UIColor) {
             bgColorLight = light
             bgColorDark = dark
         }
     }
     
     let colorOptions: [String: themeColor] = [
-        "red": themeColor(UIColor(rgb: 0xC23642), UIColor(rgb: 0x660211)),
-        "orange": themeColor(UIColor(rgb: 0xF56531), UIColor(rgb: 0xA33007)),
-        "yellow": themeColor(UIColor(rgb: 0xDBCD09), UIColor(rgb: 0xA37407)),
-        "green": themeColor(UIColor(rgb: 0x95C443), UIColor(rgb: 0x285C14)),
-        "blue": themeColor(UIColor(rgb: 0x267AC5), UIColor(rgb: 0x13305D)),
-        "purple": themeColor(UIColor(rgb: 0x6543CC), UIColor(rgb: 0x12025C)),
-        "black": themeColor(UIColor(rgb: 0x292929), UIColor(rgb: 0x0A0A0A))
+        "red" : themeColor(hue: 355),
+        "orange" : themeColor(hue: 16),
+        "yellow" : themeColor(hue: 56),
+        "green" : themeColor(hue: 82),
+        "blue" : themeColor(hue: 208),
+        "purple" : themeColor(hue: 255),
+        "black": themeColor(light: UIColor(rgb: 0x292929), dark: UIColor(rgb: 0x0A0A0A))
+//        "red": themeColor(UIColor(rgb: 0xC23642), UIColor(rgb: 0x660211)),
+//        "orange": themeColor(UIColor(rgb: 0xF56531), UIColor(rgb: 0xA33007)),
+//        "yellow": themeColor(UIColor(rgb: 0xDBCD09), UIColor(rgb: 0xA37407)),
+//        "green": themeColor(UIColor(rgb: 0x95C443), UIColor(rgb: 0x285C14)),
+//        "blue": themeColor(UIColor(rgb: 0x267AC5), UIColor(rgb: 0x13305D)),
+//        "purple": themeColor(UIColor(rgb: 0x6543CC), UIColor(rgb: 0x12025C)),
+//        "black": themeColor(UIColor(rgb: 0x292929), UIColor(rgb: 0x0A0A0A))
     ]
     
     init(_ themeColor: String? = nil) {
