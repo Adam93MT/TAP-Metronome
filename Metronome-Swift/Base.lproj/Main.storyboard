@@ -42,7 +42,7 @@
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8r-1J-ZFl">
                                 <rect key="frame" x="0.0" y="172" width="375" height="256"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="32"/>
-                                <state key="normal" title="TAP">
+                                <state key="normal">
                                     <color key="titleColor" red="0.99607843137254903" green="0.99607843137254903" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -80,7 +80,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r9f-r2-GK7">
-                                <rect key="frame" x="169" y="517" width="36" height="36"/>
+                                <rect key="frame" x="169" y="315.5" width="36" height="36"/>
                                 <state key="normal" image="play"/>
                                 <state key="highlighted" image="play_highlight"/>
                                 <connections>
@@ -92,7 +92,6 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="lyi-v4-qiX" firstAttribute="height" secondItem="huJ-0x-goJ" secondAttribute="height" id="05b-Rq-Zd7"/>
-                            <constraint firstItem="lyi-v4-qiX" firstAttribute="top" secondItem="r9f-r2-GK7" secondAttribute="bottom" constant="36" id="09j-gb-ODy"/>
                             <constraint firstItem="KrZ-CO-g8Q" firstAttribute="height" secondItem="lyi-v4-qiX" secondAttribute="height" id="1iM-fF-gzI"/>
                             <constraint firstItem="r9f-r2-GK7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2DS-Qv-vOn"/>
                             <constraint firstAttribute="centerX" secondItem="y8r-1J-ZFl" secondAttribute="centerX" id="6fM-Xn-aF0"/>
@@ -103,6 +102,7 @@
                             <constraint firstAttribute="centerY" secondItem="y8r-1J-ZFl" secondAttribute="centerY" id="PGb-wO-03X"/>
                             <constraint firstItem="huJ-0x-goJ" firstAttribute="centerY" secondItem="lyi-v4-qiX" secondAttribute="centerY" id="PVm-gZ-4FW"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lyi-v4-qiX" secondAttribute="bottom" constant="32" id="S0i-o9-FPa"/>
+                            <constraint firstItem="r9f-r2-GK7" firstAttribute="centerY" secondItem="y8r-1J-ZFl" secondAttribute="centerY" id="eor-OO-2wy"/>
                             <constraint firstAttribute="trailing" secondItem="KrZ-CO-g8Q" secondAttribute="trailing" constant="32" id="gYu-xA-Y1o"/>
                             <constraint firstItem="lyi-v4-qiX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mLu-EY-5DD"/>
                         </constraints>
