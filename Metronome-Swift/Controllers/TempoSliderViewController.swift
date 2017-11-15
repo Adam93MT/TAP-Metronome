@@ -11,6 +11,8 @@ import UIKit
 class TempoSliderViewController: UIViewController {
     
     let delegate = UIApplication.shared.delegate as! AppDelegate
+    var currentOrientation: String = "portrait"
+    var blurEffectView: UIVisualEffectView!
     // var tempoLabel: UILabel!
     var checkImage: UIImage!
     var crossImage: UIImage!
@@ -38,16 +40,30 @@ class TempoSliderViewController: UIViewController {
         
         self.view.backgroundColor = UIColor.clear
         let blurEffect = UIBlurEffect(style: .dark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self.view.frame
         self.view.insertSubview(blurEffectView, at: 0)
         
         tempoSlider.maximumValue = Float(maxVal)
         tempoSlider.minimumValue = Float(minVal)
         tempoSlider.value = Float(delegate.metronome.getTempo())
+        
+        // set initial rotation
+        if UIDevice.current.orientation.isPortrait {
+            self.currentOrientation = "portrait"
+        } else if UIDevice.current.orientation.isLandscape {
+            self.currentOrientation = "landscape"
+        }
+        // Listen for device rotation
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.handleDeviceRotation), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil
+        )
+        
+    }
     
-        //tempoLabel = UILabel(frame: CGRect(x: 0, y: 0, width: thumbWidth, height: thumbHeight))
-//        self.initSliderLabel()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tempoSlider.updateLabel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,10 +73,11 @@ class TempoSliderViewController: UIViewController {
         tempoSlider.value = Float(delegate.metronome.getTempo())
         // position the label once we've set the value
         tempoSlider.updateLabel()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+        super.viewDidAppear(animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -110,5 +127,19 @@ class TempoSliderViewController: UIViewController {
         } else {
             closeButton.setImage(crossImage, for: .normal)
         }
+    }
+    
+    func handleDeviceRotation() {
+        if UIDevice.current.orientation.isPortrait {
+            self.currentOrientation = "portrait"
+        } else if UIDevice.current.orientation.isLandscape {
+            self.currentOrientation = "landscape"
+        }
+        
+        blurEffectView.frame = self.view.frame
+//        sliderPosY = tempoSlider.frame.midY
+//        sliderLength = tempoSlider.frame.height
+        tempoSlider.updateLabel()
+        
     }
 }
