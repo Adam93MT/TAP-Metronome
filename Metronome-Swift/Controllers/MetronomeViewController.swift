@@ -31,7 +31,6 @@ class MetronomeViewController: UIViewController {
     var metronomeDisplayLink: CADisplayLink!
     
     var currentOrientation: String = "portrait"
-    var originalOrientation: String = "portrait"
     var viewWidth: CGFloat!
     var viewHeight: CGFloat!
     
@@ -63,7 +62,7 @@ class MetronomeViewController: UIViewController {
         
         // Set Up Beat Circle Views
         self.containerView = BeatContainerView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight))
-        self.containerView.originalOrientation = self.originalOrientation
+//        self.containerView.originalOrientation = originalOrientation
         self.containerView.screenWidth = self.viewWidth
         self.containerView.screenHeight = self.viewHeight
         self.containerView.center = view.center
@@ -78,7 +77,6 @@ class MetronomeViewController: UIViewController {
         tapButton.contentEdgeInsets = UIEdgeInsetsMake(
             viewHeight/2, viewWidth/2, viewHeight/2, viewWidth/2
         )
-//        tapButton.setTitle("TAP", for: .normal)
         tapButton.alpha = 0.75
         
         // Set up gesture recognizer
@@ -111,8 +109,8 @@ class MetronomeViewController: UIViewController {
             self.currentOrientation = "portrait"
         }
         print("Initial orientation \(self.currentOrientation)")
-        self.originalOrientation = self.currentOrientation
-        self.containerView.originalOrientation = self.originalOrientation
+        originalOrientation = self.currentOrientation
+//        self.containerView.originalOrientation = originalOrientation
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -234,7 +232,6 @@ class MetronomeViewController: UIViewController {
             self.containerView.currentOrientation = "landscape"
         }
         self.gradientLayer.gl.frame = self.view.bounds
-        
     }
     
     func createGradientLayer() {

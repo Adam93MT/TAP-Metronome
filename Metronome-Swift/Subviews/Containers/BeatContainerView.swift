@@ -32,7 +32,6 @@ class BeatContainerView: UIView {
     var viewCentreX: CGFloat!
     var viewCentreY: CGFloat!
     var currentOrientation: String = "portrait"
-    var originalOrientation: String = "portrait"
     
     var startShape: CGPath!
     var beatCircleLayer: CAShapeLayer!
@@ -130,7 +129,7 @@ class BeatContainerView: UIView {
         }
         else {
             thisBeat = self.BeatViewsArray[beatIndex]
-            if self.currentOrientation == self.originalOrientation{
+            if self.currentOrientation == originalOrientation {
                 thisBeat.frame.origin.x = self.defaultLocationX
                 thisBeat.frame.origin.y = self.defaultLocationY
             }
