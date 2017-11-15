@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kFG-60-Imb">
-    <device id="retina4_7" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kFG-60-Imb">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,7 +15,7 @@
             <objects>
                 <navigationController id="kFG-60-Imb" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" opaque="NO" alpha="0.0" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="ylQ-8O-857">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
@@ -36,7 +36,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8r-1J-ZFl">
@@ -67,7 +67,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyi-v4-qiX" customClass="UIControlButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="139" y="589" width="96" height="46"/>
+                                <rect key="frame" x="139.66666666666666" y="700" width="96" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="Dc6-28-5lJ"/>
                                 </constraints>
@@ -80,7 +80,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r9f-r2-GK7">
-                                <rect key="frame" x="169" y="315.5" width="36" height="36"/>
+                                <rect key="frame" x="169.66666666666666" y="388" width="36" height="36"/>
                                 <state key="normal" image="play"/>
                                 <state key="highlighted" image="play_highlight"/>
                                 <connections>
@@ -145,51 +145,9 @@
                         <viewControllerLayoutGuide type="bottom" id="7KZ-gf-eDx"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dDn-N8-zP2">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTQ-dj-CCx" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="272" y="347" width="44" height="44"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="pressedColorButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="fuS-PI-QVb"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gpB-nD-3cn" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="16" y="410" width="44" height="44"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="pressedColorButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="xcF-ap-UCF"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3gv-uz-FB6" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="16" y="349" width="44" height="44"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="pressedColorButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="S0J-2d-f28"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n0a-Ad-STu" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="81" y="349" width="44" height="44"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="pressedColorButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="08M-XY-U8a"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5j-vI-4H3" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="147" y="349" width="44" height="44"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="pressedColorButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="hCm-Sc-xLS"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w5v-ho-d7T" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="208" y="348" width="44" height="44"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="pressedColorButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="vom-oj-aC4"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="COLOUR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GBW-fx-p83">
                                 <rect key="frame" x="16" y="312" width="65.5" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -197,7 +155,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GROUPS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6wx-2x-NF8">
-                                <rect key="frame" x="16" y="80" width="65.5" height="19.5"/>
+                                <rect key="frame" x="16" y="104" width="65.666666666666671" height="19.666666666666671"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -255,110 +213,67 @@
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="spacer3" translatesAutoresizingMaskIntoConstraints="NO" id="fyS-ga-Wyf" customClass="SpacerView">
                                 <rect key="frame" x="277" y="120" width="5" height="68"/>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="colorspacer1" translatesAutoresizingMaskIntoConstraints="NO" id="olg-67-7wg" customClass="SpacerView">
-                                <rect key="frame" x="68" y="349" width="8" height="43"/>
-                            </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="colorspacer2" translatesAutoresizingMaskIntoConstraints="NO" id="Nfb-F5-kr4" customClass="SpacerView">
-                                <rect key="frame" x="131" y="349" width="8" height="43"/>
-                            </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="colorspacer3" translatesAutoresizingMaskIntoConstraints="NO" id="8ZP-x7-kKo" customClass="SpacerView">
-                                <rect key="frame" x="193" y="348" width="8" height="43"/>
-                            </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="colorspacer4" translatesAutoresizingMaskIntoConstraints="NO" id="tnC-ki-piq" customClass="SpacerView">
-                                <rect key="frame" x="256" y="348" width="8" height="43"/>
-                            </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="colorspacer5" translatesAutoresizingMaskIntoConstraints="NO" id="66l-7M-ufu" customClass="SpacerView">
-                                <rect key="frame" x="319" y="348" width="8" height="43"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nr5-L1-ULL" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="85" y="421" width="36" height="22"/>
-                                <state key="normal" image="increment"/>
-                                <connections>
-                                    <action selector="pressAddButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="pUo-cS-Adj"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYl-cm-0CC" customClass="ColorPickerButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="327" y="347" width="44" height="44"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="pressedColorButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="cas-m6-4jQ"/>
-                                </connections>
-                            </button>
+                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jnC-ma-K7C">
+                                <rect key="frame" x="0.0" y="364" width="375" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="1TR-C1-ME6"/>
+                                </constraints>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.26098805144384779" blue="0.54550781250000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="GBW-fx-p83" firstAttribute="leading" secondItem="6wx-2x-NF8" secondAttribute="leading" id="00K-Ww-XaU"/>
-                            <constraint firstItem="66l-7M-ufu" firstAttribute="leading" secondItem="MTQ-dj-CCx" secondAttribute="trailing" id="2DU-Zj-B3G"/>
                             <constraint firstItem="Drc-Ug-f4P" firstAttribute="centerY" secondItem="th3-re-hjt" secondAttribute="centerY" id="3Ke-Oh-oFj"/>
                             <constraint firstItem="NSd-NK-CLB" firstAttribute="width" secondItem="d0l-We-2zM" secondAttribute="width" id="4OK-Li-UTg"/>
                             <constraint firstItem="GBW-fx-p83" firstAttribute="top" secondItem="3Gs-OI-l3I" secondAttribute="bottom" constant="24" id="6C0-GF-Ku9"/>
-                            <constraint firstItem="nr5-L1-ULL" firstAttribute="centerY" secondItem="gpB-nD-3cn" secondAttribute="centerY" id="7xv-Al-AFL"/>
                             <constraint firstItem="fyS-ga-Wyf" firstAttribute="leading" secondItem="Drc-Ug-f4P" secondAttribute="trailing" id="8IX-q7-hck"/>
-                            <constraint firstItem="olg-67-7wg" firstAttribute="width" secondItem="Nfb-F5-kr4" secondAttribute="width" id="8fT-f1-suu"/>
                             <constraint firstItem="bBp-yE-T2g" firstAttribute="centerY" secondItem="3Gs-OI-l3I" secondAttribute="centerY" id="99L-Na-FsH"/>
-                            <constraint firstItem="MTQ-dj-CCx" firstAttribute="leading" secondItem="tnC-ki-piq" secondAttribute="trailing" id="Ahi-wH-rr4"/>
-                            <constraint firstItem="3gv-uz-FB6" firstAttribute="centerY" secondItem="n0a-Ad-STu" secondAttribute="centerY" id="BfK-tz-NSS"/>
                             <constraint firstItem="th3-re-hjt" firstAttribute="leading" secondItem="NSd-NK-CLB" secondAttribute="trailing" id="Bho-nf-rHa"/>
-                            <constraint firstItem="3gv-uz-FB6" firstAttribute="leading" secondItem="dDn-N8-zP2" secondAttribute="leading" constant="16" id="Cxi-Bq-UwF"/>
-                            <constraint firstItem="w5v-ho-d7T" firstAttribute="centerY" secondItem="H5j-vI-4H3" secondAttribute="centerY" id="EF4-pg-Z0Q"/>
                             <constraint firstItem="d0l-We-2zM" firstAttribute="width" secondItem="fyS-ga-Wyf" secondAttribute="width" id="FR9-ey-zR4"/>
-                            <constraint firstItem="olg-67-7wg" firstAttribute="leading" secondItem="3gv-uz-FB6" secondAttribute="trailing" id="FUC-Ox-rBh"/>
-                            <constraint firstItem="Nfb-F5-kr4" firstAttribute="leading" secondItem="n0a-Ad-STu" secondAttribute="trailing" id="FqP-eR-Mci"/>
                             <constraint firstItem="d0l-We-2zM" firstAttribute="leading" secondItem="th3-re-hjt" secondAttribute="trailing" id="Gwk-p2-Tf3"/>
                             <constraint firstItem="d0l-We-2zM" firstAttribute="height" secondItem="fyS-ga-Wyf" secondAttribute="height" id="IKk-0Y-0vS"/>
-                            <constraint firstItem="tnC-ki-piq" firstAttribute="width" secondItem="66l-7M-ufu" secondAttribute="width" id="J58-L2-q9k"/>
-                            <constraint firstItem="H5j-vI-4H3" firstAttribute="centerY" secondItem="n0a-Ad-STu" secondAttribute="centerY" id="QID-1G-ScZ"/>
+                            <constraint firstItem="jnC-ma-K7C" firstAttribute="centerX" secondItem="dDn-N8-zP2" secondAttribute="centerX" id="IpY-Dg-QNy"/>
                             <constraint firstItem="Drc-Ug-f4P" firstAttribute="leading" secondItem="d0l-We-2zM" secondAttribute="trailing" id="Qnd-qr-Wq4"/>
                             <constraint firstItem="NSd-NK-CLB" firstAttribute="leading" secondItem="3Gs-OI-l3I" secondAttribute="trailing" id="RBC-MA-SwJ"/>
                             <constraint firstItem="Drc-Ug-f4P" firstAttribute="centerY" secondItem="3Gs-OI-l3I" secondAttribute="centerY" id="RGk-bF-W8n"/>
-                            <constraint firstItem="H5j-vI-4H3" firstAttribute="leading" secondItem="Nfb-F5-kr4" secondAttribute="trailing" id="SHb-Xd-zoA"/>
                             <constraint firstItem="NSd-NK-CLB" firstAttribute="height" secondItem="d0l-We-2zM" secondAttribute="height" id="T98-2X-sKt"/>
+                            <constraint firstItem="jnC-ma-K7C" firstAttribute="top" secondItem="GBW-fx-p83" secondAttribute="bottom" constant="16" id="V5k-uH-nqT"/>
                             <constraint firstItem="th3-re-hjt" firstAttribute="centerY" secondItem="3Gs-OI-l3I" secondAttribute="centerY" id="WEq-v5-lGe"/>
                             <constraint firstItem="bBp-yE-T2g" firstAttribute="leading" secondItem="fyS-ga-Wyf" secondAttribute="trailing" id="XcO-qG-qsl"/>
-                            <constraint firstItem="tnC-ki-piq" firstAttribute="leading" secondItem="w5v-ho-d7T" secondAttribute="trailing" id="ZEL-ZS-0ue"/>
                             <constraint firstItem="6wx-2x-NF8" firstAttribute="leading" secondItem="dDn-N8-zP2" secondAttribute="leading" constant="16" id="ZFU-Je-vAE"/>
-                            <constraint firstItem="3gv-uz-FB6" firstAttribute="top" secondItem="GBW-fx-p83" secondAttribute="bottom" constant="16" id="Zgv-Xu-Ibv"/>
-                            <constraint firstItem="Nfb-F5-kr4" firstAttribute="width" secondItem="8ZP-x7-kKo" secondAttribute="width" id="aND-yr-Bzw"/>
-                            <constraint firstItem="MTQ-dj-CCx" firstAttribute="centerY" secondItem="aYl-cm-0CC" secondAttribute="centerY" id="aaA-03-nMt"/>
                             <constraint firstItem="3Gs-OI-l3I" firstAttribute="leading" secondItem="dDn-N8-zP2" secondAttribute="leading" constant="16" id="cRb-N8-SCp"/>
-                            <constraint firstItem="8ZP-x7-kKo" firstAttribute="leading" secondItem="H5j-vI-4H3" secondAttribute="trailing" id="clw-8s-Kco"/>
-                            <constraint firstItem="nr5-L1-ULL" firstAttribute="centerX" secondItem="n0a-Ad-STu" secondAttribute="centerX" id="eEX-8P-VsS"/>
-                            <constraint firstItem="w5v-ho-d7T" firstAttribute="leading" secondItem="8ZP-x7-kKo" secondAttribute="trailing" id="eWN-t1-h23"/>
-                            <constraint firstItem="MTQ-dj-CCx" firstAttribute="centerY" secondItem="w5v-ho-d7T" secondAttribute="centerY" id="fmR-Kh-6kM"/>
-                            <constraint firstAttribute="trailing" secondItem="aYl-cm-0CC" secondAttribute="trailing" constant="16" id="gjn-AT-0HJ"/>
                             <constraint firstItem="NSd-NK-CLB" firstAttribute="height" secondItem="3Gs-OI-l3I" secondAttribute="height" id="hyX-1h-wfr"/>
+                            <constraint firstItem="jnC-ma-K7C" firstAttribute="width" secondItem="dDn-N8-zP2" secondAttribute="width" id="kNm-hl-CvA"/>
                             <constraint firstItem="3Gs-OI-l3I" firstAttribute="top" secondItem="6wx-2x-NF8" secondAttribute="bottom" constant="16" id="kRl-df-cdD"/>
-                            <constraint firstItem="n0a-Ad-STu" firstAttribute="leading" secondItem="olg-67-7wg" secondAttribute="trailing" id="lo0-EG-JMS"/>
                             <constraint firstAttribute="trailing" secondItem="bBp-yE-T2g" secondAttribute="trailing" constant="16" id="mnG-PC-Ru1"/>
                             <constraint firstItem="6wx-2x-NF8" firstAttribute="top" secondItem="Rqz-Nl-CRb" secondAttribute="bottom" constant="16" id="qRE-fF-0jj"/>
                             <constraint firstItem="bBp-yE-T2g" firstAttribute="centerY" secondItem="Drc-Ug-f4P" secondAttribute="centerY" id="r3P-fV-x7Z"/>
                             <constraint firstItem="th3-re-hjt" firstAttribute="centerY" secondItem="3Gs-OI-l3I" secondAttribute="centerY" id="sYq-jR-oaZ"/>
-                            <constraint firstItem="8ZP-x7-kKo" firstAttribute="width" secondItem="tnC-ki-piq" secondAttribute="width" id="uJf-cz-VWm"/>
-                            <constraint firstItem="aYl-cm-0CC" firstAttribute="leading" secondItem="66l-7M-ufu" secondAttribute="trailing" id="yE7-K2-w29"/>
-                            <constraint firstItem="gpB-nD-3cn" firstAttribute="top" secondItem="3gv-uz-FB6" secondAttribute="bottom" constant="16" id="zTR-JG-lrf"/>
-                            <constraint firstItem="gpB-nD-3cn" firstAttribute="centerX" secondItem="3gv-uz-FB6" secondAttribute="centerX" id="zqK-wc-R4h"/>
+                            <constraint firstAttribute="trailing" secondItem="jnC-ma-K7C" secondAttribute="trailing" id="ta8-5U-hei"/>
+                            <constraint firstItem="jnC-ma-K7C" firstAttribute="leading" secondItem="dDn-N8-zP2" secondAttribute="leading" id="vq1-gQ-kGo"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="ColorsLabel" destination="GBW-fx-p83" id="eIz-Nm-IgW"/>
                         <outlet property="GroupsLabel" destination="6wx-2x-NF8" id="P99-rW-s3M"/>
-                        <outlet property="blackButton" destination="gpB-nD-3cn" id="YVS-Ea-jzt"/>
-                        <outlet property="blueButton" destination="MTQ-dj-CCx" id="u6Q-IH-KKR"/>
+                        <outlet property="colorCollectionContainerView" destination="jnC-ma-K7C" id="gzA-Ib-bWh"/>
                         <outlet property="fourBeats" destination="Drc-Ug-f4P" id="NZ0-aZ-iD0"/>
-                        <outlet property="greenButton" destination="w5v-ho-d7T" id="Acp-Nz-9PI"/>
-                        <outlet property="orangeButton" destination="n0a-Ad-STu" id="zhX-Ko-Uug"/>
-                        <outlet property="plusButton" destination="nr5-L1-ULL" id="mIh-i9-dWb"/>
-                        <outlet property="purpleButton" destination="aYl-cm-0CC" id="LgR-uT-pIg"/>
-                        <outlet property="redButton" destination="3gv-uz-FB6" id="D9g-f3-JFr"/>
                         <outlet property="sixBeats" destination="bBp-yE-T2g" id="gYp-mY-MJW"/>
                         <outlet property="threeBeats" destination="th3-re-hjt" id="FbV-83-kYQ"/>
                         <outlet property="twoBeats" destination="3Gs-OI-l3I" id="OGW-xa-wGv"/>
-                        <outlet property="yellowButton" destination="H5j-vI-4H3" id="Rti-iO-vGI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VBS-nb-Pfz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="368.80000000000001" y="98.50074962518741"/>
+        </scene>
+        <!--Color Picker Collection View Controller-->
+        <scene sceneID="khI-U8-QLT">
+            <objects>
+                <collectionViewController id="Haa-P0-HfQ" customClass="ColorPickerCollectionViewController" customModule="TAP_Metronome_Swift" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Sw-Ic-XeB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1149" y="91"/>
         </scene>
         <!--Tempo Slider View Controller-->
         <scene sceneID="JCw-eD-wxe">
@@ -369,7 +284,7 @@
                         <viewControllerLayoutGuide type="bottom" id="4l9-JP-ljz"/>
                     </layoutGuides>
                     <view key="view" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="gI4-uK-P8r">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cST-cU-Civ" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
@@ -381,7 +296,7 @@
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ws2-DH-D3A" customClass="TempoVerticalSlider" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="-2" y="318.5" width="379" height="31"/>
+                                <rect key="frame" x="-2" y="391" width="379" height="31"/>
                                 <color key="thumbTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="sliderValueChanged:" destination="9i7-qK-ccy" eventType="valueChanged" id="SAO-Ke-HHq"/>
@@ -396,7 +311,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jaS-Bw-cwn" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="327" y="613" width="16" height="22"/>
+                                <rect key="frame" x="327" y="724" width="16" height="22"/>
                                 <state key="normal" image="increment"/>
                                 <connections>
                                     <action selector="incrementButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AiY-FV-N8w"/>
