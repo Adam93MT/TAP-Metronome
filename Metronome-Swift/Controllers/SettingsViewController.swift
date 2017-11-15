@@ -10,6 +10,7 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     let delegate = UIApplication.shared.delegate as! AppDelegate
+    var currentOrientation: String = "portrait"
 
     let colorCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -59,6 +60,10 @@ class SettingsViewController: UIViewController {
         threeBeats.setValue(val: 3)
         fourBeats.setValue(val: 4)
         sixBeats.setValue(val: 6)
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.handleDeviceRotation), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil
+        )
     }
     
     override func viewDidLayoutSubviews() {
@@ -128,6 +133,15 @@ class SettingsViewController: UIViewController {
         let alert = UIAlertController(title: "Coming Soon!", message: "More backgrounds coming soon.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func handleDeviceRotation() {
+        if UIDevice.current.orientation.isPortrait {
+            self.currentOrientation = "portrait"
+        } else if UIDevice.current.orientation.isLandscape {
+            self.currentOrientation = "landscape"
+        }
+        self.gradientLayer.gl.frame = self.view.bounds
     }
 }
 
