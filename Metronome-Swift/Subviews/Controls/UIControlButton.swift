@@ -10,8 +10,8 @@ import UIKit
 
 class UIControlButton: UIButton {
     
-    var normalColor = UIColor.white.withAlphaComponent(0.15)
-    var highlightColor = UIColor.white.withAlphaComponent(0.8)
+    var normalColor = Globals.colors.normalButtonColor
+    var highlightColor = Globals.colors.highlightButtonColor
     
     override init(frame: CGRect) {
         super.init(frame: frame)

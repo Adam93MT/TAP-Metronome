@@ -11,6 +11,19 @@ import UIKit
 class SettingsViewController: UIViewController {
     let delegate = UIApplication.shared.delegate as! AppDelegate
 
+    let colorCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0,
+                                           left: Globals.dimensions.minPadding,
+                                           bottom: 0,
+                                           right: Globals.dimensions.minPadding)
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.backgroundColor = .clear
+        return cv
+    }()
+    
+    var colorButtonSize:CGFloat!
+    
     
     @IBOutlet weak var GroupsLabel: UILabel!
     
@@ -21,18 +34,9 @@ class SettingsViewController: UIViewController {
     var BeatGroupButtonsArray = [BeatGroupButton]()
     
     @IBOutlet weak var ColorsLabel: UILabel!
+    @IBOutlet weak var colorCollectionContainerView: UIView!
     
-    @IBOutlet weak var redButton: ColorPickerButton!
-    @IBOutlet weak var orangeButton: ColorPickerButton!
-    @IBOutlet weak var yellowButton: ColorPickerButton!
-    @IBOutlet weak var greenButton: ColorPickerButton!
-    @IBOutlet weak var blueButton: ColorPickerButton!
-    @IBOutlet weak var purpleButton: ColorPickerButton!
-    @IBOutlet weak var blackButton: ColorPickerButton!
-    
-    @IBOutlet weak var plusButton: UICircleButton!
-    //    var TimeButtonsArray = [BeatNumberButton]()
-    var ColorButtonsArray = [ColorPickerButton]()
+    var lastSelectedIndex: Int = Array(Globals.colors.colorOptions.keys).index(of: Globals.colors.bgTheme)!
     let borderWidth:CGFloat = 2
     let borderColor = UIColor.white.cgColor
     let gradientLayer = GradientView()
@@ -55,26 +59,19 @@ class SettingsViewController: UIViewController {
         threeBeats.setValue(val: 3)
         fourBeats.setValue(val: 4)
         sixBeats.setValue(val: 6)
-        
+    }
+    
+    override func viewDidLayoutSubviews() {
         // Color Buttons
-        ColorButtonsArray = [redButton, orangeButton, yellowButton, greenButton, blueButton, purpleButton, blackButton]
-        
-        redButton.setColorStringValue("red")
-        orangeButton.setColorStringValue("orange")
-        yellowButton.setColorStringValue("yellow")
-        greenButton.setColorStringValue("green")
-        blueButton.setColorStringValue("blue")
-        purpleButton.setColorStringValue("purple")
-        blackButton.setColorStringValue("black")
-        
+        colorButtonSize = min(
+            self.view.frame.width / 6 - (Globals.dimensions.minPadding),
+            Globals.dimensions.buttonHeight)
+        setupColorCollectionView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.createGradientLayer()
-        for btn in ColorButtonsArray {
-            btn.createGradientLayer()
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -91,29 +88,25 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func pressedGroupButton(_ sender: BeatGroupButton) {
-        for button in BeatGroupButtonsArray {
-            button.isPicked = false
-        }
-        sender.isPicked = true
-    }
+    // MARK: VIEW SETUP
     
-    // Press Color Buttons
-    @IBAction func pressedColorButton(_ sender: ColorPickerButton) {
-        for cbtn in ColorButtonsArray {
-            if cbtn != sender {cbtn.isPicked = false}
-        }
-        sender.isPicked = true
-        updateUIColor()
+    func setupColorCollectionView() {
+        
+        colorCollectionView.frame = colorCollectionContainerView.bounds
+        //CGRect(x: 0,
+//                                           y: 0,
+//                                           width: colorCollectionContainerView.frame.width,
+//                                           height: colorCollectionContainerView.frame.height)
+        colorCollectionContainerView.addSubview(colorCollectionView)
+        colorCollectionView.dataSource = self
+        colorCollectionView.delegate = self
+        colorCollectionView.register(ColorCollectionViewCell.self, forCellWithReuseIdentifier: "Color")
     }
     
     func updateUIColor() {
         self.view.backgroundColor = Globals.colors.bgColorLight
         self.gradientLayer.gl.removeFromSuperlayer()
         self.createGradientLayer()
-        for button in BeatGroupButtonsArray {
-            button.setColors()
-        }
     }
     
     func createGradientLayer() {
@@ -122,20 +115,67 @@ class SettingsViewController: UIViewController {
         self.gradientLayer.gl.frame = self.view.bounds
         self.view.layer.insertSublayer(self.gradientLayer.gl, at: 0)
     }
+    
+    // MARK : UI Interaction
+    @IBAction func pressedGroupButton(_ sender: BeatGroupButton) {
+        for button in BeatGroupButtonsArray {
+            button.isPicked = false
+        }
+        sender.isPicked = true
+    }
 
-    @IBAction func pressAddButton(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Coming Soon!", message: "Soon you'll be able to add your own custom colours.", preferredStyle: UIAlertControllerStyle.alert)
+    func addColor() {
+        let alert = UIAlertController(title: "Coming Soon!", message: "More backgrounds coming soon.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+//
+extension SettingsViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return Globals.colors.colorOptions.count + 1
     }
-    */
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = colorCollectionView.dequeueReusableCell(withReuseIdentifier: "Color", for: indexPath) as! ColorCollectionViewCell
+        
+        if (indexPath.item < Globals.colors.colorOptions.count){
+            cell.setColorStringValue(Array(Globals.colors.colorOptions.keys)[indexPath.item])
+        } else {
+            cell.setColorStringValue("add")
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("Selected \(indexPath)")
+        
+        // if the index is out of range, reset the selection
+        if (indexPath.item >= Globals.colors.colorOptions.count) {
+            print("pressed Add More")
+            collectionView.cellForItem(at: indexPath)?.isSelected = false
+            collectionView.cellForItem(at: [0,lastSelectedIndex])?.isSelected = true
+            addColor()
+            
+        // otherwise, make sure the last index is deselected
+        } else {
+            collectionView.cellForItem(at: [0, lastSelectedIndex])?.isSelected = false
+            self.updateUIColor()
+            lastSelectedIndex = indexPath.item
+        }
+    }
+}
 
+extension SettingsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: self.colorButtonSize, height: self.colorButtonSize)
+    }
 }
