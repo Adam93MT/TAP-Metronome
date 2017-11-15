@@ -21,7 +21,7 @@ class ColorCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            if (Globals.colors.validateColor(self.colorString)) {
+            if (globalColors.validateColor(self.colorString)) {
                 self.layer.borderColor = isSelected ? highlightBorderColor : defaultBorderColor
                 self.layer.borderWidth = isSelected ? borderWidth : defaultBorderWidth
                 if isSelected {
@@ -47,10 +47,9 @@ class ColorCollectionViewCell: UICollectionViewCell {
     }
     
     func setColorStringValue(_ color: String) {
-        if let _ = Globals.colors.colorOptions[color]{
-            // if the color is legit
+        if globalColors.validateColor(color) {
             self.colorString = color
-            self.defaultColor = Globals.colors.colorOptions[self.colorString]?.bgColorLight
+            self.defaultColor = globalColors.getColorOption(color).bgColorLight
             if self.colorString == Globals.colors.bgTheme {
                 self.isSelected = true
             }
@@ -71,8 +70,8 @@ class ColorCollectionViewCell: UICollectionViewCell {
         // Set up the background colors
         if (self.colorString != "") {
             self.gradientLayer.setColors(
-                startColor: (Globals.colors.colorOptions[self.colorString]?.bgColorLight)!,
-                endColor: (Globals.colors.colorOptions[self.colorString]?.bgColorDark)!
+                startColor: (globalColors.getColorOption(self.colorString).bgColorLight)!,
+                endColor: (globalColors.getColorOption(self.colorString).bgColorDark)!
             )
             self.gradientLayer.gl.frame = self.bounds
             self.gradientLayer.gl.cornerRadius = self.layer.cornerRadius

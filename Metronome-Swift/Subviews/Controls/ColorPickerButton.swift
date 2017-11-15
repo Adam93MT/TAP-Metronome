@@ -36,7 +36,7 @@ class ColorPickerButton: UICircleButton {
     
     func setColorStringValue(_ color: String) {
         self.colorString = color
-        setDefaultColor(defaultColor: (Globals.colors.colorOptions[self.colorString]?.bgColorLight)!)
+        setDefaultColor(defaultColor: (globalColors.getColorOption(self.colorString).bgColorLight)!)
         if self.colorString == Globals.colors.bgTheme {
             self.isPicked = true
         }
@@ -55,8 +55,8 @@ class ColorPickerButton: UICircleButton {
         
         if (self.colorString != "") {
             self.gradientLayer.setColors(
-                startColor: (Globals.colors.colorOptions[self.colorString]?.bgColorLight)!,
-                endColor: (Globals.colors.colorOptions[self.colorString]?.bgColorDark)!
+                startColor: (globalColors.getColorOption(self.colorString).bgColorLight)!,
+                endColor: (globalColors.getColorOption(self.colorString).bgColorDark)!
             )
 //            self.gradientLayer.gl.frame = CGRect(x:0, y:0, width: Globals.dimensions.buttonHeight, height: Globals.dimensions.buttonHeight)
             

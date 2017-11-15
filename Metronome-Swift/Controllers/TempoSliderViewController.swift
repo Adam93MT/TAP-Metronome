@@ -137,8 +137,6 @@ class TempoSliderViewController: UIViewController {
         }
         
         blurEffectView.frame = self.view.frame
-//        sliderPosY = tempoSlider.frame.midY
-//        sliderLength = tempoSlider.frame.height
         tempoSlider.updateLabel()
         
     }

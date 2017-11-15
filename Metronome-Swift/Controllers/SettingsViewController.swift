@@ -37,7 +37,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var ColorsLabel: UILabel!
     @IBOutlet weak var colorCollectionContainerView: UIView!
     
-    var lastSelectedIndex: Int = Array(Globals.colors.colorOptions.keys).index(of: Globals.colors.bgTheme)!
+    var lastSelectedIndex: Int = globalColors.getIndexOfColorOption(Globals.colors.bgTheme)
     let borderWidth:CGFloat = 2
     let borderColor = UIColor.white.cgColor
     let gradientLayer = GradientView()
@@ -148,7 +148,7 @@ class SettingsViewController: UIViewController {
 //
 extension SettingsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Globals.colors.colorOptions.count + 1
+        return globalColors.colorOptions.count + 1
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -158,8 +158,8 @@ extension SettingsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = colorCollectionView.dequeueReusableCell(withReuseIdentifier: "Color", for: indexPath) as! ColorCollectionViewCell
         
-        if (indexPath.item < Globals.colors.colorOptions.count){
-            cell.setColorStringValue(Array(Globals.colors.colorOptions.keys)[indexPath.item])
+        if (indexPath.item < globalColors.colorOptions.count){
+            cell.setColorStringValue(globalColors.getColorName(withID: indexPath.item))
         } else {
             cell.setColorStringValue("add")
         }
@@ -170,7 +170,7 @@ extension SettingsViewController: UICollectionViewDataSource {
         print("Selected \(indexPath)")
         
         // if the index is out of range, reset the selection
-        if (indexPath.item >= Globals.colors.colorOptions.count) {
+        if (indexPath.item >= globalColors.colorOptions.count) {
             print("pressed Add More")
             collectionView.cellForItem(at: indexPath)?.isSelected = false
             collectionView.cellForItem(at: [0,lastSelectedIndex])?.isSelected = true
