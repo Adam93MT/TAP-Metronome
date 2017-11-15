@@ -20,11 +20,14 @@ class globalColors {
     
     let colorOptions: [String: themeColor] = [
         "red" : themeColor(hue: 355),
-        "orange" : themeColor(hue: 16, sat: 80),
-        "yellow" : themeColor(hue: 56, sat: 95),
-        "green" : themeColor(hue: 82),
-        "blue" : themeColor(hue: 208),
+        "orange" : themeColor(hue: 24, sat: 80),
+        "yellow" : themeColor(hue: 56, sat: 100),
+        "green" : themeColor(hue: 90),
+        "seafoam" : themeColor(hue: 155),
+        "cyan" : themeColor(hue: 184),
+        "blue" : themeColor(hue: 210),
         "purple" : themeColor(hue: 255),
+        "magenta" : themeColor(hue: 290),
         "grey" : themeColor(hue: 0, sat: 0),
         "black": themeColor(light: UIColor(rgb: 0x292929), dark: UIColor(rgb: 0x0A0A0A))
     ]
@@ -34,8 +37,8 @@ class globalColors {
         var bgColorDark: UIColor!
         
         init(hue: CGFloat) {
-            bgColorLight = UIColor(hue: hue/360, saturation: 72.0/100, brightness: 77.0/100, alpha: 1)
-            bgColorDark = UIColor(hue: hue/360, saturation: 72.0/100, brightness: 40.0/100, alpha: 1)
+            bgColorLight = UIColor(hue: hue/360, saturation: 72.0/100, brightness: 72.0/100, alpha: 1)
+            bgColorDark = UIColor(hue: hue/360, saturation: 86.0/100, brightness: 36.0/100, alpha: 1)
         }
         
         init(hue: CGFloat, sat: CGFloat) {
