@@ -18,35 +18,39 @@ class globalColors {
     var normalButtonColor: UIColor
     var highlightButtonColor: UIColor
     
-    let colorOptions: [String: themeColor] = [
-        "red" : themeColor(hue: 355),
-        "orange" : themeColor(hue: 24, sat: 80),
-        "yellow" : themeColor(hue: 56, sat: 100),
-        "green" : themeColor(hue: 90),
-        "seafoam" : themeColor(hue: 155),
-        "cyan" : themeColor(hue: 184),
-        "blue" : themeColor(hue: 210),
-        "purple" : themeColor(hue: 255),
-        "magenta" : themeColor(hue: 290),
-        "grey" : themeColor(hue: 0, sat: 0),
-        "black": themeColor(light: UIColor(rgb: 0x292929), dark: UIColor(rgb: 0x0A0A0A))
+    static let colorOptions: [themeColor] = [
+        themeColor("red", hue: 355),
+        themeColor("orange", hue: 24, sat: 80),
+        themeColor("yellow", hue: 56, sat: 100),
+        themeColor("green", hue: 90),
+        themeColor("seafoam", hue: 155),
+        themeColor("cyan", hue: 184),
+        themeColor("blue", hue: 210),
+        themeColor("purple", hue: 255),
+        themeColor("magenta", hue: 290),
+        themeColor("grey", hue: 0, sat: 0),
+        themeColor("black", light: UIColor(rgb: 0x292929), dark: UIColor(rgb: 0x0A0A0A))
     ]
     
     struct themeColor {
+        var colorName: String!
         var bgColorLight: UIColor!
         var bgColorDark: UIColor!
         
-        init(hue: CGFloat) {
+        init(_ name: String, hue: CGFloat) {
+            colorName = name
             bgColorLight = UIColor(hue: hue/360, saturation: 72.0/100, brightness: 72.0/100, alpha: 1)
             bgColorDark = UIColor(hue: hue/360, saturation: 86.0/100, brightness: 36.0/100, alpha: 1)
         }
         
-        init(hue: CGFloat, sat: CGFloat) {
+        init(_ name: String, hue: CGFloat, sat: CGFloat) {
+            colorName = name
             bgColorLight = UIColor(hue: hue/360, saturation: sat/100, brightness: 77.0/100, alpha: 1)
             bgColorDark = UIColor(hue: hue/360, saturation: sat/100, brightness: 40.0/100, alpha: 1)
         }
         
-        init (light: UIColor, dark: UIColor) {
+        init (_ name: String, light: UIColor, dark: UIColor) {
+            colorName = name
             bgColorLight = light
             bgColorDark = dark
         }
@@ -61,38 +65,48 @@ class globalColors {
         
         // check if the default theme is legit
         var defaultTheme = UserDefaults.standard.string(forKey: "theme")
-        let checkTheme = colorOptions.contains { (key, value) -> Bool in
-            key == defaultTheme
-        }
+        let checkTheme = globalColors.validateColor(defaultTheme!)
         defaultTheme = checkTheme ? defaultTheme : "black"
         print("Theme: \(defaultTheme!)")
-        
+
         // set the theme to the set color, fallback to the default
         bgTheme = (themeColor != nil) ? themeColor : defaultTheme
         UserDefaults.standard.set(defaultTheme, forKey: "theme")
-        bgColorLight = (self.colorOptions[bgTheme]?.bgColorLight)!
-        bgColorDark = (self.colorOptions[bgTheme]?.bgColorDark)!
+        bgColorLight = (globalColors.getColorOption(bgTheme).bgColorLight)
+        bgColorDark = (globalColors.getColorOption(bgTheme).bgColorDark)
     }
     
     func setTheme(_ newTheme: String) {
         // if the new theme is legit, set it, otherwise fall back on the default
-        let checkTheme = validateColor(newTheme)
+        let checkTheme = globalColors.validateColor(newTheme)
         let defaultTheme = UserDefaults.standard.string(forKey: "theme")
         bgTheme = checkTheme ? newTheme : defaultTheme
 
-        print("setting theme \(bgTheme!)")
+        print("Setting theme \(bgTheme!)")
         
         // set new default
         UserDefaults.standard.set(bgTheme, forKey: "theme")
-        bgColorLight = (self.colorOptions[bgTheme]?.bgColorLight)!
-        bgColorDark = (self.colorOptions[bgTheme]?.bgColorDark)!
+        bgColorLight = (globalColors.getColorOption(bgTheme).bgColorLight)!
+        bgColorDark = (globalColors.getColorOption(bgTheme).bgColorDark)!
     }
     
-    func validateColor(_ color: String) -> Bool {
-        let checkTheme = colorOptions.contains { (key, value) -> Bool in
-            key == color
-        }
+    static func validateColor(_ color: String) -> Bool {
+        let checkTheme = globalColors.colorOptions.contains(where: {$0.colorName == color})
         return checkTheme
+    }
+    
+    static func getColorOption(_ withName: String) -> themeColor {
+        let idx = globalColors.colorOptions.index(where: {$0.colorName == withName})
+        return globalColors.colorOptions[idx!]
+    }
+    
+    static func getColorName(withID: Int) -> String {
+        return globalColors.colorOptions[withID].colorName
+    }
+    
+    static func getIndexOfColorOption(_ withName: String) -> Int {
+        let idx = globalColors.colorOptions.index(where: {$0.colorName == withName})
+        return idx!
     }
 }
 
