@@ -296,7 +296,7 @@
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ws2-DH-D3A" customClass="TempoVerticalSlider" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="-2" y="318.5" width="379" height="31"/>
+                                <rect key="frame" x="19" y="294.5" width="337.5" height="31"/>
                                 <color key="thumbTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="sliderValueChanged:" destination="9i7-qK-ccy" eventType="valueChanged" id="SAO-Ke-HHq"/>
@@ -321,11 +321,11 @@
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="Ws2-DH-D3A" firstAttribute="width" secondItem="gI4-uK-P8r" secondAttribute="width" id="2NY-mh-MUy"/>
-                            <constraint firstItem="Ws2-DH-D3A" firstAttribute="centerY" secondItem="gI4-uK-P8r" secondAttribute="centerY" id="45T-8a-e5c"/>
+                            <constraint firstItem="Ws2-DH-D3A" firstAttribute="centerY" secondItem="gI4-uK-P8r" secondAttribute="centerY" constant="-24" id="45T-8a-e5c"/>
                             <constraint firstItem="zZp-zK-Pov" firstAttribute="leading" secondItem="gI4-uK-P8r" secondAttribute="leading" constant="32" id="6FZ-XK-ZLR"/>
                             <constraint firstAttribute="trailing" secondItem="jaS-Bw-cwn" secondAttribute="trailing" constant="32" id="ASS-Qh-yfL"/>
                             <constraint firstItem="4l9-JP-ljz" firstAttribute="top" secondItem="cST-cU-Civ" secondAttribute="bottom" constant="32" id="E2X-9U-mie"/>
+                            <constraint firstItem="Ws2-DH-D3A" firstAttribute="width" secondItem="gI4-uK-P8r" secondAttribute="height" multiplier="0.5" id="H4m-jf-scN"/>
                             <constraint firstItem="cST-cU-Civ" firstAttribute="centerX" secondItem="gI4-uK-P8r" secondAttribute="centerX" id="Mab-Mu-l9J"/>
                             <constraint firstItem="zZp-zK-Pov" firstAttribute="centerY" secondItem="cST-cU-Civ" secondAttribute="centerY" id="htB-BH-EcZ"/>
                             <constraint firstItem="jaS-Bw-cwn" firstAttribute="centerY" secondItem="cST-cU-Civ" secondAttribute="centerY" id="lX7-eS-OQ2"/>

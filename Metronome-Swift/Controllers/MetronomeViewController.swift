@@ -26,11 +26,11 @@ class MetronomeViewController: UIViewController {
     
     //    let metronome = AVMetronome()
     let delegate = UIApplication.shared.delegate as! AppDelegate
+    var currentOrientation: String = "portrait"
     var metronome: AVMetronome!
     var containerView: BeatContainerView!
     var metronomeDisplayLink: CADisplayLink!
     
-    var currentOrientation: String = "portrait"
     var viewWidth: CGFloat!
     var viewHeight: CGFloat!
     
