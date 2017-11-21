@@ -49,8 +49,8 @@ class ColorCollectionViewCell: UICollectionViewCell {
     func setColorStringValue(_ color: String) {
         if globalColors.validateColor(color) {
             self.colorString = color
-            self.defaultColor = globalColors.getColorOption(color).bgColorLight
-            if self.colorString == Globals.colors.bgTheme {
+            self.backgroundColor = globalColors.getColorOption(color).Light
+            if self.colorString == Globals.colors.currentTheme.Name {
                 self.isSelected = true
             }
             createGradientLayer()
@@ -68,10 +68,10 @@ class ColorCollectionViewCell: UICollectionViewCell {
     
     func createGradientLayer() {
         // Set up the background colors
-        if (self.colorString != "") {
+        if (globalColors.validateColor(self.colorString)) {
             self.gradientLayer.setColors(
-                startColor: (globalColors.getColorOption(self.colorString).bgColorLight)!,
-                endColor: (globalColors.getColorOption(self.colorString).bgColorDark)!
+                startColor: (globalColors.getColorOption(self.colorString).Light)!,
+                endColor: (globalColors.getColorOption(self.colorString).Dark)!
             )
             self.gradientLayer.gl.frame = self.bounds
             self.gradientLayer.gl.cornerRadius = self.layer.cornerRadius

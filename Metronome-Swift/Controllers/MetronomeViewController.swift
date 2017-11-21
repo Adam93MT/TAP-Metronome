@@ -104,13 +104,18 @@ class MetronomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Get original orientation
-        self.currentOrientation = UIDevice.current.orientation.isPortrait ? "portrait" : "landscape"
         if UIDevice.current.orientation.isFlat {
             self.currentOrientation = "portrait"
+        } else {
+            self.currentOrientation = UIDevice.current.orientation.isPortrait ? "portrait" : "landscape"
         }
-        print("Initial orientation \(self.currentOrientation)")
-        originalOrientation = self.currentOrientation
-//        self.containerView.originalOrientation = originalOrientation
+        self.containerView.currentOrientation = currentOrientation
+        print("Current orientation \(self.currentOrientation)")
+        
+        if originalOrientation.isEmpty {
+            originalOrientation = self.currentOrientation
+            print("Original orientation \(originalOrientation)")
+        }
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -231,13 +236,13 @@ class MetronomeViewController: UIViewController {
             self.currentOrientation = "landscape"
             self.containerView.currentOrientation = "landscape"
         }
+        print("Rotated to \(self.currentOrientation)")
         self.gradientLayer.gl.frame = self.view.bounds
     }
     
     func createGradientLayer() {
         // Set up the background colors
-        self.gradientLayer.setColors(startColor: Globals.colors.bgColorLight, endColor: Globals.colors.bgColorDark)
-//        self.gradientLayer.setLocations(start: 0.0, end: 0.5)
+        self.gradientLayer.setColors(startColor: Globals.colors.currentTheme.Light, endColor: Globals.colors.currentTheme.Dark)
         self.gradientLayer.gl.frame = self.view.bounds
         self.view.layer.insertSublayer(self.gradientLayer.gl, at: 0)
     }

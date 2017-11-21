@@ -24,7 +24,7 @@ class UIControlButton: UIButton {
     }
     
     func setup() {
-        self.backgroundColor = self.normalColor
+        self.backgroundColor = normalColor
         self.layer.cornerRadius = min(self.frame.width, self.frame.height)/2.0
     }
     
@@ -35,7 +35,7 @@ class UIControlButton: UIButton {
     
     override open var isHighlighted: Bool {
         didSet {
-            backgroundColor = isHighlighted ? highlightColor : normalColor
+            self.backgroundColor = isHighlighted ? highlightColor : normalColor
         }
     }
     

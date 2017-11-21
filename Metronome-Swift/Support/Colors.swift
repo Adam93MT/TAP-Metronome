@@ -10,13 +10,27 @@ import UIKit
 
 class globalColors {
     var bgColor: UIColor
-    var bgTheme: String!
-    var bgColorLight: UIColor
-    var bgColorDark: UIColor
+//    var bgTheme: String!
+//    var bgColorLight: UIColor
+//    var bgColorDark: UIColor
+    var currentTheme: themeColor!
     var textColor: UIColor
     var beatCircleStartColor: UIColor
     var normalButtonColor: UIColor
     var highlightButtonColor: UIColor
+    
+//    enum colorOptions : themeColor {
+//        case red = themeColor(hue: 355)
+//        case orange = themeColor(hue: 24, sat: 80)
+//        case yellow = themeColor(hue: 24, sat: 80)
+//        case green = themeColor(hue: 90)
+//        case seafoam = themeColor(hue: 155)
+//        case cyan = themeColor(hue: 184)
+//        case blue = themeColor(hue: 210)
+//        case purple = themeColor(hue: 255)
+//        case grey = themeColor(hue: 0, sat: 0)
+//        case black = themeColor(light: UIColor(rgb: 0x292929), dark: UIColor(rgb: 0x0A0A0A))
+//    }
     
     static let colorOptions: [themeColor] = [
         themeColor("red", hue: 355),
@@ -33,26 +47,26 @@ class globalColors {
     ]
     
     struct themeColor {
-        var colorName: String!
-        var bgColorLight: UIColor!
-        var bgColorDark: UIColor!
+        var Name: String?
+        var Light: UIColor!
+        var Dark: UIColor!
         
         init(_ name: String, hue: CGFloat) {
-            colorName = name
-            bgColorLight = UIColor(hue: hue/360, saturation: 72.0/100, brightness: 72.0/100, alpha: 1)
-            bgColorDark = UIColor(hue: hue/360, saturation: 86.0/100, brightness: 36.0/100, alpha: 1)
+            Name = name
+            Light = UIColor(hue: hue/360, saturation: 72.0/100, brightness: 72.0/100, alpha: 1)
+            Dark = UIColor(hue: hue/360, saturation: 86.0/100, brightness: 36.0/100, alpha: 1)
         }
         
         init(_ name: String, hue: CGFloat, sat: CGFloat) {
-            colorName = name
-            bgColorLight = UIColor(hue: hue/360, saturation: sat/100, brightness: 77.0/100, alpha: 1)
-            bgColorDark = UIColor(hue: hue/360, saturation: sat/100, brightness: 40.0/100, alpha: 1)
+            Name = name
+            Light = UIColor(hue: hue/360, saturation: sat/100, brightness: 77.0/100, alpha: 1)
+            Dark = UIColor(hue: hue/360, saturation: sat/100, brightness: 40.0/100, alpha: 1)
         }
         
         init (_ name: String, light: UIColor, dark: UIColor) {
-            colorName = name
-            bgColorLight = light
-            bgColorDark = dark
+            Name = name
+            Light = light
+            Dark = dark
         }
     }
     
@@ -61,7 +75,7 @@ class globalColors {
         textColor = UIColor(rgb: 0xFAFAFA)
         beatCircleStartColor = UIColor(rgb: 0xFFFFFF)
         normalButtonColor = UIColor.white.withAlphaComponent(0.15)
-        highlightButtonColor = UIColor.white.withAlphaComponent(0.15)
+        highlightButtonColor = UIColor.white.withAlphaComponent(0.5)
         
         // check if the default theme is legit
         var defaultTheme = UserDefaults.standard.string(forKey: "theme")
@@ -70,42 +84,49 @@ class globalColors {
         print("Theme: \(defaultTheme!)")
 
         // set the theme to the set color, fallback to the default
-        bgTheme = (themeColor != nil) ? themeColor : defaultTheme
-        UserDefaults.standard.set(defaultTheme, forKey: "theme")
-        bgColorLight = (globalColors.getColorOption(bgTheme).bgColorLight)
-        bgColorDark = (globalColors.getColorOption(bgTheme).bgColorDark)
+        
+        let themeName = (themeColor != nil) ? themeColor : defaultTheme
+        UserDefaults.standard.set(themeName, forKey: "theme")
+//        bgColorLight = (globalColors.getColorOption(bgTheme).bgColorLight)
+//        bgColorDark = (globalColors.getColorOption(bgTheme).bgColorDark)
+        
+        currentTheme = globalColors.getColorOption(themeName!)
+        
     }
     
     func setTheme(_ newTheme: String) {
         // if the new theme is legit, set it, otherwise fall back on the default
         let checkTheme = globalColors.validateColor(newTheme)
         let defaultTheme = UserDefaults.standard.string(forKey: "theme")
-        bgTheme = checkTheme ? newTheme : defaultTheme
+        let themeName = checkTheme ? newTheme : defaultTheme
 
-        print("Setting theme \(bgTheme!)")
+        print("Setting theme \(themeName!)")
+        
+        currentTheme = globalColors.getColorOption(themeName!)
         
         // set new default
-        UserDefaults.standard.set(bgTheme, forKey: "theme")
-        bgColorLight = (globalColors.getColorOption(bgTheme).bgColorLight)!
-        bgColorDark = (globalColors.getColorOption(bgTheme).bgColorDark)!
+        UserDefaults.standard.set(themeName, forKey: "theme")
+        
+//        bgColorLight = (globalColors.getColorOption(bgTheme).bgColorLight)!
+//        bgColorDark = (globalColors.getColorOption(bgTheme).bgColorDark)!
     }
     
-    static func validateColor(_ color: String) -> Bool {
-        let checkTheme = globalColors.colorOptions.contains(where: {$0.colorName == color})
-        return checkTheme
+    static func validateColor(_ withName: String) -> Bool {
+        let check = globalColors.colorOptions.contains(where: {$0.Name == withName})
+        return check
     }
     
     static func getColorOption(_ withName: String) -> themeColor {
-        let idx = globalColors.colorOptions.index(where: {$0.colorName == withName})
+        let idx = globalColors.colorOptions.index(where: {$0.Name == withName})
         return globalColors.colorOptions[idx!]
     }
     
     static func getColorName(withID: Int) -> String {
-        return globalColors.colorOptions[withID].colorName
+        return globalColors.colorOptions[withID].Name!
     }
     
     static func getIndexOfColorOption(_ withName: String) -> Int {
-        let idx = globalColors.colorOptions.index(where: {$0.colorName == withName})
+        let idx = globalColors.colorOptions.index(where: {$0.Name == withName})
         return idx!
     }
 }

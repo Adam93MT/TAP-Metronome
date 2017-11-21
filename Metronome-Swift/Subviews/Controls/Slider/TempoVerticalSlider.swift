@@ -29,7 +29,7 @@ class TempoVerticalSlider: UISlider {
         print("setup slider")
         
         // Setup standard slider elements
-        self.thumbTintColor = .clear//delegate.bgColorDark.withAlphaComponent(0.8)
+        self.thumbTintColor = .clear
         self.backgroundColor = .clear
         self.minimumTrackTintColor = .white
         self.maximumTrackTintColor = UIColor.white.withAlphaComponent(0.2)
@@ -62,9 +62,9 @@ class TempoVerticalSlider: UISlider {
         // text & color
         tempoThumb.textAlignment = .center
         tempoThumb.text = String(delegate.metronome.getTempo())
-        tempoThumb.textColor = Globals.colors.bgColorDark
+        tempoThumb.textColor = Globals.colors.currentTheme.Dark
         tempoThumb.font = tempoThumb.font.withSize(28)
-        tempoThumb.setColors(Globals.colors.textColor, highlightColor: Globals.colors.textColor.withAlphaComponent(0.85))
+        tempoThumb.setColors(Globals.colors.textColor, highlightColor: Globals.colors.highlightButtonColor)
         tempoThumb.layer.masksToBounds = true
         tempoThumb.layer.cornerRadius = Globals.dimensions.buttonHeight/2
         self.addSubview(tempoThumb)
