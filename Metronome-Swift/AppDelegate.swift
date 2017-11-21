@@ -30,7 +30,7 @@ struct Globals {
 
 var tempoModalisVisible: Bool = false
 var onSettingsPage: Bool = false
-var originalOrientation: String = "portrait"
+var originalOrientation: String = ""
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

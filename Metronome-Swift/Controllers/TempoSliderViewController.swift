@@ -97,16 +97,19 @@ class TempoSliderViewController: UIViewController {
     @IBAction func sliderValueChanged(_ sender: UISlider) {
         delegate.metronome.setTempo(Int(tempoSlider.value))
         self.tempoSlider.updateLabel()
+        changeCloseIcon()
     }
     
     @IBAction func pressedDecrement(_ sender: UIButton) {
         delegate.metronome.decrementTempo()
         self.tempoSlider.updateLabel()
+        changeCloseIcon()
     }
     
     @IBAction func pressedIncrement(_ sender: UIButton) {
         delegate.metronome.incrementTempo()
         self.tempoSlider.updateLabel()
+        changeCloseIcon()
     }
     
     

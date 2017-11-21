@@ -10,7 +10,6 @@
 		660BB2341FA1038A00A47778 /* TouchableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BB2331FA1038A00A47778 /* TouchableLabel.swift */; };
 		6636EFFF1F89CD8F0000D99A /* TapDownGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */; };
 		664E8AA61F9E86CC00E29C1D /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664E8AA51F9E86CC00E29C1D /* UserDefaultsManager.swift */; };
-		66675BB21FA121910043D6E5 /* ColorPickerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66675BB11FA121910043D6E5 /* ColorPickerButton.swift */; };
 		666E14F81FA2AD3100879B4A /* BeatGroupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E14F71FA2AD3100879B4A /* BeatGroupButton.swift */; };
 		6695724D1C2C6024001BF1FF /* BeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6695724C1C2C6024001BF1FF /* BeatView.swift */; };
 		66A5AE5E1F95A4EB00E432F7 /* TempoSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5AE5D1F95A4EB00E432F7 /* TempoSliderViewController.swift */; };
@@ -52,7 +51,6 @@
 		660BB2331FA1038A00A47778 /* TouchableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchableLabel.swift; sourceTree = "<group>"; };
 		6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapDownGestureRecognizer.swift; sourceTree = "<group>"; };
 		664E8AA51F9E86CC00E29C1D /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
-		66675BB11FA121910043D6E5 /* ColorPickerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorPickerButton.swift; path = "Metronome-Swift/Subviews/Controls/ColorPickerButton.swift"; sourceTree = SOURCE_ROOT; };
 		666E14F31FA25F8E00879B4A /* USABILITY_TEST_RESULTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = USABILITY_TEST_RESULTS.md; sourceTree = "<group>"; };
 		666E14F71FA2AD3100879B4A /* BeatGroupButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatGroupButton.swift; sourceTree = "<group>"; };
 		6695724C1C2C6024001BF1FF /* BeatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatView.swift; sourceTree = "<group>"; };
@@ -68,7 +66,7 @@
 		66D26EB11FA2F27B00CC1C02 /* SpacerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerView.swift; sourceTree = "<group>"; };
 		66E4D1F11D164A4300811CCA /* BeatCircleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BeatCircleView.xib; sourceTree = "<group>"; };
 		66E4D1F31D16532900811CCA /* BeatContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatContainerView.swift; sourceTree = "<group>"; };
-		66E6E2411FBB6D99002A0044 /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorCollectionViewCell.swift; path = "Metronome-Swift/Subviews/Controls/ColorCollectionViewCell.swift"; sourceTree = SOURCE_ROOT; };
+		66E6E2411FBB6D99002A0044 /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorCollectionViewCell.swift; path = "Metronome-Swift/Subviews/Controls/Settings/ColorCollectionViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		66E98B881C2919C00097E58E /* downBeatClick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = downBeatClick.mp3; sourceTree = "<group>"; };
 		66E98B891C2919C00097E58E /* metronomeClick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = metronomeClick.mp3; sourceTree = "<group>"; };
 		66EAD1321F992B0A00D7CEE7 /* UICircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICircleButton.swift; sourceTree = "<group>"; };
@@ -103,16 +101,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		66029B7A1FBD00C8001D31AF /* Slider */ = {
+			isa = PBXGroup;
+			children = (
+				66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */,
+				660BB2331FA1038A00A47778 /* TouchableLabel.swift */,
+			);
+			path = Slider;
+			sourceTree = "<group>";
+		};
+		66029B7B1FBD00DC001D31AF /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				66E6E2411FBB6D99002A0044 /* ColorCollectionViewCell.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		66029B7C1FBD00EF001D31AF /* General */ = {
+			isa = PBXGroup;
+			children = (
+				66EAD1341F99372700D7CEE7 /* UIControlButton.swift */,
+				66EAD1321F992B0A00D7CEE7 /* UICircleButton.swift */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
 		660BB2351FA106FD00A47778 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
 				666E14F71FA2AD3100879B4A /* BeatGroupButton.swift */,
-				66E6E2411FBB6D99002A0044 /* ColorCollectionViewCell.swift */,
-				66675BB11FA121910043D6E5 /* ColorPickerButton.swift */,
-				66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */,
-				66EAD1341F99372700D7CEE7 /* UIControlButton.swift */,
-				66EAD1321F992B0A00D7CEE7 /* UICircleButton.swift */,
-				660BB2331FA1038A00A47778 /* TouchableLabel.swift */,
+				66029B7B1FBD00DC001D31AF /* Settings */,
+				66029B7A1FBD00C8001D31AF /* Slider */,
+				66029B7C1FBD00EF001D31AF /* General */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -130,11 +151,11 @@
 		664E8AA91F9E8B4100E29C1D /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				666E14F61FA2A9A100879B4A /* Containers */,
 				6695724C1C2C6024001BF1FF /* BeatView.swift */,
 				66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */,
 				6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */,
 				66D26EB11FA2F27B00CC1C02 /* SpacerView.swift */,
-				666E14F61FA2A9A100879B4A /* Containers */,
 				660BB2351FA106FD00A47778 /* Controls */,
 			);
 			path = Subviews;
@@ -352,7 +373,6 @@
 				66D26EB21FA2F27B00CC1C02 /* SpacerView.swift in Sources */,
 				66E4D1F41D16532900811CCA /* BeatContainerView.swift in Sources */,
 				66E6E2421FBB6D99002A0044 /* ColorCollectionViewCell.swift in Sources */,
-				66675BB21FA121910043D6E5 /* ColorPickerButton.swift in Sources */,
 				66AB01241F8D6CE4000D5E38 /* GradientLayer.swift in Sources */,
 				B897AC7919E4AC8700820251 /* MetronomeViewController.swift in Sources */,
 				66CA3F601F9E9E8F00670273 /* SettingsViewController.swift in Sources */,

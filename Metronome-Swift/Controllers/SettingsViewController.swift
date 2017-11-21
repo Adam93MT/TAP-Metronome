@@ -37,7 +37,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var ColorsLabel: UILabel!
     @IBOutlet weak var colorCollectionContainerView: UIView!
     
-    var lastSelectedIndex: Int = globalColors.getIndexOfColorOption(Globals.colors.bgTheme)
+    var lastSelectedIndex: Int = globalColors.getIndexOfColorOption(Globals.colors.currentTheme.Name!)
     let borderWidth:CGFloat = 2
     let borderColor = UIColor.white.cgColor
     let gradientLayer = GradientView()
@@ -50,7 +50,7 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         onSettingsPage = true
         self.setNeedsStatusBarAppearanceUpdate()
-        self.view.backgroundColor = Globals.colors.bgColorLight
+        self.view.backgroundColor = Globals.colors.currentTheme.Light
         // Do any additional setup after loading the view.
         
         // Beats Buttons
@@ -98,25 +98,22 @@ class SettingsViewController: UIViewController {
     func setupColorCollectionView() {
         
         colorCollectionView.frame = colorCollectionContainerView.bounds
-        //CGRect(x: 0,
-//                                           y: 0,
-//                                           width: colorCollectionContainerView.frame.width,
-//                                           height: colorCollectionContainerView.frame.height)
         colorCollectionContainerView.addSubview(colorCollectionView)
+        
         colorCollectionView.dataSource = self
         colorCollectionView.delegate = self
         colorCollectionView.register(ColorCollectionViewCell.self, forCellWithReuseIdentifier: "Color")
     }
     
     func updateUIColor() {
-        self.view.backgroundColor = Globals.colors.bgColorLight
+        self.view.backgroundColor = Globals.colors.currentTheme.Light
         self.gradientLayer.gl.removeFromSuperlayer()
         self.createGradientLayer()
     }
     
     func createGradientLayer() {
         // Set up the background colors
-        self.gradientLayer.setColors(startColor: Globals.colors.bgColorLight, endColor: Globals.colors.bgColorDark)
+        self.gradientLayer.setColors(startColor: Globals.colors.currentTheme.Light, endColor: Globals.colors.currentTheme.Dark)
         self.gradientLayer.gl.frame = self.view.bounds
         self.view.layer.insertSublayer(self.gradientLayer.gl, at: 0)
     }
@@ -141,6 +138,7 @@ class SettingsViewController: UIViewController {
         } else if UIDevice.current.orientation.isLandscape {
             self.currentOrientation = "landscape"
         }
+        print("Rotated to \(self.currentOrientation)")
         self.gradientLayer.gl.frame = self.view.bounds
     }
 }
