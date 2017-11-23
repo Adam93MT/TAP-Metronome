@@ -10,9 +10,6 @@ import UIKit
 
 class globalColors {
     var bgColor: UIColor
-//    var bgTheme: String!
-//    var bgColorLight: UIColor
-//    var bgColorDark: UIColor
     var currentTheme: themeColor!
     var textColor: UIColor
     var beatCircleStartColor: UIColor
@@ -41,7 +38,7 @@ class globalColors {
         themeColor("cyan", hue: 184),
         themeColor("blue", hue: 210),
         themeColor("purple", hue: 255),
-        themeColor("magenta", hue: 290),
+//        themeColor("magenta", hue: 290),
         themeColor("grey", hue: 0, sat: 0),
         themeColor("black", light: UIColor(rgb: 0x292929), dark: UIColor(rgb: 0x0A0A0A))
     ]
@@ -84,11 +81,8 @@ class globalColors {
         print("Theme: \(defaultTheme!)")
 
         // set the theme to the set color, fallback to the default
-        
         let themeName = (themeColor != nil) ? themeColor : defaultTheme
         UserDefaults.standard.set(themeName, forKey: "theme")
-//        bgColorLight = (globalColors.getColorOption(bgTheme).bgColorLight)
-//        bgColorDark = (globalColors.getColorOption(bgTheme).bgColorDark)
         
         currentTheme = globalColors.getColorOption(themeName!)
         
@@ -106,9 +100,6 @@ class globalColors {
         
         // set new default
         UserDefaults.standard.set(themeName, forKey: "theme")
-        
-//        bgColorLight = (globalColors.getColorOption(bgTheme).bgColorLight)!
-//        bgColorDark = (globalColors.getColorOption(bgTheme).bgColorDark)!
     }
     
     static func validateColor(_ withName: String) -> Bool {
