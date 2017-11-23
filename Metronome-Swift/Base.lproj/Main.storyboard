@@ -308,6 +308,7 @@
                                 <rect key="frame" x="32" y="613" width="24" height="22"/>
                                 <state key="normal" image="decrement"/>
                                 <connections>
+                                    <action selector="decmentButtonLongPress:" destination="9i7-qK-ccy" eventType="touchDown" id="V8p-DP-uI1"/>
                                     <action selector="decrementButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LR2-On-M9B"/>
                                     <action selector="pressedDecrement:" destination="9i7-qK-ccy" eventType="touchUpInside" id="5nu-s0-u6q"/>
                                 </connections>
@@ -316,6 +317,7 @@
                                 <rect key="frame" x="327" y="613" width="16" height="22"/>
                                 <state key="normal" image="increment"/>
                                 <connections>
+                                    <action selector="incrementButtonLongPress:" destination="9i7-qK-ccy" eventType="touchDown" id="Kxq-Ad-MWH"/>
                                     <action selector="incrementButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AiY-FV-N8w"/>
                                     <action selector="pressedIncrement:" destination="9i7-qK-ccy" eventType="touchUpInside" id="NhQ-Yn-y1T"/>
                                 </connections>
