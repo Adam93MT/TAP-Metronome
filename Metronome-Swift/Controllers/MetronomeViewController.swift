@@ -31,6 +31,9 @@ class MetronomeViewController: UIViewController {
     var containerView: BeatContainerView!
     var metronomeDisplayLink: CADisplayLink!
     
+    var decrementLongPressTimer: Timer?
+    var incrementLongPressTimer: Timer?
+    
     var viewWidth: CGFloat!
     var viewHeight: CGFloat!
     
@@ -45,6 +48,7 @@ class MetronomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.emptyButton.image = UIImage(named: "placeholder")
+        
         // Lets us access the ViewController from metronome logic
         metronome = delegate.metronome
         metronome.vc = self
@@ -62,7 +66,6 @@ class MetronomeViewController: UIViewController {
         
         // Set Up Beat Circle Views
         self.containerView = BeatContainerView(frame: CGRect(x: 0, y: 0, width: viewWidth, height: viewHeight))
-//        self.containerView.originalOrientation = originalOrientation
         self.containerView.screenWidth = self.viewWidth
         self.containerView.screenHeight = self.viewHeight
         self.containerView.center = view.center
@@ -90,6 +93,8 @@ class MetronomeViewController: UIViewController {
         
         // Set up Tempo Control Buttons, Slider and Text
         tempoButton.setTitle(String(metronome.tempoBPM), for: .normal)
+//        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress))
+//        decrementButton.addGestureRecognizer(longGesture)
 
         // metronome.prepare()
     }
@@ -127,12 +132,31 @@ class MetronomeViewController: UIViewController {
     }
     
     @IBAction func incrementButtonPressed(_ sender: UIButton) {
-        print("tempo++")
         self.metronome.incrementTempo()
+        incrementLongPressTimer?.invalidate()
+    }
+    @IBAction func incrementButtonLongPress(_ sender: UIButton) {
+        incrementLongPressTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true, block: { (Timer) in
+            if self.metronome.getTempo() < self.metronome.maxTempo {
+                self.metronome.incrementTempo()
+            } else {
+                self.incrementLongPressTimer?.invalidate()
+            }
+        })
     }
     
     @IBAction func decrementButtonPressed(_ sender: UIButton) {
         self.metronome.decrementTempo()
+        decrementLongPressTimer?.invalidate()
+    }
+    @IBAction func decmentButtonLongPress(_ sender: Any) {
+        decrementLongPressTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true, block: { (Timer) in
+            if self.metronome.getTempo() > self.metronome.minTempo {
+                self.metronome.decrementTempo()
+            } else {
+                self.incrementLongPressTimer?.invalidate()
+            }
+        })
     }
     
     @IBAction func togglePlayPause(_ sender: UIButton) {
@@ -143,7 +167,6 @@ class MetronomeViewController: UIViewController {
         } else {
             self.startMetronome()
         }
-        
     }
     @IBAction func openMenu(sender: AnyObject) {
         performSegue(withIdentifier: "openSettings", sender: nil)

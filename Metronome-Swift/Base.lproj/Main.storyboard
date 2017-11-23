@@ -56,6 +56,7 @@
                                 <rect key="frame" x="46" y="601" width="16" height="22"/>
                                 <state key="normal" image="decrement"/>
                                 <connections>
+                                    <action selector="decmentButtonLongPress:" destination="BYZ-38-t0r" eventType="touchDown" id="l9j-us-HaM"/>
                                     <action selector="decrementButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3ek-kW-Dp3"/>
                                 </connections>
                             </button>
@@ -63,6 +64,7 @@
                                 <rect key="frame" x="313" y="601" width="16" height="22"/>
                                 <state key="normal" image="increment"/>
                                 <connections>
+                                    <action selector="incrementButtonLongPress:" destination="BYZ-38-t0r" eventType="touchDown" id="Dcq-wD-RyD"/>
                                     <action selector="incrementButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pLz-oE-SBb"/>
                                 </connections>
                             </button>
