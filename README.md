@@ -1,12 +1,6 @@
 TAP Metronome
 ===============
 
-Original Metronome sample based of Metronone-Swift by ngelo
+Tap Metronome was inspired while I was practicing with the Water Boys a cappella group. We were struggling to stay together, and couldn't all hear the metronome clicks while singing. We needed a way to stay in time, but not rely on being able to hear the clicks.
 
-My first attempt at a Swift app
-
-TAP Metronome has minimal UI at its core
-
-Tap the button to start the metronome
-Swipe up or down to stop
-Use the slider to change the tempo
+I designed and built this iOS app as my first full Swift app. I started building it during Hack the North 2016, and refined it in the fall of 2017. 
