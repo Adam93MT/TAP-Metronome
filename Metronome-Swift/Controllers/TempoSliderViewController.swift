@@ -12,8 +12,12 @@ class TempoSliderViewController: UIViewController {
     
     let delegate = UIApplication.shared.delegate as! AppDelegate
     var currentOrientation: String = "portrait"
+    
+    // long press timers
+    var decrementLongPressTimer: Timer?
+    var incrementLongPressTimer: Timer?
+    
     var blurEffectView: UIVisualEffectView!
-    // var tempoLabel: UILabel!
     var checkImage: UIImage!
     var crossImage: UIImage!
     
@@ -97,19 +101,45 @@ class TempoSliderViewController: UIViewController {
     @IBAction func sliderValueChanged(_ sender: UISlider) {
         delegate.metronome.setTempo(Int(tempoSlider.value))
         self.tempoSlider.updateLabel()
-        changeCloseIcon()
+        updateCloseIcon()
     }
     
     @IBAction func pressedDecrement(_ sender: UIButton) {
         delegate.metronome.decrementTempo()
+        self.decrementLongPressTimer?.invalidate()
         self.tempoSlider.updateLabel()
-        changeCloseIcon()
+        updateCloseIcon()
+    }
+    @IBAction func decmentButtonLongPress(_ sender: Any) {
+        decrementLongPressTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true, block: { (Timer) in
+            if self.delegate.metronome.getTempo() > self.delegate.metronome.minTempo {
+                self.delegate.metronome.decrementTempo()
+            } else {
+                self.incrementLongPressTimer?.invalidate()
+            }
+            
+            self.tempoSlider.updateLabel()
+            self.updateCloseIcon()
+        })
     }
     
     @IBAction func pressedIncrement(_ sender: UIButton) {
         delegate.metronome.incrementTempo()
+        self.incrementLongPressTimer?.invalidate()
         self.tempoSlider.updateLabel()
-        changeCloseIcon()
+        updateCloseIcon()
+    }
+    @IBAction func incrementButtonLongPress(_ sender: UIButton) {
+        incrementLongPressTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true, block: { (Timer) in
+            if self.delegate.metronome.getTempo() < self.delegate.metronome.maxTempo {
+                self.delegate.metronome.incrementTempo()
+            } else {
+                self.incrementLongPressTimer?.invalidate()
+            }
+            
+            self.tempoSlider.updateLabel()
+            self.updateCloseIcon()
+        })
     }
     
     
@@ -124,7 +154,7 @@ class TempoSliderViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     
-    func changeCloseIcon() {
+    func updateCloseIcon() {
         if (delegate.metronome.getTempo() != initialVal) {
             closeButton.setImage(checkImage, for: .normal)
         } else {
