@@ -73,9 +73,7 @@ class TempoSliderViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tempoModalisVisible = true
-        // update the slider value every time it appears
         tempoSlider.value = Float(delegate.metronome.getTempo())
-        // position the label once we've set the value
         tempoSlider.updateLabel()
         
     }

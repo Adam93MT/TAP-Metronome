@@ -32,8 +32,8 @@ class globalColors {
     static let colorOptions: [themeColor] = [
         themeColor("red", hue: 355),
         themeColor("orange", hue: 24, sat: 80),
-        themeColor("yellow", hue: 56, sat: 100),
-        themeColor("green", hue: 90),
+//        themeColor("yellow", hue: 56, sat: 100),
+//        themeColor("green", hue: 90),
         themeColor("seafoam", hue: 155),
         themeColor("cyan", hue: 184),
         themeColor("blue", hue: 210),
@@ -76,7 +76,7 @@ class globalColors {
         
         // check if the default theme is legit
         var defaultTheme = UserDefaults.standard.string(forKey: "theme")
-        let checkTheme = globalColors.validateColor(defaultTheme!)
+        let checkTheme = (defaultTheme != nil) ? globalColors.validateColor(defaultTheme!) : false
         defaultTheme = checkTheme ? defaultTheme : "black"
         print("Theme: \(defaultTheme!)")
 
