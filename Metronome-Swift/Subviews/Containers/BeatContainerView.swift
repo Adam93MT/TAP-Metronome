@@ -121,14 +121,16 @@ class BeatContainerView: UIView {
     func animateBeatCircle(beatIndex: Int, beatDuration: Double, startPoint: CGPoint? = nil) {
         var thisBeat: BeatView!
         
-        // Beat was triggered by a tap if startPoint != nil
         if (startPoint != nil) {
+            // This means we're animating a Tap (not a normal beat)
             thisBeat = self.TapBeatViewsArray[beatIndex]
             thisBeat.frame.origin.x = startPoint!.x - thisBeat.frame.width/2
             thisBeat.frame.origin.y = startPoint!.y - thisBeat.frame.height/2
         }
         else {
+            // We're animating a normal beat
             thisBeat = self.BeatViewsArray[beatIndex]
+            // in what oriantation?
             if self.currentOrientation == originalOrientation {
                 thisBeat.frame.origin.x = self.defaultLocationX
                 thisBeat.frame.origin.y = self.defaultLocationY
@@ -140,19 +142,44 @@ class BeatContainerView: UIView {
         }
         
         // setup the animation
-        thisBeat.isHidden = false
-        let beatAnimation = { () -> Void in
+        let changesToAnimate = { () -> Void in
             let scaleTransform = CGAffineTransform(scaleX: self.endScale, y: self.endScale)
             thisBeat.alpha = self.endAlpha
             thisBeat.transform = scaleTransform
         }
         
+        let x1: Float = 0.16
+        let y1: Float = 1 - 0.16
+        let x2: Float = 0.50
+        let y2: Float = 1 - 0.0
+        
+        let timingFunction = CAMediaTimingFunction(controlPoints: x1, y1, x2, y2)
+        CATransaction.begin()
+        CATransaction.setAnimationTimingFunction(timingFunction)
+        
+        // Immediately show the circle
+        thisBeat.isHidden = false
+        
+        UIView.animate(
+            withDuration: beatDuration * 3,
+            animations: changesToAnimate) { (finished) in
+                self.beatCircleReset(beatIndex)
+                // reset circle once the animation is finished
+            }
+        
+        CATransaction.commit()
+        
         // Do the animation
-        let animationDuration = beatDuration * 2.0
-        UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseOut], animations: beatAnimation,
-           completion:  { finished in
-                self.beatCircleReset(beatIndex) // reset circle once the animation is finished
-        })
+//        UIView.animate(
+//            withDuration: beatDuration * 2,
+//            delay: 0,
+//            options: [.curveEaseOut],
+//            animations: changesToAnimate,
+//            completion:  { finished in
+//                self.beatCircleReset(beatIndex)
+//                // reset circle once the animation is finished
+//            }
+//        )
         
         // --- Error logging ---
         let delay = mach_absolute_time() - delegate.metronome.current_time

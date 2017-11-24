@@ -333,6 +333,7 @@ class MetronomeViewController: UIViewController {
         ]
         let coachMarksView = MPCoachMarks(frame: (self.view.bounds), coachMarks: coachMarks)
         coachMarksView?.continueLabelText = "OK"
+        coachMarksView?.continueLocation = .LOCATION_TOP
         self.view.addSubview(coachMarksView ?? UIView())
         coachMarksView?.start()
     }

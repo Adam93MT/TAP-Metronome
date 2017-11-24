@@ -18,12 +18,10 @@ let animationScale = CGFloat(667/startDiameter*1.2)
 
 let BeatCircleView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 375.0, height: 667.0))
 BeatCircleView.backgroundColor = darkGreyColor
-XCPShowView("Container View", BeatCircleView)
+XCPShowView(identifier: "Container View", view: BeatCircleView)
 
 
 let BeatView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: startDiameter, height: startDiameter))
-
-println(BeatView.frame.height)
 
 // IN CLASS BeatView
 
@@ -35,26 +33,26 @@ func drawBeatCircle(beatCircle: UIView) {
 }
 
 
-func animateBeatCircle(beatCircle: UIView, beatDuration: NSTimeInterval) {
+func animateBeatCircle(beatCircle: UIView, beatDuration: TimeInterval) {
 
     print(beatCircle)
     
-    var beatAnimation = { () -> Void in
+    let beatAnimation = { () -> Void in
         beatCircle.backgroundColor = endColor
-        let scaleTransform = CGAffineTransformMakeScale(animationScale, animationScale)
+        let scaleTransform = CGAffineTransform(scaleX: animationScale, y: animationScale)
         beatCircle.transform = scaleTransform
     }
-    UIView.animateWithDuration(beatDuration, animations: beatAnimation)
-    //UIView.animateWithDuration(<#duration: NSTimeInterval#>, animations: <#() -> Void##() -> Void#>, completion: <#((Bool) -> Void)?##(Bool) -> Void#>)
+    
+    UIView.animate(withDuration: beatDuration, animations: beatAnimation)
 }
 func resetBeatCircle(beatCircle: UIView) {
-    beatCircle.transform = CGAffineTransformMakeScale(1.0, 1.0)
+    beatCircle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
 }
 
 
 //MAIN
-    drawBeatCircle(BeatView)
-    animateBeatCircle(BeatView, NSTimeInterval(beatTime))
+drawBeatCircle(beatCircle: BeatView)
+animateBeatCircle(beatCircle: BeatView, beatDuration: TimeInterval(beatTime))
 
 
 
