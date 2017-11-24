@@ -82,13 +82,19 @@ class MetronomeViewController: UIViewController {
         )
         tapButton.alpha = 0.75
         
+        self.view.bringSubview(toFront: PlayPauseButton)
+        
         // Set up gesture recognizer
         let tapDownGestureRecognizer = TapDownGestureRecognizer(target: self, action: #selector(self.handleTap))
-        tapDownGestureRecognizer.delaysTouchesBegan = false
-        tapDownGestureRecognizer.delaysTouchesEnded = false
-        tapDownGestureRecognizer.numberOfTapsRequired = 1
-        tapDownGestureRecognizer.numberOfTouchesRequired = 1
         self.tapButton.addGestureRecognizer(tapDownGestureRecognizer)
+        
+        let multiTouchGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleMultiTouch))
+        multiTouchGestureRecognizer.numberOfTapsRequired = 1
+        multiTouchGestureRecognizer.numberOfTouchesRequired = 2
+        self.tapButton.addGestureRecognizer(multiTouchGestureRecognizer)
+        
+//        tapDownGestureRecognizer.require(toFail: multiTouchGestureRecognizer)
+//        multiTouchGestureRecognizer.require(toFail: tapDownGestureRecognizer)
         
         
         // Set up Tempo Control Buttons, Slider and Text
@@ -132,10 +138,6 @@ class MetronomeViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool {
         return self.controlsAreHidden
-    }
-    
-    @IBAction func swipeButton(_ sender: UIButton) {
-        if metronome.isOn { metronome.stop() }
     }
     
     @IBAction func incrementButtonPressed(_ sender: UIButton) {
@@ -198,19 +200,32 @@ class MetronomeViewController: UIViewController {
     
     func handleTap(gestureRecognizer: TapDownGestureRecognizer) {
         if self.controlsAreHidden { self.showControls() }
+        print("Touch")
+        print("\(gestureRecognizer.numberOfTouches) fingers")
         
         let tapLocation = gestureRecognizer.location(in: self.view)
         let tapIdx = metronome.getAbsoluteBeat() % metronome.possibleTimeSignatures.max()!
         self.containerView.animateBeatCircle(
             beatIndex: tapIdx, beatDuration: metronome.getInterval(), startPoint: tapLocation
         )
-        
+
         if metronome.isOn {
             metronome.logTap()
             self.killControlAnimations()
         }
         else {
-            self.startMetronome()
+                self.startMetronome()
+        }
+    }
+    
+    
+    func handleMultiTouch(gestureRecognizer: UITapGestureRecognizer) {
+        if self.controlsAreHidden { self.showControls() }
+
+        print("Multitouch")
+        print("\(gestureRecognizer.numberOfTouches) fingers")
+        if metronome.isOn {
+            self.stopMetronome()
         }
     }
     

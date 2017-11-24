@@ -39,18 +39,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r9f-r2-GK7">
+                                <rect key="frame" x="169" y="315" width="36" height="36"/>
+                                <state key="normal" image="play"/>
+                                <state key="highlighted" image="play_highlight"/>
+                                <connections>
+                                    <action selector="togglePlayPause:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Uw5-y7-gFp"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8r-1J-ZFl">
-                                <rect key="frame" x="0.0" y="172" width="375" height="256"/>
+                                <rect key="frame" x="0.0" y="205" width="375" height="256"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="32"/>
                                 <state key="normal">
                                     <color key="titleColor" red="0.99607843137254903" green="0.99607843137254903" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="swipeButton:" destination="BYZ-38-t0r" eventType="touchDragExit" id="ryy-EK-q60"/>
-                                    <action selector="tapDown:" destination="BYZ-38-t0r" eventType="touchDown" id="WAz-iB-BFN"/>
-                                    <action selector="tapUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M4J-fW-xmM"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="huJ-0x-goJ" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
                                 <rect key="frame" x="46" y="601" width="16" height="22"/>
@@ -79,14 +82,6 @@
                                 </state>
                                 <connections>
                                     <segue destination="9i7-qK-ccy" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="H5N-fU-8m3"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r9f-r2-GK7">
-                                <rect key="frame" x="169.5" y="315.5" width="36" height="36"/>
-                                <state key="normal" image="play"/>
-                                <state key="highlighted" image="play_highlight"/>
-                                <connections>
-                                    <action selector="togglePlayPause:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Uw5-y7-gFp"/>
                                 </connections>
                             </button>
                         </subviews>
