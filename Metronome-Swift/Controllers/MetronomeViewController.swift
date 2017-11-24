@@ -93,10 +93,10 @@ class MetronomeViewController: UIViewController {
         
         // Set up Tempo Control Buttons, Slider and Text
         tempoButton.setTitle(String(metronome.tempoBPM), for: .normal)
-//        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress))
-//        decrementButton.addGestureRecognizer(longGesture)
-
-        // metronome.prepare()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,6 +120,13 @@ class MetronomeViewController: UIViewController {
         if originalOrientation.isEmpty {
             originalOrientation = self.currentOrientation
             print("Original orientation \(originalOrientation)")
+        }
+        
+        // CoachMarks
+        let showTutorial = UserDefaults.standard.bool(forKey: "showTutorial")
+        if (showTutorial){
+            self.showCoachMarks()
+            UserDefaults.standard.set(false, forKey: "showTutorial")
         }
     }
     
@@ -268,6 +275,43 @@ class MetronomeViewController: UIViewController {
         self.gradientLayer.setColors(startColor: Globals.colors.currentTheme.Light, endColor: Globals.colors.currentTheme.Dark)
         self.gradientLayer.gl.frame = self.view.bounds
         self.view.layer.insertSublayer(self.gradientLayer.gl, at: 0)
+    }
+    
+    func showCoachMarks() {
+        let coachMargin:CGFloat = 16
+        //            let welcomeCoachRect:CGRect = CGRect(x:0, y:0, width:0, height:0)
+        let controlCoachRect:CGRect = CGRect(x: decrementButton.frame.minX - coachMargin,
+                                             y: decrementButton.frame.minY - coachMargin,
+                                             width: incrementButton.frame.maxX - decrementButton.frame.minX + 2*coachMargin,
+                                             height: tempoButton.frame.height + 2*coachMargin)
+        let playButtonCoachRect:CGRect = CGRect(x: PlayPauseButton.frame.minX - coachMargin,
+                                                y: PlayPauseButton.frame.minY - coachMargin,
+                                                width: PlayPauseButton.frame.width + 2*coachMargin,
+                                                height: PlayPauseButton.frame.height + 2*coachMargin)
+        let tapButtonCoachRect:CGRect = CGRect(x: coachMargin,
+                                               y: (self.view.frame.height - (self.view.frame.width - 2*coachMargin))/2,
+                                               width: self.view.frame.width - 2*coachMargin,
+                                               height: self.view.frame.width - 2*coachMargin)
+        
+        let coachMarks = [
+            [   "rect": NSValue(cgRect: playButtonCoachRect),
+                "caption": "Press play, or just tap anywhere to start the metronome.",
+                ] as [String: Any],
+            [   "rect": NSValue(cgRect: controlCoachRect),
+                "caption": "Increment, decrement or open the slider to select the tempo..."
+                ] as [String: Any],
+            [   "rect": NSValue(cgRect: tapButtonCoachRect),
+                "caption": "Or just tap anywhere to set the tempo!",
+                ] as [String: Any]
+        ]
+        
+        let coachMarksView = MPCoachMarks(frame: (self.view.bounds), coachMarks: coachMarks)
+        //            coachMarksView?.enableContinueLabel = false
+        coachMarksView?.continueLabelText = "Tap anywhere to continue"
+        coachMarksView?.continueLocation = .LOCATION_TOP
+        coachMarksView?.skipButtonText = "Skip Tutorial"
+        self.view.addSubview(coachMarksView ?? UIView())
+        coachMarksView?.start()
     }
     
     
