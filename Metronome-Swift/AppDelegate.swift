@@ -31,6 +31,8 @@ struct Globals {
 var tempoModalisVisible: Bool = false
 var onSettingsPage: Bool = false
 var originalOrientation: String = ""
+let VersionNumber = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String?
+let BuildNumber = Bundle.main.infoDictionary?["CFBundleVersion"]  as? String
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -47,6 +49,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().backgroundColor = .clear
         UINavigationBar.appearance().isTranslucent = true
         UINavigationBar.appearance().tintColor = Globals.colors.textColor
+        
+        let lastVersion = UserDefaults.standard.string(forKey: "lastVersion")
+        let lastBuild = UserDefaults.standard.string(forKey: "lastBuild")
+        
+        if !(lastVersion == VersionNumber && lastBuild == BuildNumber) {
+            UserDefaults.standard.set(true, forKey: "showTutorial")
+            UserDefaults.standard.set(VersionNumber, forKey: "lastVersion")
+            UserDefaults.standard.set(BuildNumber, forKey: "lastBuild")
+        } else {
+            UserDefaults.standard.set(false, forKey: "showTutorial")
+        }
+        // DEBUG 
+//        UserDefaults.standard.set(true, forKey: "showTutorial")
+        
         return true
     }
 
