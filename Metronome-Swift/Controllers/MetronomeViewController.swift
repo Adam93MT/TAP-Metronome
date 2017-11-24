@@ -126,7 +126,7 @@ class MetronomeViewController: UIViewController {
         let showTutorial = UserDefaults.standard.bool(forKey: "showTutorial")
         if (showTutorial){
             self.showCoachMarks()
-            UserDefaults.standard.set(false, forKey: "showTutorial")
+//            UserDefaults.standard.set(false, forKey: "showTutorial")
         }
     }
     
@@ -180,6 +180,11 @@ class MetronomeViewController: UIViewController {
     }
     
     func startMetronome() {
+        let showTutorial = UserDefaults.standard.bool(forKey: "showTutorial")
+        if (showTutorial){
+            self.showStopCoachMarks()
+            UserDefaults.standard.set(false, forKey: "showTutorial")
+        }
         delegate.metronome.start()
         PlayPauseButton.setImage(UIImage(named: "pause"), for: .normal)
         PlayPauseButton.setImage(UIImage(named: "pause_highlight"), for: .highlighted)
@@ -295,14 +300,14 @@ class MetronomeViewController: UIViewController {
         
         let coachMarks = [
             [   "rect": NSValue(cgRect: playButtonCoachRect),
-                "caption": "Press play, or just tap anywhere to start the metronome.",
-                ] as [String: Any],
-            [   "rect": NSValue(cgRect: controlCoachRect),
-                "caption": "Increment, decrement or open the slider to select the tempo..."
-                ] as [String: Any],
+                "caption": "Tap anywhere, or press Play to start the metronome.",
+            ] as [String: Any],
             [   "rect": NSValue(cgRect: tapButtonCoachRect),
-                "caption": "Or just tap anywhere to set the tempo!",
-                ] as [String: Any]
+                "caption": "Keep Tapping to set the tempo.",
+            ] as [String: Any],
+            [   "rect": NSValue(cgRect: controlCoachRect),
+                "caption": "Or set the tempo manually."
+            ] as [String: Any]
         ]
         
         let coachMarksView = MPCoachMarks(frame: (self.view.bounds), coachMarks: coachMarks)
@@ -310,6 +315,24 @@ class MetronomeViewController: UIViewController {
         coachMarksView?.continueLabelText = "Tap anywhere to continue"
         coachMarksView?.continueLocation = .LOCATION_TOP
         coachMarksView?.skipButtonText = "Skip Tutorial"
+        self.view.addSubview(coachMarksView ?? UIView())
+        coachMarksView?.start()
+    }
+    
+    func showStopCoachMarks() {
+        print("Coach Marks")
+        let coachMargin:CGFloat = 16
+        let stopCoachRect = CGRect(x: coachMargin,
+                                   y: (self.view.frame.height - (self.view.frame.width - 2*coachMargin))/2,
+                                   width: self.view.frame.width - 2*coachMargin,
+                                   height: self.view.frame.width - 2*coachMargin)
+        let coachMarks = [
+            [   "rect": NSValue(cgRect: stopCoachRect),
+                "caption": "Double Tap, or 2-finger Tap to stop the metronome.",
+            ] as [String: Any]
+        ]
+        let coachMarksView = MPCoachMarks(frame: (self.view.bounds), coachMarks: coachMarks)
+        coachMarksView?.continueLabelText = "OK"
         self.view.addSubview(coachMarksView ?? UIView())
         coachMarksView?.start()
     }

@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.set(false, forKey: "showTutorial")
         }
         // DEBUG 
-//        UserDefaults.standard.set(true, forKey: "showTutorial")
+        UserDefaults.standard.set(true, forKey: "showTutorial")
         
         return true
     }
