@@ -11,7 +11,7 @@ import UIKit
 class TouchableLabel: UILabel {
     
     var defaultColor: UIColor = .white
-    var highlightColor: UIColor = .gray
+    var highlightColor: UIColor = Globals.colors.currentTheme.Dark.withPseudoAlphaComponent(pseudoAlpha: 0.8)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

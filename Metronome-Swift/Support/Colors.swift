@@ -140,4 +140,20 @@ extension UIColor {
             blue: rgb & 0xFF
         )
     }
+    
+    func withPseudoAlphaComponent(pseudoAlpha: CGFloat) -> UIColor {
+        let baseColor = self
+        var hue: CGFloat = 0
+        var saturation: CGFloat = 0
+        var brightness: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        baseColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        
+        let newSaturation = (1 - pseudoAlpha) * (saturation)
+        let newBrightness = 1 - ((1 - pseudoAlpha) * (1 - brightness))
+        
+        return UIColor(hue: hue, saturation: newSaturation, brightness: newBrightness, alpha: 1.0)
+        
+    }
 }

@@ -40,6 +40,7 @@ class TempoVerticalSlider: UISlider {
         // detect touches on thumb
         self.addTarget(self, action: #selector(self.touchSlider), for: .touchDown)
         self.addTarget(self, action: #selector(self.touchSlider), for: .touchUpInside)
+        self.addTarget(self, action: #selector(self.touchSlider), for: .touchUpOutside)
 
         
         // Finally, we rotate the whole thing by 90deg
@@ -64,7 +65,7 @@ class TempoVerticalSlider: UISlider {
         tempoThumb.text = String(delegate.metronome.getTempo())
         tempoThumb.textColor = Globals.colors.currentTheme.Dark
         tempoThumb.font = tempoThumb.font.withSize(28)
-        tempoThumb.setColors(Globals.colors.textColor, highlightColor: Globals.colors.highlightButtonColor)
+//        tempoThumb.setColors(Globals.colors.textColor, highlightColor: Globals.colors.highlightButtonColor)
         tempoThumb.layer.masksToBounds = true
         tempoThumb.layer.cornerRadius = Globals.dimensions.buttonHeight/2
         self.addSubview(tempoThumb)
@@ -87,7 +88,7 @@ class TempoVerticalSlider: UISlider {
     func touchSlider(sender:UIGestureRecognizer) {
         if sender.state == .began {
             tempoThumb.isHighlighted = true
-//            tempoThumb.addShadow()
+            tempoThumb.addShadow()
         } else if sender.state == .ended || sender.state == .possible {
             tempoThumb.isHighlighted = false
         }
