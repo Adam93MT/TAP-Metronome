@@ -71,7 +71,6 @@ class TempoVerticalSlider: UISlider {
     }
     
     func updateLabel() {
-        
         // recall its rotated 90deg
         let thumbX:CGFloat = self.thumbRect(
             forBounds: self.bounds, trackRect: self.trackRect(forBounds: self.bounds), value: self.value
@@ -88,10 +87,15 @@ class TempoVerticalSlider: UISlider {
     func touchSlider(sender:UIGestureRecognizer) {
         if sender.state == .began {
             tempoThumb.isHighlighted = true
-            tempoThumb.addShadow()
+//            tempoThumb.addShadow()
         } else if sender.state == .ended || sender.state == .possible {
             tempoThumb.isHighlighted = false
         }
+    }
+    
+    func updateValue(newVal: Float) {
+        self.value = newVal
+        self.updateLabel()
     }
     
     /*

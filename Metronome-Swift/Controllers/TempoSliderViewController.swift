@@ -105,7 +105,7 @@ class TempoSliderViewController: UIViewController {
     @IBAction func pressedDecrement(_ sender: UIButton) {
         delegate.metronome.decrementTempo()
         self.decrementLongPressTimer?.invalidate()
-        self.tempoSlider.updateLabel()
+        self.tempoSlider.updateValue(newVal: Float(self.delegate.metronome.getTempo()))
         updateCloseIcon()
     }
     @IBAction func decmentButtonLongPress(_ sender: Any) {
@@ -116,15 +116,15 @@ class TempoSliderViewController: UIViewController {
                 self.incrementLongPressTimer?.invalidate()
             }
             
-            self.tempoSlider.updateLabel()
+            self.tempoSlider.updateValue(newVal: Float(self.delegate.metronome.getTempo()))
             self.updateCloseIcon()
         })
     }
     
     @IBAction func pressedIncrement(_ sender: UIButton) {
-        delegate.metronome.incrementTempo()
         self.incrementLongPressTimer?.invalidate()
-        self.tempoSlider.updateLabel()
+        delegate.metronome.incrementTempo()
+        self.tempoSlider.updateValue(newVal: Float(self.delegate.metronome.getTempo()))
         updateCloseIcon()
     }
     @IBAction func incrementButtonLongPress(_ sender: UIButton) {
@@ -135,7 +135,7 @@ class TempoSliderViewController: UIViewController {
                 self.incrementLongPressTimer?.invalidate()
             }
             
-            self.tempoSlider.updateLabel()
+            self.tempoSlider.updateValue(newVal: Float(self.delegate.metronome.getTempo()))
             self.updateCloseIcon()
         })
     }

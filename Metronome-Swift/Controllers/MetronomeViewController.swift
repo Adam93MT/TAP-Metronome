@@ -96,12 +96,9 @@ class MetronomeViewController: UIViewController {
         multiTouchGestureRecognizer.numberOfTouchesRequired = 2
         self.tapButton.addGestureRecognizer(multiTouchGestureRecognizer)
         
-//        tapDownGestureRecognizer.require(toFail: multiTouchGestureRecognizer)
-//        multiTouchGestureRecognizer.require(toFail: tapDownGestureRecognizer)
-        
-        
         // Set up Tempo Control Buttons, Slider and Text
         tempoButton.setTitle(String(metronome.tempoBPM), for: .normal)
+//        tempoButton.addTarget(self, #selector(), )
     }
     
     override func viewDidLayoutSubviews() {
