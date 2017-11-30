@@ -83,6 +83,9 @@ class MetronomeViewController: UIViewController {
         tapButton.alpha = 0.75
         
         self.view.bringSubview(toFront: PlayPauseButton)
+        self.view.bringSubview(toFront: tempoButton)
+        self.view.bringSubview(toFront: incrementButton)
+        self.view.bringSubview(toFront: decrementButton)
         
         // Set up gesture recognizer
         let tapDownGestureRecognizer = TapDownGestureRecognizer(target: self, action: #selector(self.handleTap))

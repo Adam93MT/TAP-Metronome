@@ -69,7 +69,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         // Color Buttons
         colorButtonSize = min(
-            self.view.frame.width / 6 - (Globals.dimensions.minPadding),
+            self.view.frame.width / 6 - (Globals.dimensions.minButtonSpacing),
             Globals.dimensions.buttonHeight)
         setupColorCollectionView()
     }

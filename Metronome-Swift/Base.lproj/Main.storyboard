@@ -25,7 +25,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H2B-fB-Z1y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2233" y="448"/>
+            <point key="canvasLocation" x="-1359" y="448"/>
         </scene>
         <!--Metronome View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -46,14 +46,6 @@
                                 <connections>
                                     <action selector="togglePlayPause:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Uw5-y7-gFp"/>
                                 </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8r-1J-ZFl">
-                                <rect key="frame" x="0.0" y="205" width="375" height="256"/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="32"/>
-                                <state key="normal">
-                                    <color key="titleColor" red="0.99607843137254903" green="0.99607843137254903" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="huJ-0x-goJ" customClass="UICircleButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
                                 <rect key="frame" x="46" y="601" width="16" height="22"/>
@@ -83,6 +75,14 @@
                                 <connections>
                                     <segue destination="9i7-qK-ccy" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="H5N-fU-8m3"/>
                                 </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8r-1J-ZFl">
+                                <rect key="frame" x="0.0" y="205" width="375" height="256"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="32"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.99607843137254903" green="0.99607843137254903" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.047058823529411764" green="0.047058823529411764" blue="0.047058823529411764" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -131,7 +131,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-415.19999999999999" y="447.52623688155927"/>
+            <point key="canvasLocation" x="-470" y="448"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="sZB-EN-lIg">
@@ -145,8 +145,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="BACKGROUND" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GBW-fx-p83">
-                                <rect key="frame" x="16" y="312" width="110" height="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BACKGROUND" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GBW-fx-p83">
+                                <rect key="frame" x="16" y="183.5" width="110" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -157,8 +157,8 @@
                                 <color key="textColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="th3-re-hjt" customClass="BeatGroupButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="106" y="123" width="64" height="63"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="th3-re-hjt" customClass="BeatGroupButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="120.5" y="116" width="30" height="44"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <state key="normal" title="3">
@@ -168,8 +168,8 @@
                                     <action selector="pressedGroupButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="7Ad-yc-fKf"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Drc-Ug-f4P" customClass="BeatGroupButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="205" y="122" width="64" height="64"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Drc-Ug-f4P" customClass="BeatGroupButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="224.5" y="115.5" width="30" height="44"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <state key="normal" title="4">
@@ -179,8 +179,8 @@
                                     <action selector="pressedGroupButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="Dwg-ms-mfn"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBp-yE-T2g" customClass="BeatGroupButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="295" y="122" width="64" height="64"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBp-yE-T2g" customClass="BeatGroupButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="329" y="115.5" width="30" height="44"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <state key="normal" title="6">
@@ -190,8 +190,8 @@
                                     <action selector="pressedGroupButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="oKZ-U9-O0B"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Gs-OI-l3I" customClass="BeatGroupButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
-                                <rect key="frame" x="16" y="122" width="64" height="64"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Gs-OI-l3I" customClass="BeatGroupButton" customModule="TAP_Metronome_Swift" customModuleProvider="target">
+                                <rect key="frame" x="16" y="115.5" width="30" height="44"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <state key="normal" title="2">
@@ -201,21 +201,21 @@
                                     <action selector="pressedGroupButton:" destination="PgZ-xe-vib" eventType="touchUpInside" id="kBf-W2-ZkF"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="spacer1" translatesAutoresizingMaskIntoConstraints="NO" id="NSd-NK-CLB" customClass="SpacerView">
-                                <rect key="frame" x="91" y="122" width="7" height="64"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" restorationIdentifier="spacer2" translatesAutoresizingMaskIntoConstraints="NO" id="d0l-We-2zM" customClass="SpacerView">
+                                <rect key="frame" x="150.5" y="120" width="74" height="68"/>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="spacer2" translatesAutoresizingMaskIntoConstraints="NO" id="d0l-We-2zM" customClass="SpacerView">
-                                <rect key="frame" x="178" y="120" width="13" height="68"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" restorationIdentifier="spacer3" translatesAutoresizingMaskIntoConstraints="NO" id="fyS-ga-Wyf" customClass="SpacerView">
+                                <rect key="frame" x="254.5" y="120" width="74.5" height="68"/>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="spacer3" translatesAutoresizingMaskIntoConstraints="NO" id="fyS-ga-Wyf" customClass="SpacerView">
-                                <rect key="frame" x="277" y="120" width="5" height="68"/>
-                            </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jnC-ma-K7C">
-                                <rect key="frame" x="0.0" y="353" width="375" height="128"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jnC-ma-K7C">
+                                <rect key="frame" x="0.0" y="219.5" width="375" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="1TR-C1-ME6"/>
                                 </constraints>
                             </containerView>
+                            <view contentMode="scaleToFill" ambiguous="YES" restorationIdentifier="spacer1" translatesAutoresizingMaskIntoConstraints="NO" id="NSd-NK-CLB" customClass="SpacerView">
+                                <rect key="frame" x="46" y="100" width="74.5" height="64"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.26098805144384779" blue="0.54550781250000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -226,7 +226,9 @@
                             <constraint firstItem="fyS-ga-Wyf" firstAttribute="leading" secondItem="Drc-Ug-f4P" secondAttribute="trailing" id="8IX-q7-hck"/>
                             <constraint firstItem="bBp-yE-T2g" firstAttribute="centerY" secondItem="3Gs-OI-l3I" secondAttribute="centerY" id="99L-Na-FsH"/>
                             <constraint firstItem="th3-re-hjt" firstAttribute="leading" secondItem="NSd-NK-CLB" secondAttribute="trailing" id="Bho-nf-rHa"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6wx-2x-NF8" secondAttribute="trailing" constant="20" symbolic="YES" id="DbB-Fi-8rc"/>
                             <constraint firstItem="d0l-We-2zM" firstAttribute="width" secondItem="fyS-ga-Wyf" secondAttribute="width" id="FR9-ey-zR4"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GBW-fx-p83" secondAttribute="trailing" constant="20" symbolic="YES" id="Fxt-Py-neu"/>
                             <constraint firstItem="d0l-We-2zM" firstAttribute="leading" secondItem="th3-re-hjt" secondAttribute="trailing" id="Gwk-p2-Tf3"/>
                             <constraint firstItem="d0l-We-2zM" firstAttribute="height" secondItem="fyS-ga-Wyf" secondAttribute="height" id="IKk-0Y-0vS"/>
                             <constraint firstItem="jnC-ma-K7C" firstAttribute="centerX" secondItem="dDn-N8-zP2" secondAttribute="centerX" id="IpY-Dg-QNy"/>
@@ -262,7 +264,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VBS-nb-Pfz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="368.80000000000001" y="98.50074962518741"/>
+            <point key="canvasLocation" x="436" y="448"/>
         </scene>
         <!--Color Picker Collection View Controller-->
         <scene sceneID="khI-U8-QLT">
@@ -338,7 +340,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J9Y-Lx-I3n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="369" y="810"/>
+            <point key="canvasLocation" x="-470" y="1229"/>
         </scene>
     </scenes>
     <resources>

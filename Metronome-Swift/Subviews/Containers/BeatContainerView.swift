@@ -75,9 +75,9 @@ class BeatContainerView: UIView {
             
             let hypotenuse = CGFloat(sqrt(Double(self.screenWidth * self.screenWidth + self.screenHeight * self.screenHeight)))
             
-            self.startDiameter = min(self.screenWidth, self.screenHeight) * 0.5
+            self.startDiameter = min(self.screenWidth, self.screenHeight) * 0.667
             
-            self.endScale = hypotenuse/self.startDiameter * 1.5
+            self.endScale = hypotenuse/self.startDiameter * 1.2
             
             let maxTS = delegate.metronome.possibleTimeSignatures.max()!
             for b in 0...maxTS-1 {
@@ -114,7 +114,6 @@ class BeatContainerView: UIView {
             beatCircleReset(b)
             BeatViewsArray[b].removeFromSuperview()
             TapBeatViewsArray[b].removeFromSuperview()
-//            BeatViewsArray.remove(at: b)
         }
     }
     
@@ -149,29 +148,32 @@ class BeatContainerView: UIView {
         }
         
         let x1: Float = 0.16
-        let y1: Float = 1 - 0.16
-        let x2: Float = 0.50
+        let y1: Float = 1 - 0.02
+        let x2: Float = 0.30
         let y2: Float = 1 - 0.0
+        let animationCurve = CAMediaTimingFunction(controlPoints: x1, y1, x2, y2)
         
-        let timingFunction = CAMediaTimingFunction(controlPoints: x1, y1, x2, y2)
         CATransaction.begin()
-        CATransaction.setAnimationTimingFunction(timingFunction)
+        CATransaction.setAnimationTimingFunction(animationCurve)
+        
+        let n: Double = 2.0
+        let a = pow(0.5*n, n)/0.5 // time for 120bpm is n
+        let animationTime = pow(beatDuration * a, 1/n)
         
         // Immediately show the circle
         thisBeat.isHidden = false
         
         UIView.animate(
-            withDuration: beatDuration * 3,
+            withDuration: animationTime,
             animations: changesToAnimate) { (finished) in
                 self.beatCircleReset(beatIndex)
                 // reset circle once the animation is finished
             }
-        
         CATransaction.commit()
         
         // Do the animation
 //        UIView.animate(
-//            withDuration: beatDuration * 2,
+//            withDuration: animationTime,
 //            delay: 0,
 //            options: [.curveEaseOut],
 //            animations: changesToAnimate,

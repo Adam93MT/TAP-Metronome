@@ -38,6 +38,7 @@ class AVMetronome : NSObject {
     let minTempo: Int = 50
     let maxTempo: Int = 220
     let possibleTimeSignatures = [2,3,4,6]
+    
     var timeSignature: Int =  0 //Defaults.integer(forKey: "timeSignature")
     var tempoBPM: Int = 0
     var tempoInterval: Double = 0
@@ -50,6 +51,7 @@ class AVMetronome : NSObject {
     var loggedDiffs = [Double]()
     var lastTapTime = mach_absolute_time()
     var untappedBeats: Int = 0
+    
     let beatsToHideUI: Int = 16
     
     // UI -----
@@ -88,6 +90,7 @@ class AVMetronome : NSObject {
         let periods1 = Int(Globals.kBipDurationSeconds * freq1)
         let periods2 = Int(Globals.kBipDurationSeconds * freq2)
         let periods3 = Int(Globals.kBipDurationSeconds * freq3)
+        
         // How many frames will that make?
         let bipFrames1 = UInt32(Double(periods1) * 1/freq1 * Double(format.sampleRate))
         let bipFrames2 = UInt32(Double(periods2) * 1/freq2 * Double(format.sampleRate))

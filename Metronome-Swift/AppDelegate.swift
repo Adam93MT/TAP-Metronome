@@ -13,10 +13,12 @@ let Defaults: UserDefaults = UserDefaults.standard
 struct globalMeasures {
     var buttonHeight: CGFloat
     var minPadding: CGFloat
+    var minButtonSpacing: CGFloat
     
     init() {
         buttonHeight = 48
-        minPadding = 12
+        minPadding = 16
+        minButtonSpacing = 12
     }
     
 }
