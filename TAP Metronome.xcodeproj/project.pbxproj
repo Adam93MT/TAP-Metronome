@@ -16,6 +16,7 @@
 		66A5AE5E1F95A4EB00E432F7 /* TempoSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5AE5D1F95A4EB00E432F7 /* TempoSliderViewController.swift */; };
 		66A5AE601F95AFA500E432F7 /* TempoVerticalSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */; };
 		66AB01241F8D6CE4000D5E38 /* GradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */; };
+		66B8FCD51FD0A51A00A64C69 /* TimeSignatureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B8FCD41FD0A51A00A64C69 /* TimeSignatureCollectionViewCell.swift */; };
 		66B9FF2C1F929D80006EDC19 /* AVMetronome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9FF2B1F929D7F006EDC19 /* AVMetronome.swift */; };
 		66B9FF2E1F929DBC006EDC19 /* TWGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B9FF2D1F929DBB006EDC19 /* TWGenerator.swift */; };
 		66CA3F601F9E9E8F00670273 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CA3F5F1F9E9E8F00670273 /* SettingsViewController.swift */; };
@@ -60,6 +61,7 @@
 		66A5AE5D1F95A4EB00E432F7 /* TempoSliderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoSliderViewController.swift; sourceTree = "<group>"; };
 		66A5AE5F1F95AFA500E432F7 /* TempoVerticalSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoVerticalSlider.swift; sourceTree = "<group>"; };
 		66AB01231F8D6CE4000D5E38 /* GradientLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLayer.swift; sourceTree = "<group>"; };
+		66B8FCD41FD0A51A00A64C69 /* TimeSignatureCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSignatureCollectionViewCell.swift; sourceTree = "<group>"; };
 		66B9FF2B1F929D7F006EDC19 /* AVMetronome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVMetronome.swift; sourceTree = "<group>"; };
 		66B9FF2D1F929DBB006EDC19 /* TWGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWGenerator.swift; sourceTree = "<group>"; };
 		66CA3F5F1F9E9E8F00670273 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				66E6E2411FBB6D99002A0044 /* ColorCollectionViewCell.swift */,
+				66B8FCD41FD0A51A00A64C69 /* TimeSignatureCollectionViewCell.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66B8FCD51FD0A51A00A64C69 /* TimeSignatureCollectionViewCell.swift in Sources */,
 				66A5AE601F95AFA500E432F7 /* TempoVerticalSlider.swift in Sources */,
 				666E14F81FA2AD3100879B4A /* BeatGroupButton.swift in Sources */,
 				66FCB4F81FC79C40007BDC3B /* MPCoachMarks.m in Sources */,
