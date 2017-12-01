@@ -10,7 +10,6 @@
 		660BB2341FA1038A00A47778 /* TouchableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660BB2331FA1038A00A47778 /* TouchableLabel.swift */; };
 		6636EFFF1F89CD8F0000D99A /* TapDownGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */; };
 		664E8AA61F9E86CC00E29C1D /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 664E8AA51F9E86CC00E29C1D /* UserDefaultsManager.swift */; };
-		666E14F81FA2AD3100879B4A /* BeatGroupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666E14F71FA2AD3100879B4A /* BeatGroupButton.swift */; };
 		6675DE341FCA09C300EE1A69 /* Easing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675DE331FCA09C300EE1A69 /* Easing.swift */; };
 		6695724D1C2C6024001BF1FF /* BeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6695724C1C2C6024001BF1FF /* BeatView.swift */; };
 		66A5AE5E1F95A4EB00E432F7 /* TempoSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A5AE5D1F95A4EB00E432F7 /* TempoSliderViewController.swift */; };
@@ -55,7 +54,6 @@
 		6636EFFE1F89CD8F0000D99A /* TapDownGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapDownGestureRecognizer.swift; sourceTree = "<group>"; };
 		664E8AA51F9E86CC00E29C1D /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		666E14F31FA25F8E00879B4A /* USABILITY_TEST_RESULTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = USABILITY_TEST_RESULTS.md; sourceTree = "<group>"; };
-		666E14F71FA2AD3100879B4A /* BeatGroupButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatGroupButton.swift; sourceTree = "<group>"; };
 		6675DE331FCA09C300EE1A69 /* Easing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easing.swift; sourceTree = "<group>"; };
 		6695724C1C2C6024001BF1FF /* BeatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeatView.swift; sourceTree = "<group>"; };
 		66A5AE5D1F95A4EB00E432F7 /* TempoSliderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoSliderViewController.swift; sourceTree = "<group>"; };
@@ -139,7 +137,6 @@
 		660BB2351FA106FD00A47778 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
-				666E14F71FA2AD3100879B4A /* BeatGroupButton.swift */,
 				66029B7B1FBD00DC001D31AF /* Settings */,
 				66029B7A1FBD00C8001D31AF /* Slider */,
 				66029B7C1FBD00EF001D31AF /* General */,
@@ -385,7 +382,6 @@
 			files = (
 				66B8FCD51FD0A51A00A64C69 /* TimeSignatureCollectionViewCell.swift in Sources */,
 				66A5AE601F95AFA500E432F7 /* TempoVerticalSlider.swift in Sources */,
-				666E14F81FA2AD3100879B4A /* BeatGroupButton.swift in Sources */,
 				66FCB4F81FC79C40007BDC3B /* MPCoachMarks.m in Sources */,
 				66CA3F621F9E9F9300670273 /* Colors.swift in Sources */,
 				66EAD1331F992B0A00D7CEE7 /* UICircleButton.swift in Sources */,

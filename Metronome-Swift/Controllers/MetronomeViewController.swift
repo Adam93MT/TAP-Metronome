@@ -76,10 +76,10 @@ class MetronomeViewController: UIViewController {
         view.sendSubview(toBack: self.containerView)
         
         // Set up Tap button
-        tapButton.frame.size = CGSize(width: viewWidth, height: viewHeight);
-        tapButton.contentEdgeInsets = UIEdgeInsetsMake(
-            viewHeight/2, viewWidth/2, viewHeight/2, viewWidth/2
-        )
+//        tapButton.frame.size = CGSize(width: viewWidth - 32, height: viewHeight - 32 );
+//        tapButton.contentEdgeInsets = UIEdgeInsetsMake(
+//            viewHeight/2, viewWidth/2, viewHeight/2, viewWidth/2
+//        )
         tapButton.alpha = 0.75
         
         self.view.bringSubview(toFront: PlayPauseButton)

@@ -12,12 +12,7 @@ class SettingsViewController: UIViewController {
     let delegate = UIApplication.shared.delegate as! AppDelegate
     var currentOrientation: String = "portrait"
     
-//    @IBOutlet weak var GroupsLabel: UILabel!
-    
     @IBOutlet weak var settingsCollectionContainerView: UIView!
-    
-//    @IBOutlet weak var ColorsLabel: UILabel!
-//    @IBOutlet weak var colorCollectionContainerView: UIView!
     
     var timeSignatureButtonSize: CGFloat = 64
     var lastSectedIndex: IndexPath = IndexPath(item: 0, section: 0)
@@ -138,7 +133,6 @@ extension SettingsViewController: UICollectionViewDataSource {
      // section 0 is Time Signatures
      // section 1 is Colors
      */
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (section == 0) {
             return delegate.metronome.possibleTimeSignatures.count
@@ -203,7 +197,6 @@ extension SettingsViewController: UICollectionViewDataSource {
             if (cell.colorString == Globals.colors.currentTheme.Name) {
                 collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .top)
             }
-//
             return cell
         }
     }
