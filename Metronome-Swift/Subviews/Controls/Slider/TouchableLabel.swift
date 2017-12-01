@@ -39,7 +39,6 @@ class TouchableLabel: UILabel {
     }
     
     func addShadow() {
-        print("adding shadow")
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOpacity = 1
         self.layer.shadowOffset = CGSize(width: 0.0, height: -3.0)

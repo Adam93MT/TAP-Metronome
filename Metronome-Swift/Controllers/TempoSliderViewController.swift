@@ -21,6 +21,7 @@ class TempoSliderViewController: UIViewController {
     var checkImage: UIImage!
     var crossImage: UIImage!
     
+    var touchableView: UIView!
     var initialVal: Int!
     var sliderPosY: CGFloat!
     var sliderLength: CGFloat!
@@ -51,6 +52,23 @@ class TempoSliderViewController: UIViewController {
         tempoSlider.maximumValue = Float(maxVal)
         tempoSlider.minimumValue = Float(minVal)
         tempoSlider.value = Float(delegate.metronome.getTempo())
+        
+        touchableView = UIView()
+        touchableView.frame = CGRect(x: tempoSlider.frame.minX
+                                        - (CGFloat(tempoSlider.thumbWidth) - tempoSlider.frame.width)/2 + 1,
+                                     y: tempoSlider.frame.minY,
+                                     width: CGFloat(tempoSlider.thumbWidth),
+                                     height: tempoSlider.frame.height)
+        
+        self.view.addSubview(touchableView)
+        touchableView.backgroundColor = .clear
+        self.view.bringSubview(toFront: touchableView)
+        
+        // detect drag
+        let dragGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.dragSlider))
+        dragGestureRecognizer.maximumNumberOfTouches = 1
+        touchableView.addGestureRecognizer(dragGestureRecognizer)
+        self.view.bringSubview(toFront: tempoSlider)
         
         // set initial rotation
         if UIDevice.current.orientation.isPortrait {
@@ -140,6 +158,16 @@ class TempoSliderViewController: UIViewController {
         })
     }
     
+    func dragSlider(sender: UIGestureRecognizer) {
+        let xLocation = sender.location(in: self.tempoSlider).x
+        let maxX = self.tempoSlider.frame.height
+        let percent = xLocation / maxX
+        let tempo = percent * CGFloat(delegate.metronome.maxTempo - delegate.metronome.minTempo) + CGFloat(delegate.metronome.minTempo)
+        delegate.metronome.setTempo(Int(tempo))
+        tempoSlider.touchSlider(sender: sender)
+        self.tempoSlider.updateValue(newVal: Float(delegate.metronome.getTempo()))
+    }
+    
     
     // MARK: - Navigation
 
@@ -169,6 +197,5 @@ class TempoSliderViewController: UIViewController {
         
         blurEffectView.frame = self.view.frame
         tempoSlider.updateLabel()
-        
     }
 }

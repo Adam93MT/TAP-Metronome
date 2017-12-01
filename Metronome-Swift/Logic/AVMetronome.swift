@@ -376,13 +376,15 @@ class AVMetronome : NSObject {
     }
     
     func setTempo(_ tempo: Int) {
-        self.tempoBPM = tempo
-        print("Set Tempo to \(tempo)")
-        self.tempoInterval = 60.0 / Double(tempoBPM)
-        beatsToScheduleAhead = Int(Int32(Globals.kTempoChangeResponsivenessSeconds / self.tempoInterval))
-        if (beatsToScheduleAhead < 1) { beatsToScheduleAhead = 1 }
-        self.tempoChangeUpdateUI()
-        UserDefaults.standard.set(tempo, forKey: "tempo")
+        if (tempo <= self.maxTempo && tempo >= self.minTempo) {
+            self.tempoBPM = tempo
+            print("Set Tempo to \(tempo)")
+            self.tempoInterval = 60.0 / Double(tempoBPM)
+            beatsToScheduleAhead = Int(Int32(Globals.kTempoChangeResponsivenessSeconds / self.tempoInterval))
+            if (beatsToScheduleAhead < 1) { beatsToScheduleAhead = 1 }
+            self.tempoChangeUpdateUI()
+            UserDefaults.standard.set(tempo, forKey: "tempo")
+        }
     }
     
     func decrementTempo() {

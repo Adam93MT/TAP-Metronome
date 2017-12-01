@@ -12,6 +12,7 @@ class TempoVerticalSlider: UISlider {
     
     let delegate = UIApplication.shared.delegate as! AppDelegate
     var tempoThumb: TouchableLabel!
+    
     let thumbWidth: Double =  112
     let thumbHeight = Double(Globals.dimensions.buttonHeight)
     
@@ -38,13 +39,10 @@ class TempoVerticalSlider: UISlider {
         initSliderLabel()
         
         // detect touches on thumb
-        self.addTarget(self, action: #selector(self.touchSlider), for: .touchDown)
-        self.addTarget(self, action: #selector(self.touchSlider), for: .touchUpInside)
-        self.addTarget(self, action: #selector(self.touchSlider), for: .touchUpOutside)
-
+        self.addTarget(self, action: #selector(self.touchSlider), for: .allTouchEvents)
         
         // Finally, we rotate the whole thing by 90deg
-        self.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2 )
+        self.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
     }
 
     override func thumbRect(forBounds bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
@@ -73,7 +71,7 @@ class TempoVerticalSlider: UISlider {
     
     func updateLabel() {
         // recall its rotated 90deg
-        let thumbX:CGFloat = self.thumbRect(
+        let thumbX: CGFloat = self.thumbRect(
             forBounds: self.bounds, trackRect: self.trackRect(forBounds: self.bounds), value: self.value
         ).midX
         let thumbY: CGFloat = self.thumbRect(
@@ -85,7 +83,7 @@ class TempoVerticalSlider: UISlider {
         tempoThumb.text = String(delegate.metronome.getTempo())
     }
     
-    func touchSlider(sender:UIGestureRecognizer) {
+    func touchSlider(sender: UIGestureRecognizer) {
         if sender.state == .began {
             tempoThumb.isHighlighted = true
             tempoThumb.addShadow()
