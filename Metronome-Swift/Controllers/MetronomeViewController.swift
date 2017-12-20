@@ -214,7 +214,8 @@ class MetronomeViewController: UIViewController {
             self.killControlAnimations()
         }
         else {
-                self.startMetronome()
+            delegate.metronome.didRegisterTap = true
+            self.startMetronome()
         }
     }
     
