@@ -328,9 +328,10 @@ class AVMetronome : NSObject {
         self.didRegisterTap = true
         
         let lastDiff = Double(self.absToNanos(tapTime - lastTapTime)) / Double(NSEC_PER_SEC)
+        print(lastDiff)
         
         // Double tap means stop
-        if (lastDiff < self.getTimeGivenTempo(self.maxTempo)) {
+        if (lastDiff < 0.66 * self.getTimeGivenTempo(self.maxTempo)) {
             self.stop()
             
             // Will want to broadcast this later
