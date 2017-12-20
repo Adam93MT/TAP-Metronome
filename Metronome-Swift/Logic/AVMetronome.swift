@@ -402,7 +402,6 @@ class AVMetronome : NSObject {
     }
     
     func incrementBeat() {
-//         print("beat++")
         self.beatNumber += 1
     }
     

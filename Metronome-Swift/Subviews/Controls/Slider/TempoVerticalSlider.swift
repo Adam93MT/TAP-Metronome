@@ -31,16 +31,17 @@ class TempoVerticalSlider: UISlider {
         
         // Setup standard slider elements
         self.thumbTintColor = .clear
-        self.backgroundColor = .clear
+        self.backgroundColor = UIColor.clear.withAlphaComponent(0)
         self.minimumTrackTintColor = .white
         self.maximumTrackTintColor = UIColor.white.withAlphaComponent(0.2)
-        
+//        self.maximumValueImage = UIImage(named: "sliderMaxEndCap")
+//        self.minimumValueImage = UIImage(named: "sliderMinEndCap")
+//
         // Setup the label
         initSliderLabel()
         
         // detect touches on thumb
         self.addTarget(self, action: #selector(self.touchSlider), for: .allTouchEvents)
-        
         // Finally, we rotate the whole thing by 90deg
         self.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
     }

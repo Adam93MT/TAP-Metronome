@@ -53,6 +53,7 @@ class TempoSliderViewController: UIViewController {
         tempoSlider.minimumValue = Float(minVal)
         tempoSlider.value = Float(delegate.metronome.getTempo())
         
+        // Slider slop
         touchableView = UIView()
         touchableView.frame = CGRect(x: tempoSlider.frame.minX
                                         - (CGFloat(tempoSlider.thumbWidth) - tempoSlider.frame.width)/2 + 1,
@@ -68,6 +69,7 @@ class TempoSliderViewController: UIViewController {
         let dragGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.dragSlider))
         dragGestureRecognizer.maximumNumberOfTouches = 1
         touchableView.addGestureRecognizer(dragGestureRecognizer)
+        
         self.view.bringSubview(toFront: tempoSlider)
         
         // set initial rotation

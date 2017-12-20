@@ -150,7 +150,7 @@ extension UIColor {
         
         baseColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
         
-        let newSaturation = (1 - pseudoAlpha) * (saturation)
+        let newSaturation = pow(1 - pseudoAlpha, 1.25) * (saturation)
         let newBrightness = 1 - ((1 - pseudoAlpha) * (1 - brightness))
         
         return UIColor(hue: hue, saturation: newSaturation, brightness: newBrightness, alpha: 1.0)
